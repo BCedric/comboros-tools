@@ -21,7 +21,7 @@ services:
     restart: unless-stopped
   db:
     image: ${DB_IMAGE}:${DB_TAG}
-    container_name: db_comboros_tool
+    container_name: db_comboros_tools
     volumes:
       - /data/comboros_tools/db_data:/var/lib/mysql
     environment:
