@@ -5,16 +5,15 @@ namespace App\Controller\api;
 use App\Entity\Artist;
 use App\Entity\Band;
 use App\Entity\Config;
+use App\Entity\Workshop;
 use App\Repository\ArtistRepository;
 use App\Repository\BandRepository;
 use App\Repository\ConfigRepository;
-use App\Service\DocService;
+use App\Repository\WorkshopRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/config', 'config_api_')]
@@ -39,7 +38,8 @@ class ConfigApiController extends AbstractAPIController
         ConfigRepository $configRepository,
         EntityManagerInterface $em,
         ArtistRepository $artistRepository,
-        BandRepository $bandRepository
+        BandRepository $bandRepository,
+        WorkshopRepository $workshopRepository,
     ) {
         $body = json_decode($request->getContent(), true);
         foreach ($body as $name => $value) {
@@ -65,6 +65,11 @@ class ConfigApiController extends AbstractAPIController
             $em->remove($band);
         }
 
+        $workshops = $workshopRepository->findAll();
+        foreach ($workshops as $workshop) {
+            $em->remove($workshop);
+        }
+
 
         // Remplissage table Band
         $progCSV = $configRepository->findConfigValue('progCSV');
@@ -78,6 +83,24 @@ class ConfigApiController extends AbstractAPIController
                 $band->setTime($row[$configRepository->findConfigValue('progCSVtime')]);
                 $band->setPlace($row[$configRepository->findConfigValue('progCSVplace')]);
                 $em->persist($band);
+            }
+            fclose($handle);
+        }
+
+        $em->flush();
+
+        // Remplissage table Workshop
+        $workshopCSV = $configRepository->findConfigValue('workshopCSV');
+        $workshopCSVName = $configRepository->findConfigValue('workshopCSVName');
+        if (($handle = fopen($workshopCSV, 'r')) !== FALSE) {
+
+            while (($row = fgetcsv($handle, 0, ',')) !== FALSE) {
+                $workshop = new Workshop();
+                $workshop->setName($row[$workshopCSVName]);
+                $workshop->setDay($row[$configRepository->findConfigValue('workshopCSVday')]);
+                $workshop->setPeriod($row[$configRepository->findConfigValue('workshopCSVperiod')]);
+                $workshop->setPlace($row[$configRepository->findConfigValue('workshopCSVplace')]);
+                $em->persist($workshop);
             }
             fclose($handle);
         }

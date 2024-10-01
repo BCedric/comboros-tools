@@ -130,7 +130,7 @@ class Band
     {
         return implode(', ', array_map(fn($a) => $a->getFirstname() . ' ' . $a->getLastname(), $this->getArtists()->toArray()));
     }
-    
+
     #[Ignore]
     public function getCompanions()
     {
@@ -157,7 +157,10 @@ class Band
     public function getConcert()
     {
         $time = DateTime::createFromFormat('H\hi', $this->time);
+        if (!$time) {
+            $time = DateTime::createFromFormat('H\h', $this->time);
+        }
         $installation = $time->sub(DateInterval::createFromDateString('30 minutes'));
-        return $this->getDay() . ' ' . $this->time . ', ' . $this->getPlace() . ' (installation à ' . $installation->format('H\hi') . ')';
+        return "Dans la journée ou soirée de " . $this->getDay() . ', à ' . $this->time . ', ' . $this->getPlace() . ' (installation à ' . $installation->format('H\hi') . ')';
     }
 }

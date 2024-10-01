@@ -4,6 +4,9 @@ import {
   Http
 } from '@b-cedric/react-common-bootstrap'
 import React, { useEffect, useState } from 'react'
+import ConfigArtisteAnswer from './ConfigArtisteAnswer'
+import ConfigProgFile from './ConfigProgFile'
+import ConfigWorkshopFile from './ConfigWorkshopFile'
 
 const Config = ({ config }) => {
   const [formFields, setFormFields] = useState({
@@ -12,6 +15,11 @@ const Config = ({ config }) => {
     progCSVday: 0,
     progCSVtime: 0,
     progCSVplace: 0,
+    workshopCSV: '',
+    workshopCSVname: 0,
+    workshopCSVday: 0,
+    workshopCSVperiod: 0,
+    workshopCSVplace: 0,
     cessionCSV: '',
     cessionCSVbandName: 0,
     cessionCSVLastname: 0,
@@ -46,149 +54,16 @@ const Config = ({ config }) => {
       formFields={formFields}
       setFormFields={setFormFields}
     >
-      <h2>Fichier programmation</h2>
-      <CustomFormField
-        label="URL du ficher CSV de la programmation de bals"
-        fieldName="progCSV"
+      <ConfigProgFile />
+      <ConfigWorkshopFile />
+      <ConfigArtisteAnswer
+        formFieldPrefix="cession"
+        title="Fichier de réponses avec contrat de cession"
       />
-      <div className="form-line">
-        <CustomFormField
-          label="Numéro de la colonne contenant le nom du groupe"
-          fieldName="progCSVbandName"
-          type="number"
-        />
-        <CustomFormField
-          label="Numéro de la colonne contenant le jour du bal"
-          fieldName="progCSVday"
-          type="number"
-        />
-        <CustomFormField
-          label="Numéro de la colonne contenant l'heure du bal"
-          fieldName="progCSVtime"
-          type="number"
-        />
-      </div>
-      <CustomFormField
-        label="Numéro de la colonne contenant le lieu du bal"
-        fieldName="progCSVplace"
-        type="number"
+      <ConfigArtisteAnswer
+        formFieldPrefix="guso"
+        title="Fichier de réponses GUSO"
       />
-      <h2>Fichier de réponses avec contrat de cession</h2>
-      <CustomFormField
-        label="URL du ficher CSV des réponses au formulaire par contrat de cession"
-        fieldName="cessionCSV"
-      />
-      <div className="form-line">
-        <CustomFormField
-          label="Numéro de la colonne contenant le nom du groupe"
-          fieldName="cessionCSVbandName"
-          type="number"
-        />
-        <CustomFormField
-          label="Numéro de la colonne contenant le nom"
-          fieldName="cessionCSVLastname"
-          type="number"
-        />
-        <CustomFormField
-          label="Numéro de la colonne contenant le prénom"
-          fieldName="cessionCSVFirstname"
-          type="number"
-        />
-      </div>
-      <div className="form-line">
-        <CustomFormField
-          label="Numéro de la colonne contenant la date d'arrivée"
-          fieldName="cessionCSVDateArrival"
-          type="number"
-        />
-        <CustomFormField
-          label="Numéro de la colonne contenant l'heure d'arrivée"
-          fieldName="cessionCSVTimeArrival"
-          type="number"
-        />
-      </div>
-      <div className="form-line">
-        <CustomFormField
-          label="Numéro de la colonne contenant la date de départ"
-          fieldName="cessionCSVDateDeparture"
-          type="number"
-        />
-        <CustomFormField
-          label="Numéro de la colonne contenant l'heure de départ"
-          fieldName="cessionCSVTimeDeparture"
-          type="number"
-        />
-      </div>
-      <div className="form-line">
-        <CustomFormField
-          label="Numéro de la colonne contenant le nom de l'accompagnateur.rice"
-          fieldName="cessionCSVCompanion"
-          type="number"
-        />
-        <CustomFormField
-          label="Numéro de la colonne contenant le nom des enfants"
-          fieldName="cessionCSVChildren"
-          type="number"
-        />
-      </div>
-      <h2>Fichier de réponses GUSO</h2>
-      <CustomFormField
-        label="URL du ficher CSV des réponses au formulaire GUSO"
-        fieldName="gusoCSV"
-      />
-      <div className="form-line">
-        <CustomFormField
-          label="Numéro de la colonne contenant le nom du groupe"
-          fieldName="gusoCSVbandName"
-          type="number"
-        />
-        <CustomFormField
-          label="Numéro de la colonne contenant le nom"
-          fieldName="gusoCSVLastname"
-          type="number"
-        />
-        <CustomFormField
-          label="Numéro de la colonne contenant le prénom"
-          fieldName="gusoCSVFirstname"
-          type="number"
-        />
-      </div>
-      <div className="form-line">
-        <CustomFormField
-          label="Numéro de la colonne contenant la date d'arrivée"
-          fieldName="gusoCSVDateArrival"
-          type="number"
-        />
-        <CustomFormField
-          label="Numéro de la colonne contenant l'heure d'arrivée"
-          fieldName="gusoCSVTimeArrival"
-          type="number"
-        />
-      </div>
-      <div className="form-line">
-        <CustomFormField
-          label="Numéro de la colonne contenant la date de départ"
-          fieldName="gusoCSVDateDeparture"
-          type="number"
-        />
-        <CustomFormField
-          label="Numéro de la colonne contenant l'heure de départ"
-          fieldName="gusoCSVTimeDeparture"
-          type="number"
-        />
-      </div>
-      <div className="form-line">
-        <CustomFormField
-          label="Numéro de la colonne contenant le nom de l'accompagnateur.rice"
-          fieldName="gusoCSVCompanion"
-          type="number"
-        />
-        <CustomFormField
-          label="Numéro de la colonne contenant le nom des enfants"
-          fieldName="gusoCSVChildren"
-          type="number"
-        />
-      </div>
       <h2>Feuille de route</h2>
       <CustomFormField
         label="URL de la feuille de route type"
