@@ -1,3 +1,5 @@
+import { mdiCog, mdiFileDocumentOutline } from '@mdi/js'
+import Icon from '@mdi/react'
 import React from 'react'
 import { Link, useMatch } from 'react-router-dom'
 
@@ -7,27 +9,28 @@ const Menu = () => {
   const isHome = useMatch('/')
 
   return (
-    <div>
-      <ul className="nav nav-tabs">
-        <li className="nav-item">
+    <div className="menu">
+      <h2>Outils Comboros</h2>
+      <hr />
+      <ul>
+        <li>
           <Link
-            className={`nav-link ${isHome ? 'active' : ''}`}
+            className={`${isHome ? 'active' : ''}`}
             aria-current="page"
             to=""
           >
-            Feuilles de route
+            <Icon path={mdiFileDocumentOutline} size={1} />
+            <span>Feuilles de route</span>
           </Link>
         </li>
-        <li className="nav-item">
-          <Link className={`nav-link ${isConfig ? 'active' : ''}`} to="/config">
-            Config
+        <li>
+          <Link className={`${isConfig ? 'active' : ''}`} to="/config">
+            <Icon path={mdiCog} size={1} />
+            <span>Configuration</span>
           </Link>
         </li>
-        <li className="nav-item">
-          <Link
-            className={`nav-link ${isConfigTech ? 'active' : ''}`}
-            to="/config-tech"
-          >
+        <li>
+          <Link className={`${isConfigTech ? 'active' : ''}`} to="/config-tech">
             Config Techniciens
           </Link>
         </li>

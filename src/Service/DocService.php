@@ -8,6 +8,8 @@ use PhpOffice\PhpWord\TemplateProcessor;
 use PhpOffice\PhpWord\IOFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\ConventionTypeGlobalField;
+use PhpOffice\PhpWord\Element\Table;
+use PhpOffice\PhpWord\SimpleType\TblWidth;
 use setasign\Fpdi\Fpdi;
 use ZipArchive;
 
@@ -121,10 +123,20 @@ class DocService
             ['value' => $value, 'type' => $type, 'tag' => $tag] = $field;
             if ($type === 'image' && is_file('/tmp/' . $value)) {
                 $templateProcessor->setImageValue($tag, ['path' => '/tmp/' . $value, 'width' => $field['width'], 'height' => 10000000]);
+            } else if ($type === 'array') {
+                $table = new Table(array('borderSize' => 1, 'borderColor' => 'CCCCCC', 'width' => 100 * 100, 'unit' => TblWidth::PERCENT));
+                foreach ($value as $row) {
+                    $table->addRow();
+                    foreach ($row as $cellValue) {
+                        $table->addCell($cellValue['width'])->addText($cellValue['value']);
+                    }
+                }
+                $templateProcessor->setComplexValue($tag, $table);
             } else {
                 $templateProcessor->setValue($tag, $value);
             }
         }
+
         $templateProcessor->saveAs($tmpFilePath);
         $res = file_get_contents($tmpFilePath);
         unlink($tmpFilePath);

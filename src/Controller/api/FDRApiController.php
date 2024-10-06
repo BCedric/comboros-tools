@@ -2,9 +2,11 @@
 
 namespace App\Controller\api;
 
+use App\Repository\ArtistRepository;
 use App\Repository\BandRepository;
 use App\Repository\ConfigRepository;
 use App\Repository\TechRepository;
+use App\Repository\WorkshopRepository;
 use App\Service\DocService;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\HeaderUtils;
@@ -25,6 +27,13 @@ class FDRApiController extends AbstractAPIController
         return new JsonResponse($this->serializer->normalize($bands));
     }
 
+    #[Route('/workshop', name: 'workshop', methods: ['GET'])]
+    public function workshop(WorkshopRepository $workshopRepository)
+    {
+        $workshops = $workshopRepository->findAll();
+        return new JsonResponse($this->serializer->normalize($workshops));
+    }
+
     #[Route('/get-fdr', name: 'get_fdr', methods: ['GET', 'POST'])]
     public function get_fdr(
         Request $request,
@@ -32,7 +41,9 @@ class FDRApiController extends AbstractAPIController
         ConfigRepository $configRepository,
         HttpClientInterface $http,
         BandRepository $bandRepository,
-        TechRepository $techRepository
+        TechRepository $techRepository,
+        WorkshopRepository $workshopRepository,
+        ArtistRepository $artistRepository
     ) {
         $body = json_decode($request->getContent(), true);
         $urlFDR = $configRepository->findConfigValue('urlFDR');
@@ -58,6 +69,31 @@ class FDRApiController extends AbstractAPIController
                 ['tag' => 'mail_accueil_tech', 'type' => 'string', 'value' => $tech->getMail()],
                 ['tag' => 'tel_accueil_tech', 'type' => 'string', 'value' => $tech->getTel()],
 
+            ]);
+        }
+
+        $workshopId = $body['workshop'];
+        if ($workshopId != null) {
+            $workshop = $workshopRepository->find($workshopId);
+            $docFields = array_merge($docFields, [
+                ['tag' => 'stage', 'type' => 'string', 'value' => $workshop->__toString()],
+            ]);
+        }
+        $hosting = array_reduce($body['hosting'], function ($acc, $item) use ($artistRepository) {
+            if (!empty($item['value'])) {
+                $artist = $artistRepository->find($item['id']);
+                $acc[] = [
+                    'artist' => ['value' => $artist->getFirstname() . ' ' . $artist->getLastname(), 'width' => 1],
+                    'hosting' => ['value' => $item['value'], 'width' => 2],
+                ];
+            }
+            return $acc;
+        }, []);
+
+
+        if (!empty($hosting)) {
+            $docFields = array_merge($docFields, [
+                ['tag' => 'hebergement', 'type' => 'array', 'value' => $hosting],
             ]);
         }
 

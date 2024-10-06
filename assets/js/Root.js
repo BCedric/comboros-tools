@@ -5,10 +5,11 @@ import Menu from './Menu'
 const Root = () => {
   return (
     <div>
-      <h1>Outils Comboros</h1>
-      <Menu />
-      <div className="content">
-        <Outlet />
+      <div className="flex ">
+        <Menu />
+        <div className="content">
+          <Outlet />
+        </div>
       </div>
     </div>
   )

@@ -1,7 +1,8 @@
+import { CustomFormField } from '@b-cedric/react-common-bootstrap'
 import moment from 'moment'
 import React from 'react'
 
-const FDRArtistsTable = ({ artists }) => {
+const FDRArtistsTable = ({ artists, hosting, setHosting }) => {
   return (
     <>
       {artists.length > 0 && (
@@ -23,15 +24,15 @@ const FDRArtistsTable = ({ artists }) => {
                 <td>{moment(artist.dateArrival).format('DD/MM HH[h]mm')}</td>
                 <td>{moment(artist.dateDeparture).format('DD/MM HH[h]mm')}</td>
                 <td>
-                  {/* <CustomFormField
+                  <CustomFormField
                     onChange={(value) =>
-                      setArtists((prev) => {
+                      setHosting((prev) => {
                         const copy = [...prev]
-                        copy[index] = { ...artist, hosting: value }
+                        copy[index] = { id: artist.id, value }
                         return copy
                       })
                     }
-                  /> */}
+                  />
                 </td>
               </tr>
             ))}

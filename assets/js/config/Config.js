@@ -42,10 +42,6 @@ const Config = ({ config }) => {
     setFormFields((prev) => ({ ...prev, ...config }))
   }, [])
 
-  useEffect(() => {
-    console.log(formFields)
-  }, [formFields])
-
   const submit = () => Http.put('/config', formFields)
 
   return (

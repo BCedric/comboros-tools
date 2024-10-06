@@ -3,7 +3,7 @@ import {
   Http,
   ListFormControl
 } from '@b-cedric/react-common-bootstrap'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const ConfigTech = () => {
   const [tech, setTech] = useState([])
@@ -33,15 +33,14 @@ const ConfigTech = () => {
           { label: 'Email', propName: 'mail' },
           { label: 'Téléphone', propName: 'tel' }
         ]}
-        setList={(list) => (
-          console.log(list),
+        setList={(list) =>
           setTech(
             list.map((item) => ({
               ...item,
               room: item.room.value != null ? item.room.value : item.room
             }))
           )
-        )}
+        }
       />
     </CustomForm>
   )

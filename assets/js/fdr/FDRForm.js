@@ -9,17 +9,26 @@ import FDRArtistsTable from './FDRArtistsTable'
 
 const FDRForm = () => {
   const [groups, setGroups] = useState([])
+  const [workshops, setworkshops] = useState([])
 
   const [groupSelectedIndex, setGroupSelectedIndex] = useState(null)
+  const [workshopSelectedIndex, setWorkshopSelectedIndex] = useState(null)
   const groupSelected = useMemo(
     () => groups[groupSelectedIndex],
     [groupSelectedIndex, groups]
+  )
+
+  const [hosting, setHosting] = useState([])
+  const workshopSelected = useMemo(
+    () => workshops[workshopSelectedIndex],
+    [workshopSelectedIndex, workshops]
   )
   const [format, setFormat] = useState('docx')
   const [referent, setReferent] = useState({ name: '', mail: '', tel: '' })
 
   useEffect(() => {
     Http.get('/fdr/band').then((groups) => setGroups(groups))
+    Http.get('/fdr/workshop').then((groups) => setworkshops(groups))
   }, [])
 
   const submit = () =>
@@ -30,7 +39,9 @@ const FDRForm = () => {
       data: {
         format,
         group: groupSelected.id,
-        referent
+        workshop: workshopSelected != null ? workshopSelected.id : null,
+        referent,
+        hosting
       }
     }).then((response) => {
       const url = window.URL.createObjectURL(response.data)
@@ -75,20 +86,36 @@ const FDRForm = () => {
         onChange={({ value }) => setGroupSelectedIndex(value)}
         type="select"
       />
+
       <FDRArtistsTable
         artists={groupSelected != null ? groupSelected.artists : []}
+        hosting={hosting}
+        setHosting={setHosting}
       />
       {groupSelected != null && (
-        <CustomFormField
-          label="Format"
-          type="radio"
-          value={format}
-          onChange={(value) => setFormat(value)}
-          options={[
-            { value: 'docx', label: 'docx' },
-            { value: 'pdf', label: 'pdf' }
-          ]}
-        />
+        <>
+          <CustomFormField
+            label="Associer un stage"
+            options={workshops.map((g, index) => ({
+              ...g,
+              label: g.name,
+              value: index
+            }))}
+            value={workshopSelectedIndex}
+            onChange={({ value }) => setWorkshopSelectedIndex(value)}
+            type="select"
+          />
+          <CustomFormField
+            label="Format"
+            type="radio"
+            value={format}
+            onChange={(value) => setFormat(value)}
+            options={[
+              { value: 'docx', label: 'docx' },
+              { value: 'pdf', label: 'pdf' }
+            ]}
+          />
+        </>
       )}
     </CustomForm>
   )

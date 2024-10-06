@@ -1,0 +1,30 @@
+.menu {
+  width: 15%;
+  height: 100vh;
+  background-color: black;
+  color: white;
+  padding: 1em;
+  position: fixed;
+
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    width: 100%;
+    padding: 0.5em;
+    border-radius: 0.25em;
+    display: flex;
+    align-items: center;
+
+    @extend .spaced-inline;
+
+    &.active {
+      background-color: $primary;
+      border: 1px solid white;
+    }
+  }
+}

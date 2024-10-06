@@ -120,7 +120,7 @@ class ConfigApiController extends AbstractAPIController
                 $departure = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('cessionCSVDateDeparture')] . ' ' . $row[$configRepository->findConfigValue('cessionCSVTimeDeparture')]);
                 $departure != false && $artist->setDateDeparture($departure);
                 $artist->setCompanions([$row[$configRepository->findConfigValue('cessionCSVCompanion')], $row[$configRepository->findConfigValue('cessionCSVChildren')]]);
-                $artistBand = $bandRepository->findOneBy(['name' => $row[$configRepository->findConfigValue('cessionCSVbandName')]]);
+                $artistBand = $bandRepository->findOneByName($row[$configRepository->findConfigValue('cessionCSVbandName')]);
                 if ($artistBand != null) {
                     $artist->setBand($artistBand);
                 }
