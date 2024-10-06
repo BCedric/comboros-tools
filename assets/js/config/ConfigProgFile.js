@@ -1,9 +1,22 @@
 import { CustomFormField } from '@b-cedric/react-common-bootstrap'
-import React from 'react'
+import React, { useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
+import ConfigForm from './ConfigForm'
 
-const ConfigProgFile = () => {
+const ConfigProgFile = ({}) => {
+  const config = useOutletContext()
+  
+  const [formFields, setFormFields] = useState({
+    progCSV: '',
+    progCSVbandName: 0,
+    progCSVday: 0,
+    progCSVtime: 0,
+    progCSVplace: 0,
+    ...config
+  })
+
   return (
-    <div>
+    <ConfigForm formFields={formFields} setFormFields={setFormFields}>
       <h2>Fichier programmation</h2>
       <CustomFormField
         label="URL du ficher CSV de la programmation de bals"
@@ -31,7 +44,7 @@ const ConfigProgFile = () => {
         fieldName="progCSVplace"
         type="number"
       />
-    </div>
+    </ConfigForm>
   )
 }
 

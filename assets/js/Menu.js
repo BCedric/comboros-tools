@@ -4,8 +4,7 @@ import React from 'react'
 import { Link, useMatch } from 'react-router-dom'
 
 const Menu = () => {
-  const isConfigTech = useMatch('/config-tech')
-  const isConfig = useMatch('/config')
+  const isConfig = useMatch('/config*')
   const isHome = useMatch('/')
 
   return (
@@ -27,11 +26,6 @@ const Menu = () => {
           <Link className={`${isConfig ? 'active' : ''}`} to="/config">
             <Icon path={mdiCog} size={1} />
             <span>Configuration</span>
-          </Link>
-        </li>
-        <li>
-          <Link className={`${isConfigTech ? 'active' : ''}`} to="/config-tech">
-            Config Techniciens
           </Link>
         </li>
       </ul>

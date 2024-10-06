@@ -1,9 +1,21 @@
 import { CustomFormField } from '@b-cedric/react-common-bootstrap'
-import React from 'react'
+import React, { useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
+import ConfigForm from './ConfigForm'
 
 const ConfigWorkshopFile = () => {
+  const config = useOutletContext()
+
+  const [formFields, setFormFields] = useState({
+    workshopCSV: '',
+    workshopCSVname: 0,
+    workshopCSVday: 0,
+    workshopCSVperiod: 0,
+    workshopCSVplace: 0,
+    ...config
+  })
   return (
-    <div>
+    <ConfigForm formFields={formFields} setFormFields={setFormFields}>
       <h2>Fichier des stages</h2>
       <CustomFormField
         label="URL du ficher CSV de la programmation des stages"
@@ -31,7 +43,7 @@ const ConfigWorkshopFile = () => {
         fieldName="workshopCSVplace"
         type="number"
       />
-    </div>
+    </ConfigForm>
   )
 }
 

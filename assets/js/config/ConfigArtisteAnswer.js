@@ -1,13 +1,21 @@
 import { CustomFormField } from '@b-cedric/react-common-bootstrap'
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
+import ConfigForm from './ConfigForm'
 
-const ConfigArtisteAnswer = ({ formFieldPrefix, title }) => {
-  const getFieldName = useCallback(
-    (fieldName) => `${formFieldPrefix}${fieldName}`,
-    [formFieldPrefix]
-  )
+const ConfigArtisteAnswer = ({ formFieldPrefix, title, initFields }) => {
+  const config = useOutletContext()
+  const [formFields, setFormFields] = useState({
+    ...initFields,
+    ...config
+  })
+
+    const getFieldName = useCallback(
+      (fieldName) => `${formFieldPrefix}${fieldName}`,
+      [formFieldPrefix]
+    )
   return (
-    <div>
+    <ConfigForm formFields={formFields} setFormFields={setFormFields}>
       <h2>{title}</h2>
       <CustomFormField
         label="URL du ficher CSV des réponses au formulaire par contrat de cession"
@@ -66,7 +74,7 @@ const ConfigArtisteAnswer = ({ formFieldPrefix, title }) => {
           type="number"
         />
       </div>
-    </div>
+    </ConfigForm>
   )
 }
 
