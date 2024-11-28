@@ -1,12 +1,14 @@
 import React from 'react'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
 import Root from './Root'
-import ConfigTech from './config/ConfigTech'
 import ConfigArtisteAnswer from './config/ConfigArtisteAnswer'
 import ConfigProgFile from './config/ConfigProgFile'
+import ConfigTech from './config/ConfigTech'
+import ConfigVolunteers from './config/ConfigVolunteers'
 import ConfigWorkshopFile from './config/ConfigWorkshopFile'
 import InitConfig from './config/InitConfig'
 import FDR from './fdr/FDR'
+import Prog from './prog/Prog'
 
 const router = createHashRouter([
   {
@@ -16,6 +18,10 @@ const router = createHashRouter([
       {
         path: '',
         element: <FDR />
+      },
+      {
+        path: 'prog',
+        element: <Prog />
       },
       {
         path: '/config',

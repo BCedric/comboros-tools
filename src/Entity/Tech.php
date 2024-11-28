@@ -14,9 +14,6 @@ class Tech
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $room = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -25,17 +22,20 @@ class Tech
     #[ORM\Column(length: 255)]
     private ?string $tel = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Room $room = null;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getRoom(): ?string
+    public function getRoom(): ?Room
     {
         return $this->room;
     }
 
-    public function setRoom(string $room): static
+    public function setRoom(?Room $room): static
     {
         $this->room = $room;
 
@@ -77,4 +77,6 @@ class Tech
 
         return $this;
     }
+
+    
 }

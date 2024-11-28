@@ -22,13 +22,13 @@ class Band
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $day = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $time = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $place = null;
 
     /**
@@ -36,6 +36,15 @@ class Band
      */
     #[ORM\OneToMany(targetEntity: Artist::class, mappedBy: 'band')]
     private Collection $artists;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $start = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $end = null;
+
+    #[ORM\ManyToOne]
+    private ?Room $room = null;
 
     public function __construct()
     {
@@ -162,5 +171,41 @@ class Band
         }
         $installation = $time->sub(DateInterval::createFromDateString('30 minutes'));
         return "Dans la journée ou soirée de " . $this->getDay() . ', à ' . $this->time . ', ' . $this->getPlace() . ' (installation à ' . $installation->format('H\hi') . ')';
+    }
+
+    public function getStart(): ?\DateTimeInterface
+    {
+        return $this->start;
+    }
+
+    public function setStart(\DateTimeInterface $start): static
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    public function getEnd(): ?\DateTimeInterface
+    {
+        return $this->end;
+    }
+
+    public function setEnd(\DateTimeInterface $end): static
+    {
+        $this->end = $end;
+
+        return $this;
+    }
+
+    public function getRoom(): ?Room
+    {
+        return $this->room;
+    }
+
+    public function setRoom(?Room $room): static
+    {
+        $this->room = $room;
+
+        return $this;
     }
 }

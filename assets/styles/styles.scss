@@ -3,6 +3,23 @@ $primary: #900;
 $enable-shadows: true;
 $prefix: 'mo-';
 
+.calendar-container {
+  //   max-height: 600px;
+  //   overflow-y: scroll;
+
+  .fc-timegrid-event-harness {
+    width: 33%;
+  }
+
+  .event-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  .event-content {
+    padding: 0.25em;
+  }
+}
+
 // Then import Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import '~@b-cedric/react-common-bootstrap/styles/styles.scss';
