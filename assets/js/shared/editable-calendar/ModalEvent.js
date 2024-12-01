@@ -28,8 +28,6 @@ const ModalEvent = ({
     })
   }, [currentSelectInfo])
 
-  console.log(newEvent.room)
-
   const handleValidate = () => {
     onValidate(newEvent)
     setNewEvent({ ...initEvent })

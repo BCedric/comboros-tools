@@ -13,9 +13,9 @@ const ConfigTech = () => {
   const [rooms, setRooms] = useState([])
 
   useEffect(() => {
-    Http.get('/tech').then((tech) => setTech(tech))
-    Http.get('/config/rooms').then((rooms) =>
-      setRooms(rooms.map((r) => ({ label: r, value: r })))
+    Http.get('/tech').then((tech) => setTech(tech.map(t => ({...t, room: t.room.id}))))
+    Http.get('/room').then((rooms) =>
+      setRooms(rooms.map((r) => ({ label: r.label, value: r.id })))
     )
   }, [])
 

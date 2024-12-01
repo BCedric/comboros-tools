@@ -3,6 +3,7 @@
 namespace App\Controller\api;
 
 use App\Entity\Tech;
+use App\Repository\RoomRepository;
 use App\Repository\TechRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +24,8 @@ class TechController extends AbstractAPIController
     public function post(
         Request $request,
         EntityManagerInterface $em,
-        TechRepository $techRepository
+        TechRepository $techRepository,
+        RoomRepository $roomRepository
     ) {
         $body = json_decode($request->getContent(), true);
 
@@ -34,7 +36,7 @@ class TechController extends AbstractAPIController
                 $tech = new Tech();
             }
             $tech->setMail($techArray['mail']);
-            $tech->setRoom($techArray['room']);
+            $tech->setRoom($roomRepository->find($techArray['room']));
             $tech->setName($techArray['name']);
             $tech->setTel($techArray['tel']);
 

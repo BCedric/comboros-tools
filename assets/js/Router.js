@@ -2,13 +2,12 @@ import React from 'react'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
 import Root from './Root'
 import ConfigArtisteAnswer from './config/ConfigArtisteAnswer'
-import ConfigProgFile from './config/ConfigProgFile'
 import ConfigTech from './config/ConfigTech'
 import ConfigVolunteers from './config/ConfigVolunteers'
-import ConfigWorkshopFile from './config/ConfigWorkshopFile'
 import InitConfig from './config/InitConfig'
 import FDR from './fdr/FDR'
 import Prog from './prog/Prog'
+import Workshop from './workshop/Workshop'
 
 const router = createHashRouter([
   {
@@ -24,13 +23,15 @@ const router = createHashRouter([
         element: <Prog />
       },
       {
+        path: 'workshop',
+        element: <Workshop />
+      },
+      {
         path: '/config',
         element: <InitConfig />,
         children: [
-          { path: '', element: <ConfigProgFile /> },
-          { path: 'workshop', element: <ConfigWorkshopFile /> },
           {
-            path: 'cession',
+            path: '',
             element: (
               <ConfigArtisteAnswer
                 formFieldPrefix="cession"

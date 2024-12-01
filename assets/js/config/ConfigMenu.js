@@ -5,17 +5,7 @@ const ConfigMenu = () => {
   return (
     <ul className="nav">
       <li className="nav-item">
-        <Link className="nav-link active" aria-current="page" to="/config">
-          Programmation
-        </Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" to="/config/workshop">
-          Ateliers
-        </Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" to="/config/cession">
+        <Link className="nav-link" to="/config">
           Cession
         </Link>
       </li>

@@ -5,20 +5,14 @@ import interactionPlugin from '@fullcalendar/interaction'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import React from 'react'
-import ProgEvent from './ProgEvent'
+import CalendarEvent from './CalendarEvent'
 
-const formatBand = (b) => ({
-  ...b,
-  title: b.name,
-  extendedProps: { room: b.room },
-  backgroundColor: b.room.color
-})
-
-const ProgCalendar = ({
+const Calendar = ({
   setShowModalEvent,
   events,
   setEvents,
-  setCurrentSelectInfo
+  setCurrentSelectInfo,
+  route
 }) => {
   const handleSelect = (selectInfo) => {
     setShowModalEvent(true)
@@ -27,13 +21,13 @@ const ProgCalendar = ({
 
   const handleEventChange = (param) => {
     const event = param.event
-    Http.post('/band', {
+    Http.post(route, {
       id: event.id,
       name: event.title,
       room: event.extendedProps.room.id,
       start: event.start,
       end: event.end
-    }).then((bands) => setEvents(bands.map(formatBand)))
+    }).then((events) => setEvents(events))
   }
 
   const editEvent = (eventId) => {
@@ -43,7 +37,7 @@ const ProgCalendar = ({
   }
 
   const deleteEvent = (id) => {
-    Http.delete(`/band/${id}`).then((bands) => setEvents(bands.map(formatBand)))
+    Http.delete(`${route}/${id}`).then((events) => setEvents(events))
   }
 
   return (
@@ -64,7 +58,7 @@ const ProgCalendar = ({
       eventChange={handleEventChange}
       select={(param) => handleSelect(param)}
       eventContent={(eventInfo) => (
-        <ProgEvent
+        <CalendarEvent
           editEvent={editEvent}
           deleteEvent={deleteEvent}
           eventInfo={eventInfo}
@@ -76,4 +70,4 @@ const ProgCalendar = ({
   )
 }
 
-export default ProgCalendar
+export default Calendar

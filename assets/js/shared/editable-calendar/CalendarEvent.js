@@ -2,7 +2,7 @@ import { mdiClose, mdiPencil } from '@mdi/js'
 import Icon from '@mdi/react'
 import React from 'react'
 
-const ProgEvent = ({ eventInfo, editEvent, deleteEvent }) => {
+const CalendarEvent = ({ eventInfo, editEvent, deleteEvent }) => {
   return (
     <>
       <div className="event-header">
@@ -30,4 +30,4 @@ const ProgEvent = ({ eventInfo, editEvent, deleteEvent }) => {
   )
 }
 
-export default ProgEvent
+export default CalendarEvent

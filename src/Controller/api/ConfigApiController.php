@@ -3,12 +3,12 @@
 namespace App\Controller\api;
 
 use App\Entity\Artist;
-use App\Entity\Band;
 use App\Entity\Config;
-use App\Entity\Workshop;
+use App\Entity\Volunteer;
 use App\Repository\ArtistRepository;
 use App\Repository\BandRepository;
 use App\Repository\ConfigRepository;
+use App\Repository\VolunteerRepository;
 use App\Repository\WorkshopRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -60,52 +60,8 @@ class ConfigApiController extends AbstractAPIController
             $em->remove($artist);
         }
 
-        $bands = $bandRepository->findAll();
-        foreach ($bands as $band) {
-            $em->remove($band);
         }
 
-        $workshops = $workshopRepository->findAll();
-        foreach ($workshops as $workshop) {
-            $em->remove($workshop);
-        }
-
-
-        // Remplissage table Band
-        $progCSV = $configRepository->findConfigValue('progCSV');
-        $progCSVbandName = $configRepository->findConfigValue('progCSVbandName');
-        if (($handle = fopen($progCSV, 'r')) !== FALSE) {
-
-            while (($row = fgetcsv($handle, 0, ',')) !== FALSE) {
-                $band = new Band();
-                $band->setName($row[$progCSVbandName]);
-                $band->setDay($row[$configRepository->findConfigValue('progCSVday')]);
-                $band->setTime($row[$configRepository->findConfigValue('progCSVtime')]);
-                $band->setPlace($row[$configRepository->findConfigValue('progCSVplace')]);
-                $em->persist($band);
-            }
-            fclose($handle);
-        }
-
-        $em->flush();
-
-        // Remplissage table Workshop
-        $workshopCSV = $configRepository->findConfigValue('workshopCSV');
-        $workshopCSVName = $configRepository->findConfigValue('workshopCSVName');
-        if (($handle = fopen($workshopCSV, 'r')) !== FALSE) {
-
-            while (($row = fgetcsv($handle, 0, ',')) !== FALSE) {
-                $workshop = new Workshop();
-                $workshop->setName($row[$workshopCSVName]);
-                $workshop->setDay($row[$configRepository->findConfigValue('workshopCSVday')]);
-                $workshop->setPeriod($row[$configRepository->findConfigValue('workshopCSVperiod')]);
-                $workshop->setPlace($row[$configRepository->findConfigValue('workshopCSVplace')]);
-                $em->persist($workshop);
-            }
-            fclose($handle);
-        }
-
-        $em->flush();
 
         // Remplissage table Artists
         $cessionCSV = $configRepository->findConfigValue('cessionCSV');
@@ -140,7 +96,7 @@ class ConfigApiController extends AbstractAPIController
                 $departure = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('gusoCSVDateDeparture')] . ' ' . $row[$configRepository->findConfigValue('gusoCSVTimeDeparture')]);
                 $departure != false && $artist->setDateDeparture($departure);
                 $artist->setCompanions([$row[$configRepository->findConfigValue('gusoCSVCompanion')]]);
-                $artistBand = $bandRepository->findOneBy(['name' => $row[$configRepository->findConfigValue('gusoCSVbandName')]]);
+                $artistBand = $bandRepository->findOneByName($row[$configRepository->findConfigValue('gusoCSVbandName')]);
                 if ($artistBand != null) {
                     $artist->setBand($artistBand);
                 }
@@ -148,23 +104,31 @@ class ConfigApiController extends AbstractAPIController
             }
             fclose($handle);
         }
+        $em->flush();
 
+        //Remplissage table volunteer
+        // $volunteerCSV = $configRepository->findConfigValue('volunteerCSV');
+        // if (($handle = fopen($volunteerCSV, 'r')) !== FALSE) {
+        //     while (($row = fgetcsv($handle, 0, ',')) !== FALSE) {
+        //         $volunteer = new Volunteer();
+        //         $volunteer->setFirstname($row[$configRepository->findConfigValue('volunteerCSVfirstname')]);
+        //         $volunteer->setLastname($row[$configRepository->findConfigValue('volunteerCSVlastname')]);
+        //         $lunches = [
+        //             'jeudi' => $row[$configRepository->findConfigValue('volunteerCSVlunchThursday')],
+        //             'vendredi' => $row[$configRepository->findConfigValue('volunteerCSVlunchFriday')],
+        //             'samedi' => $row[$configRepository->findConfigValue('volunteerCSVlunchSaturday')],
+        //             'dimanche' => $row[$configRepository->findConfigValue('volunteerCSVlunchSunday')]
+        //         ];
+
+        //         $volunteer->setLunches($lunches);
+
+        //         $em->persist($volunteer);
+        //     }
+        //     fclose($handle);
+        // }
         $em->flush();
 
 
         return $this->get($configRepository);
-    }
-
-    #[Route('/rooms', name: 'get_rooms', methods: ['GET'])]
-    public function get_rooms(BandRepository $bandRepository)
-    {
-        $res = [];
-        foreach ($bandRepository->findAll() as $band) {
-            if (!in_array($band->getPlace(), $res)) {
-                $res[] = $band->getPlace();
-            }
-        }
-
-        return new JsonResponse($res);
     }
 }

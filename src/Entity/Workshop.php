@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\WorkshopRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WorkshopRepository::class)]
@@ -16,14 +17,17 @@ class Workshop
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $day = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $period = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $place = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $start = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $end = null;
+
+    #[ORM\ManyToOne]
+    private ?Room $room = null;
 
     public function getId(): ?int
     {
@@ -42,30 +46,6 @@ class Workshop
         return $this;
     }
 
-    public function getDay(): ?string
-    {
-        return $this->day;
-    }
-
-    public function setDay(string $day): static
-    {
-        $this->day = $day;
-
-        return $this;
-    }
-
-    public function getPeriod(): ?string
-    {
-        return $this->period;
-    }
-
-    public function setPeriod(string $period): static
-    {
-        $this->period = $period;
-
-        return $this;
-    }
-
     public function getPlace(): ?string
     {
         return $this->place;
@@ -80,6 +60,45 @@ class Workshop
 
     public function __toString()
     {
-        return $this->name . ' : ' . $this->day . ' ' . $this->getPeriod() . ', ' . $this->place;
+        $day = $this->getStart()->format('d/m');
+        $startTime = $this->getStart()->format('H\hi');
+        $endTime = $this->getEnd()->format('H\hi');
+        return $this->name . ' : Le ' . $day . ' de ' . $startTime . ' à ' . $endTime;
+    }
+
+    public function getStart(): ?\DateTimeInterface
+    {
+        return $this->start;
+    }
+
+    public function setStart(\DateTimeInterface $start): static
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    public function getEnd(): ?\DateTimeInterface
+    {
+        return $this->end;
+    }
+
+    public function setEnd(\DateTimeInterface $end): static
+    {
+        $this->end = $end;
+
+        return $this;
+    }
+
+    public function getRoom(): ?Room
+    {
+        return $this->room;
+    }
+
+    public function setRoom(?Room $room): static
+    {
+        $this->room = $room;
+
+        return $this;
     }
 }

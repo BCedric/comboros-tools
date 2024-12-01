@@ -23,12 +23,6 @@ class Band
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $day = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $time = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $place = null;
 
     /**
@@ -64,30 +58,6 @@ class Band
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getDay(): ?string
-    {
-        return $this->day;
-    }
-
-    public function setDay(string $day): static
-    {
-        $this->day = $day;
-
-        return $this;
-    }
-
-    public function getTime(): ?string
-    {
-        return $this->time;
-    }
-
-    public function setTime(string $time): static
-    {
-        $this->time = $time;
 
         return $this;
     }
@@ -165,12 +135,16 @@ class Band
     #[Ignore]
     public function getConcert()
     {
-        $time = DateTime::createFromFormat('H\hi', $this->time);
-        if (!$time) {
-            $time = DateTime::createFromFormat('H\h', $this->time);
+        /** @var Datetime */
+        $startDateTime = $this->getStart();
+        if (intval($startDateTime->format('H')) < 5) {
+            $day = intval($startDateTime->format('d')) - 1;
+        } else {
+            $day = intval($startDateTime->format('d'));
         }
-        $installation = $time->sub(DateInterval::createFromDateString('30 minutes'));
-        return "Dans la journée ou soirée de " . $this->getDay() . ', à ' . $this->time . ', ' . $this->getPlace() . ' (installation à ' . $installation->format('H\hi') . ')';
+        $installation = clone $startDateTime;
+        $installation->sub(DateInterval::createFromDateString('30 minutes'));
+        return "Dans la journée ou soirée du " . $day . "/" . $startDateTime->format('m') . ', de ' . $startDateTime->format('H\hi') . ' à ' . $this->getEnd()->format('H\hi') . ' (installation à ' . $installation->format('H\hi') . ')';
     }
 
     public function getStart(): ?\DateTimeInterface
