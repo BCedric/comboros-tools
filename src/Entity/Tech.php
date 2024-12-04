@@ -22,7 +22,7 @@ class Tech
     #[ORM\Column(length: 255)]
     private ?string $tel = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'tech', cascade: ['persist', 'remove'])]
     private ?Room $room = null;
 
     public function getId(): ?int
@@ -78,5 +78,4 @@ class Tech
         return $this;
     }
 
-    
 }

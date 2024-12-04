@@ -2,6 +2,7 @@
 
 namespace App\Controller\api;
 
+use App\Entity\Room;
 use App\Repository\ArtistRepository;
 use App\Repository\BandRepository;
 use App\Repository\ConfigRepository;
@@ -47,9 +48,10 @@ class FDRApiController extends AbstractAPIController
     ) {
         $body = json_decode($request->getContent(), true);
         $urlFDR = $configRepository->findConfigValue('urlFDR');
+
+        /** @var Band */
         $band = $bandRepository->find($body['group']);
 
-        $tech = $techRepository->findOneBy(['room' => $band->getPlace()]);
 
         $docFields = [
             ['tag' => 'groupe', 'type' => 'string', 'value' => $band->getName()],
@@ -63,6 +65,7 @@ class FDRApiController extends AbstractAPIController
             ['tag' => 'tel_accueil_ref', 'type' => 'string', 'value' => $body['referent']['tel']],
         ];
 
+        $tech = $band->getRoom()->getTech();
         if ($tech != null) {
             $docFields = array_merge($docFields, [
                 ['tag' => 'nom_accueil_tech', 'type' => 'string', 'value' => $tech->getName()],
