@@ -22,9 +22,6 @@ class Band
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $place = null;
-
     /**
      * @var Collection<int, Artist>
      */
@@ -58,18 +55,6 @@ class Band
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getPlace(): ?string
-    {
-        return $this->place;
-    }
-
-    public function setPlace(string $place): static
-    {
-        $this->place = $place;
 
         return $this;
     }
@@ -144,7 +129,7 @@ class Band
         }
         $installation = clone $startDateTime;
         $installation->sub(DateInterval::createFromDateString('30 minutes'));
-        return "Dans la journée ou soirée du " . $day . "/" . $startDateTime->format('m') . ', de ' . $startDateTime->format('H\hi') . ' à ' . $this->getEnd()->format('H\hi') . ' (installation à ' . $installation->format('H\hi') . ')';
+        return "Dans la journée ou soirée du " . $day . "/" . $startDateTime->format('m') . ', de ' . $startDateTime->format('H\hi') . ' à ' . $this->getEnd()->format('H\hi') . ' à ' . $this->getRoom()->getLabel() . ' (installation à ' . $installation->format('H\hi') . ')';
     }
 
     public function getStart(): ?\DateTimeInterface
