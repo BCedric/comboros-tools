@@ -2,6 +2,7 @@ import React from 'react'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
 import Root from './Root'
 import ConfigArtisteAnswer from './config/ConfigArtisteAnswer'
+import ConfigFDR from './config/ConfigFDR'
 import ConfigTech from './config/ConfigTech'
 import ConfigVolunteers from './config/ConfigVolunteers'
 import InitConfig from './config/InitConfig'
@@ -32,6 +33,10 @@ const router = createHashRouter([
         children: [
           {
             path: '',
+            element: <ConfigFDR />
+          },
+          {
+            path: 'cession',
             element: (
               <ConfigArtisteAnswer
                 formFieldPrefix="cession"

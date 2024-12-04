@@ -6,6 +6,11 @@ const ConfigMenu = () => {
     <ul className="nav">
       <li className="nav-item">
         <Link className="nav-link" to="/config">
+          Feuilles de route
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" to="/config/cession">
           Cession
         </Link>
       </li>
