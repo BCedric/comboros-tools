@@ -1,6 +1,7 @@
 import React from 'react'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
 import Root from './Root'
+import ComForm from './com-form/ComForm'
 import ConfigArtisteAnswer from './config/ConfigArtisteAnswer'
 import ConfigFDR from './config/ConfigFDR'
 import ConfigTech from './config/ConfigTech'
@@ -26,6 +27,10 @@ const router = createHashRouter([
       {
         path: 'workshop',
         element: <Workshop />
+      },
+      {
+        path: 'com-form/:accessCode',
+        element: <ComForm />
       },
       {
         path: '/config',

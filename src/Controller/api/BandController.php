@@ -7,8 +7,10 @@ use App\Repository\BandRepository;
 use App\Repository\RoomRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/band', 'band_api_')]
@@ -47,6 +49,41 @@ class BandController extends AbstractAPIController
         return $this->get($bandRepository);
     }
 
+    #[Route('/{id}', name: 'postFormdata', methods: ['POST'])]
+    public function postformdata(
+        Band $band,
+        Request $request,
+        EntityManagerInterface $em,
+        KernelInterface $appKernel
+    ) {
+        $imgsFolder = $appKernel->getProjectDir() . '/var/band-imgs';
+        $body = json_decode($request->request->get('body'), true);
+        $files = $request->files->all();
+
+        foreach ($band->getImgs() as $value) {
+            unlink($imgsFolder . '/' . $value);
+        }
+        $band->setImgs([]);
+        foreach ($files as $file) {
+            $band->addImg($file->getClientOriginalName());
+            $file->move($imgsFolder, $file->getClientOriginalName());
+        }
+        if (array_key_exists('presentation', $body)) {
+            $band->setPresentation($body['presentation']);
+        }
+        if (array_key_exists('members', $body)) {
+            $band->setMembers($body['members']);
+        }
+        if (array_key_exists('otherElements', $body)) {
+            $band->setOtherElements($body['otherElements']);
+        }
+        if (array_key_exists('link', $body)) {
+            $band->setLink($body['link']);
+        }
+        $em->flush();
+        return new JsonResponse('OK');
+    }
+
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(
         Band $band,
@@ -57,5 +94,11 @@ class BandController extends AbstractAPIController
         $em->flush();
 
         return $this->get($bandRepository);
+    }
+    #[Route('/access-code/{access_code}', name: 'getByAccessCode', methods: ['GET'])]
+    public function initAccessCode(
+        #[MapEntity(mapping: ['access_code' => 'formComAccessCode'])] Band $band,
+    ) {
+        return new JsonResponse($this->serializer->normalize($band));
     }
 }

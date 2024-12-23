@@ -37,9 +37,28 @@ class Band
     #[ORM\ManyToOne]
     private ?Room $room = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $presentation = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $members = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $otherElements = null;
+
+    #[ORM\Column(options: ['default' => '[]'])]
+    private array $imgs = [];
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $link = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $formComAccessCode = null;
+
     public function __construct()
     {
         $this->artists = new ArrayCollection();
+        $this->formComAccessCode = md5(uniqid());
     }
 
     public function getId(): ?int
@@ -164,6 +183,85 @@ class Band
     public function setRoom(?Room $room): static
     {
         $this->room = $room;
+
+        return $this;
+    }
+
+    public function getPresentation(): ?string
+    {
+        return $this->presentation;
+    }
+
+    public function setPresentation(?string $presentation): static
+    {
+        $this->presentation = $presentation;
+
+        return $this;
+    }
+
+    public function getMembers(): ?string
+    {
+        return $this->members;
+    }
+
+    public function setMembers(?string $members): static
+    {
+        $this->members = $members;
+
+        return $this;
+    }
+
+    public function getOtherElements(): ?string
+    {
+        return $this->otherElements;
+    }
+
+    public function setOtherElements(?string $otherElements): static
+    {
+        $this->otherElements = $otherElements;
+
+        return $this;
+    }
+
+    public function getImgs(): array
+    {
+        return $this->imgs;
+    }
+
+    public function setImgs(array $imgs): static
+    {
+        $this->imgs = $imgs;
+
+        return $this;
+    }
+
+    public function addImg(string $img): static
+    {
+        $this->imgs[] = $img;
+
+        return $this;
+    }
+
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function setLink(string $link): static
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    public function getFormComAccessCode(): ?string
+    {
+        return $this->formComAccessCode;
+    }
+
+    public function setFormComAccessCode(string $formComAccessCode): static
+    {
+        $this->formComAccessCode = $formComAccessCode;
 
         return $this;
     }
