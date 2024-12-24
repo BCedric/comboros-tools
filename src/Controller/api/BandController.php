@@ -8,6 +8,7 @@ use App\Repository\RoomRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -100,5 +101,16 @@ class BandController extends AbstractAPIController
         #[MapEntity(mapping: ['access_code' => 'formComAccessCode'])] Band $band,
     ) {
         return new JsonResponse($this->serializer->normalize($band));
+    }
+
+    #[Route('/img/{filename}', name: "get_img", methods: ["GET"])]
+    public function getImg(
+        string $filename,
+        KernelInterface $appKernel
+    ) {
+        $filepath = $appKernel->getProjectDir() . '/var/band-imgs/' . $filename;
+        return new BinaryFileResponse($filepath, 200, [
+            'Content-Type' => mime_content_type($filepath)
+        ]);
     }
 }

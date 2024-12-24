@@ -1,0 +1,44 @@
+.calendar-container {
+  //   max-height: 600px;
+  //   overflow-y: scroll;
+
+  .fc-timegrid-event-harness {
+    width: 33%;
+  }
+
+  .event-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  .event-content {
+    padding: 0.25em;
+  }
+}
+
+.calendar-workshop {
+  .fc-timegrid-event-harness {
+    width: 14%;
+  }
+}
+
+.band-details {
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: white;
+  border-left: 1px solid black;
+  z-index: 10;
+  padding: 1em;
+
+  .band-details-title {
+    font-size: 1.2em;
+  }
+
+  .label {
+    font-weight: bold;
+  }
+  .band-detail-img {
+    max-width: 200px;
+  }
+}

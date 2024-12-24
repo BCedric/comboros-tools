@@ -12,7 +12,8 @@ const Calendar = ({
   events,
   setEvents,
   setCurrentSelectInfo,
-  route
+  route,
+  onClickEvent = () => {}
 }) => {
   const handleSelect = (selectInfo) => {
     setShowModalEvent(true)
@@ -56,6 +57,7 @@ const Calendar = ({
       hiddenDays={[1, 2, 3, 4]}
       initialDate="2025-08-15"
       eventChange={handleEventChange}
+      eventClick={onClickEvent}
       select={(param) => handleSelect(param)}
       eventContent={(eventInfo) => (
         <CalendarEvent

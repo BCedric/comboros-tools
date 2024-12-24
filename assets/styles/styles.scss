@@ -3,28 +3,7 @@ $primary: #900;
 $enable-shadows: true;
 $prefix: 'mo-';
 
-.calendar-container {
-  //   max-height: 600px;
-  //   overflow-y: scroll;
 
-  .fc-timegrid-event-harness {
-    width: 33%;
-  }
-
-  .event-header {
-    display: flex;
-    justify-content: space-between;
-  }
-  .event-content {
-    padding: 0.25em;
-  }
-}
-
-.calendar-workshop {
-  .fc-timegrid-event-harness {
-    width: 14%;
-  }
-}
 
 // Then import Bootstrap
 @import '~bootstrap/scss/bootstrap';
@@ -32,6 +11,7 @@ $prefix: 'mo-';
 
 @import 'content.scss';
 @import 'menu.scss';
+@import 'prog.scss';
 
 body {
   background-color: white;

@@ -11,12 +11,16 @@ const CalendarEvent = ({ eventInfo, editEvent, deleteEvent }) => {
           <Icon
             path={mdiPencil}
             size={0.6}
-            onClick={() => editEvent(eventInfo.event.id)}
+            onClick={(e) => (
+              e.stopPropagation(), editEvent(eventInfo.event.id)
+            )}
           />
           <Icon
             path={mdiClose}
             size={0.6}
-            onClick={() => deleteEvent(eventInfo.event.id)}
+            onClick={() => (
+              e.stopPropagation(), deleteEvent(eventInfo.event.id)
+            )}
           />
         </div>
       </div>

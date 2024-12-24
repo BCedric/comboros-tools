@@ -6,7 +6,8 @@ import ModalEvent from './ModalEvent'
 const EditableCalendar = ({
   formatEvents = (event) => event,
   route,
-  className
+  onClickEvent = () => {},
+  className,
 }) => {
   const [rooms, setRooms] = useState([])
   const [events, setEvents] = useState([])
@@ -27,6 +28,7 @@ const EditableCalendar = ({
         setEvents={customSetEvents}
         setCurrentSelectInfo={setCurrentSelectInfo}
         route={route}
+        onClickEvent={onClickEvent}
       />
       <ModalEvent
         rooms={rooms}

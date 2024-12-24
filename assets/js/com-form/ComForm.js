@@ -4,7 +4,7 @@ import {
   Http
 } from '@b-cedric/react-common-bootstrap'
 import { useAlertsContext } from '@b-cedric/react-common-bootstrap/alert'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useBandsContext } from '../shared/BandsProvider'
 
@@ -30,6 +30,11 @@ const ComForm = () => {
     otherElements: '',
     link: ''
   })
+
+  const isFormValid = useMemo(() => {
+    const { presentation, members } = formFields
+    return presentation != '' && members != ''
+  }, [formFields])
 
   const { addAlert } = useAlertsContext()
 
@@ -59,6 +64,7 @@ const ComForm = () => {
         onSubmit={handleSubmit}
         formFields={formFields}
         setFormFields={setFormFields}
+        isFormValid={isFormValid}
       >
         <CustomFormField
           label="Nom du groupe, de l'artiste ou du spectacle."
@@ -83,11 +89,13 @@ const ComForm = () => {
           label="Nom des membres du groupe et leurs rôles (instruments détaillés, lumière, sonorisation)."
           type="textarea"
           fieldName="members"
+          isValid={formFields.members != ''}
         />
         <CustomFormField
           label="Texte de présentation (5-6 lignes)"
           type="textarea"
           fieldName="presentation"
+          isValid={formFields.presentation != ''}
         />
         <CustomFormField
           label="Lien vers les ressources numériques : site, vidéos ou réseaux sociaux, si vous en disposez."
