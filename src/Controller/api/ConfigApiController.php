@@ -60,7 +60,10 @@ class ConfigApiController extends AbstractAPIController
             $em->remove($artist);
         }
 
-        }
+        // $volunteers = $volunteerRepository->findAll();
+        // foreach ($volunteers as $volunteer) {
+        //     $em->remove($volunteer);
+        // }
 
 
         // Remplissage table Artists
