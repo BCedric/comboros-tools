@@ -1,12 +1,5 @@
 FROM php:8.2-apache
 
-ENV HTTP_PROXY http://proxy.dsi.uca.fr:8080
-ENV HTTPS_PROXY http://proxy.dsi.uca.fr:8080
-ENV NO_PROXY ".uca.fr,localhost,gitlab.dsi.uca.fr,.dev.dsi.uca.fr"
-RUN export http_proxy=$HTTP_PROXY
-RUN export https_proxy=$HTTPS_PROXY
-RUN export no_proxy=$NO_PROXY
-
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 RUN apt-get update \

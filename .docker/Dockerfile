@@ -2,16 +2,16 @@ ARG NODE_TAG
 ARG APACHE_IMAGE
 FROM node:$NODE_TAG as buildnode
 
-# WORKDIR /app
+WORKDIR /app
 
-# COPY package*.json ./
-# RUN npm config set proxy $HTTP_PROXY
-# RUN npm i
+COPY package*.json ./
+RUN npm config set proxy $HTTP_PROXY
+RUN npm i
 
-# COPY assets/ ./assets/
-# COPY webpack.config.js ./
+COPY assets/ ./assets/
+COPY webpack.config.js ./
 
-# RUN npm run build
+RUN npm run build
 
 # -----------------------------
 FROM php:8.2-apache
@@ -66,7 +66,7 @@ COPY package.json package.json
 # COPY package-lock.json package-lock.json
 COPY webpack.config.js webpack.config.js
 COPY .env .env
-# COPY --from=buildnode /app/public/build /var/www/html/public/build
+COPY --from=buildnode /app/public/build /var/www/html/public/build
 
 COPY .docker/vhosts.conf /etc/apache2/sites-available/000-default.conf
 COPY .docker .docker
@@ -97,6 +97,5 @@ RUN chmod 777 -R public/uploads
 RUN echo 'date.timezone=Europe/Paris' >> /usr/local/etc/php/conf.d/docker-php-upfilesize.ini;
 # COPY .docker/crontab /etc/cron.d/my-cron-file
 
-# RUN composer install --no-interaction --optimize-autoloader
 
 CMD ["apache2-foreground"]

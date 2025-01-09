@@ -1,9 +1,6 @@
 #!/bin/bash -e
 
-
-export HTTPS_PROXY=http://proxy.dsi.uca.fr:8080
-export HTTP_PROXY=http://proxy.dsi.uca.fr:8080
-export NO_PROXY=".uca.fr,localhost,gitlab.dsi.uca.fr,.dev.dsi.uca.fr"
+composer install --no-interaction --optimize-autoloader
 
 php bin/console doctrine:database:create --if-not-exists
 php bin/console c:c
