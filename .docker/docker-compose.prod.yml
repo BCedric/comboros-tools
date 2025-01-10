@@ -22,9 +22,10 @@ services:
     image: ${DB_IMAGE}:${DB_TAG}
     container_name: db_comboros_tools
     volumes:
-      - ../data/db_data:/var/lib/mysql
+      - ../../comboro-tools-data/db_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
     networks:
