@@ -59,11 +59,11 @@ COPY bin bin
 COPY config config
 COPY public public
 COPY src src
-# COPY templates templates
+COPY templates templates
 COPY composer.json composer.json
 COPY composer.lock composer.lock
 COPY package.json package.json
-# COPY package-lock.json package-lock.json
+COPY package-lock.json package-lock.json
 COPY webpack.config.js webpack.config.js
 COPY .env .env
 COPY --from=buildnode /app/public/build /var/www/html/public/build
@@ -72,19 +72,15 @@ COPY .docker/vhosts.conf /etc/apache2/sites-available/000-default.conf
 COPY .docker .docker
 RUN chmod a+x /var/www/html/.docker/entrypoint.sh
 
-ARG UPLOAD_DIR, IMG_DIR, FILES_DIR, ARCHIVES__DOCAPOST_DIR
+ARG UPLOAD_DIR, IMG_DIR
 RUN mkdir -p public/uploads
 RUN chmod a+w public/uploads
 RUN mkdir -p var/uploads
 RUN chmod a+w var/uploads
-RUN mkdir -p var/uploads/${FILES_DIR}
-RUN chmod a+w var/uploads/${FILES_DIR}
 RUN mkdir -p var/uploads/${IMG_DIR}
 RUN chmod a+w var/uploads/${IMG_DIR}
 RUN mkdir -p var/uploads/${UPLOAD_DIR}
 RUN chmod a+w var/uploads/${UPLOAD_DIR}
-RUN mkdir -p var/uploads/${ARCHIVES__DOCAPOST_DIR}
-RUN chmod a+w var/uploads/${ARCHIVES__DOCAPOST_DIR}
 RUN chmod a+w /tmp
 RUN mkdir -p var
 RUN chmod a+w -R var

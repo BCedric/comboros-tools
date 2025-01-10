@@ -1,5 +1,6 @@
 services:
   www:
+    container_name: www_comboros_tools
     build:
       context: ../
       dockerfile: ./.docker/Dockerfile
@@ -9,7 +10,7 @@ services:
         IMG_DIR: ${IMG_DIR}
         APACHE_IMAGE: ${APACHE_IMAGE}
     volumes:
-      - ../:/var/www/html/
+      - ../.env.local:/var/www/html/.env.local
     networks:
       - localNetwork
       - webgateway
@@ -21,7 +22,7 @@ services:
     image: ${DB_IMAGE}:${DB_TAG}
     container_name: db_comboros_tools
     volumes:
-      - ./data/comboros_tools/db_data:/var/lib/mysql
+      - ../data/db_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_USER: ${DB_USER}
@@ -31,19 +32,6 @@ services:
       - localNetwork
     ports:
       - '127.0.0.1:${DB_PORT}:3306'
-  node:
-    image: node:${NODE_TAG}
-    working_dir: /var/www/html/
-    volumes:
-      - ../:/var/www/html/
-    command:
-      - /bin/sh
-      - '-c'
-      # - 'npm install @babel/plugin-proposal-class-properties @babel/preset-react'
-      - 'npm install && npm run watch'
-    networks:
-      - localNetwork
-      - webgateway
 
 volumes:
   db_data:
