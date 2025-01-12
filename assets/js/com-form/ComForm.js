@@ -38,8 +38,6 @@ const ComForm = () => {
 
   const { addAlert } = useAlertsContext()
 
-  useEffect(() => console.log(formFields), [formFields])
-
   const { bands } = useBandsContext()
 
   const handleSubmit = () => {
@@ -49,7 +47,7 @@ const ComForm = () => {
     )
     formData.append('body', JSON.stringify(formFields))
 
-    Http.postFormData(`/band/${formFields.band}`, formData)
+    return Http.postFormData(`/band/${formFields.band}`, formData)
       .then(() => addAlert('Le formulaire a bien été enregistré', 'success'))
       .catch(
         () => "Une erreur est survenue lors de l'enregistrement du formulaire",
