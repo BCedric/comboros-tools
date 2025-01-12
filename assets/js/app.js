@@ -1,5 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Router from './Router'
+import Root from './Root'
 
-ReactDOM.createRoot(document.getElementById('app')).render(<Router />)
+ReactDOM.createRoot(document.getElementById('app')).render(<Root />)

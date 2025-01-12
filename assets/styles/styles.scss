@@ -3,13 +3,12 @@ $primary: #900;
 $enable-shadows: true;
 $prefix: 'mo-';
 
-
-
 // Then import Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import '~@b-cedric/react-common-bootstrap/styles/styles.scss';
 
 @import 'content.scss';
+@import 'login-form.scss';
 @import 'menu.scss';
 @import 'prog.scss';
 

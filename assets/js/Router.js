@@ -1,6 +1,6 @@
 import React from 'react'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
-import Root from './Root'
+import { ProtectedRoute } from './ProtectedRoute'
 import ComForm from './com-form/ComForm'
 import ConfigArtisteAnswer from './config/ConfigArtisteAnswer'
 import ConfigFDR from './config/ConfigFDR'
@@ -14,12 +14,13 @@ import Workshop from './workshop/Workshop'
 const router = createHashRouter([
   {
     path: '',
-    element: <Root />,
+    element: <ProtectedRoute />,
     children: [
       {
         path: '',
         element: <FDR />
       },
+
       {
         path: 'prog',
         element: <Prog />
@@ -28,10 +29,7 @@ const router = createHashRouter([
         path: 'workshop',
         element: <Workshop />
       },
-      {
-        path: 'com-form/:accessCode',
-        element: <ComForm />
-      },
+
       {
         path: '/config',
         element: <InitConfig />,
@@ -85,6 +83,14 @@ const router = createHashRouter([
         ]
       }
     ]
+  },
+  {
+    path: 'com-form/:accessCode',
+    element: (
+      <div className="content-unprotected">
+        <ComForm />
+      </div>
+    )
   }
 ])
 
