@@ -11,6 +11,7 @@ services:
         APACHE_IMAGE: ${APACHE_IMAGE}
     volumes:
       - ../.env.local:/var/www/html/.env.local
+      - ../../comboros-tools-data/band-imgs:/var/www/html/var/band-imgs
     networks:
       - localNetwork
       - webgateway
