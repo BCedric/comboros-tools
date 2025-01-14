@@ -49,7 +49,7 @@ class Band
     #[ORM\Column(options: ['default' => '[]'])]
     private array $imgs = [];
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $link = null;
 
     #[ORM\Column(length: 255)]
