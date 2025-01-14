@@ -3,7 +3,6 @@ import Icon from '@mdi/react'
 import React from 'react'
 
 const BandDetails = ({ close, band }) => {
-  console.log(band)
   return (
     <div className="band-details">
       <div className=" flex space-between">

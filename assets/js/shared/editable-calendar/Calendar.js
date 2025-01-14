@@ -68,6 +68,7 @@ const Calendar = ({
       )}
       timeZone="Europe/Paris"
       slotDuration="00:15:00"
+      scrollTime={false}
     />
   )
 }
