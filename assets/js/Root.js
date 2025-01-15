@@ -1,18 +1,18 @@
+import { ConfirmContextProvider } from '@b-cedric/react-common-bootstrap'
 import { AlertsContextProvider } from '@b-cedric/react-common-bootstrap/alert'
 import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Login from './Login'
-import Menu from './Menu'
-import BandsProvider from './shared/BandsProvider'
 import Router from './Router'
+import BandsProvider from './shared/BandsProvider'
 
 const Root = () => {
   return (
     <AlertsContextProvider>
       <BandsProvider>
-        <div>
-         <Router />
-        </div>
+        <ConfirmContextProvider>
+          <div>
+            <Router />
+          </div>
+        </ConfirmContextProvider>
       </BandsProvider>
     </AlertsContextProvider>
   )

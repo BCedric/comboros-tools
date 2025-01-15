@@ -14,6 +14,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/config', 'config_api_')]
@@ -133,5 +134,27 @@ class ConfigApiController extends AbstractAPIController
 
 
         return $this->get($configRepository);
+    }
+
+
+    #[Route('/reset', name: 'reset', methods: ['PUT'])]
+    public function reset(
+        WorkshopRepository $workshopRepository,
+        BandRepository $bandRepository,
+        ArtistRepository $artistRepository,
+        EntityManagerInterface $em
+    ) {
+        foreach ($workshopRepository->findAll() as $workshop) {
+            $em->remove($workshop);
+        }
+        foreach ($artistRepository->findAll() as $artist) {
+            $em->remove($artist);
+        }
+        foreach ($bandRepository->findAll() as $band) {
+            $em->remove($band);
+        }
+
+        $em->flush();
+        return new Response('OK');
     }
 }

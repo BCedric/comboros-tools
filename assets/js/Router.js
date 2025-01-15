@@ -4,6 +4,7 @@ import { ProtectedRoute } from './ProtectedRoute'
 import ComForm from './com-form/ComForm'
 import ConfigArtisteAnswer from './config/ConfigArtisteAnswer'
 import ConfigFDR from './config/ConfigFDR'
+import ConfigReset from './config/ConfigReset'
 import ConfigTech from './config/ConfigTech'
 // import ConfigVolunteers from './config/ConfigVolunteers'
 import InitConfig from './config/InitConfig'
@@ -79,6 +80,10 @@ const router = createHashRouter([
           {
             path: 'tech',
             element: <ConfigTech />
+          },
+          {
+            path: 'reset',
+            element: <ConfigReset />
           }
         ]
       }

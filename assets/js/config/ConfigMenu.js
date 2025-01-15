@@ -24,6 +24,11 @@ const ConfigMenu = () => {
           Techniciens
         </Link>
       </li>
+      <li className="nav-item">
+        <Link className="nav-link" to="/config/reset">
+          Reset
+        </Link>
+      </li>
     </ul>
   )
 }
