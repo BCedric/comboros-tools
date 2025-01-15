@@ -1,6 +1,8 @@
-import { mdiClose } from '@mdi/js'
+import { CustomFormField } from '@b-cedric/react-common-bootstrap'
+import { mdiClose, mdiContentCopy } from '@mdi/js'
 import Icon from '@mdi/react'
 import React from 'react'
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 const BandDetails = ({ close, band }) => {
   return (
@@ -18,7 +20,22 @@ const BandDetails = ({ close, band }) => {
         <span className="label">
           Lien vers le formulaire des éléments de communication:
         </span>
-        <p>{`${window.location.origin}/#/com-form/${band.formComAccessCode}`}</p>
+        <CustomFormField
+          value={`${window.location.origin}/#/com-form/${band.formComAccessCode}`}
+          disabled={true}
+          suffix={
+            <CopyToClipboard
+              text={`${window.location.origin}/#/com-form/${band.formComAccessCode}`}
+            >
+              <Icon
+                className="clickable"
+                path={mdiContentCopy}
+                size={1}
+                title="Copier le lien"
+              />
+            </CopyToClipboard>
+          }
+        />
       </div>
       <div>
         <h3>Éléments de communication</h3>
