@@ -41,7 +41,9 @@ class BandController extends AbstractAPIController
         $band->setName($body['name']);
         $band->setStart(new DateTime($body['start']));
         $band->setEnd(new DateTime($body['end']));
-        $band->setRoom($roomRepository->find($body['room']));
+        if (array_key_exists('room', $body) && $body['room'] != null) {
+            $band->setRoom($roomRepository->find($body['room']));
+        }
 
         $em->persist($band);
 

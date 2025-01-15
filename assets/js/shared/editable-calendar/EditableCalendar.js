@@ -7,7 +7,7 @@ const EditableCalendar = ({
   formatEvents = (event) => event,
   route,
   onClickEvent = () => {},
-  className,
+  className
 }) => {
   const [rooms, setRooms] = useState([])
   const [events, setEvents] = useState([])
@@ -39,7 +39,7 @@ const EditableCalendar = ({
           Http.post(route, {
             ...currentSelectInfo,
             ...newEvent,
-            room: newEvent.room.id
+            room: newEvent.room == null ? null : newEvent.room.id
           }).then(customSetEvents)
           setCurrentSelectInfo(null)
         }}

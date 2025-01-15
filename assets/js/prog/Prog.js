@@ -7,7 +7,7 @@ const formatBand = (b) => ({
   ...b,
   title: b.name,
   extendedProps: { room: b.room },
-  backgroundColor: b.room.color
+  backgroundColor: b.room == null ? 'black' : b.room.color
 })
 
 const Prog = () => {
