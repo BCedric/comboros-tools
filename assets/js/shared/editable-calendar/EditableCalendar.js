@@ -7,12 +7,18 @@ const EditableCalendar = ({
   formatEvents = (event) => event,
   route,
   onClickEvent = () => {},
-  className
+  className,
+  beforeDelete,
+  onEventsChange = () => {}
 }) => {
   const [rooms, setRooms] = useState([])
   const [events, setEvents] = useState([])
   const [showModalEvent, setShowModalEvent] = useState(false)
   const [currentSelectInfo, setCurrentSelectInfo] = useState(null)
+
+  useEffect(() => {
+    onEventsChange(events)
+  }, [events])
 
   const customSetEvents = (events) => setEvents(events.map(formatEvents))
   useEffect(() => {
@@ -29,6 +35,7 @@ const EditableCalendar = ({
         setCurrentSelectInfo={setCurrentSelectInfo}
         route={route}
         onClickEvent={onClickEvent}
+        beforeDelete={beforeDelete}
       />
       <ModalEvent
         rooms={rooms}

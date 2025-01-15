@@ -18,7 +18,7 @@ const CalendarEvent = ({ eventInfo, editEvent, deleteEvent }) => {
           <Icon
             path={mdiClose}
             size={0.6}
-            onClick={() => (
+            onClick={(e) => (
               e.stopPropagation(), deleteEvent(eventInfo.event.id)
             )}
           />

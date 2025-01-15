@@ -13,7 +13,8 @@ const Calendar = ({
   setEvents,
   setCurrentSelectInfo,
   route,
-  onClickEvent = () => {}
+  onClickEvent = () => {},
+  beforeDelete = () => new Promise((resolve) => resolve())
 }) => {
   const handleSelect = (selectInfo) => {
     setShowModalEvent(true)
@@ -38,7 +39,9 @@ const Calendar = ({
   }
 
   const deleteEvent = (id) => {
-    Http.delete(`${route}/${id}`).then((events) => setEvents(events))
+    beforeDelete(id).then(() =>
+      Http.delete(`${route}/${id}`).then((events) => setEvents(events))
+    )
   }
 
   return (

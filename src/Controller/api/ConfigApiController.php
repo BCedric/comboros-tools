@@ -41,6 +41,7 @@ class ConfigApiController extends AbstractAPIController
         ArtistRepository $artistRepository,
         BandRepository $bandRepository,
         WorkshopRepository $workshopRepository,
+        VolunteerRepository $volunteerRepository
     ) {
         $body = json_decode($request->getContent(), true);
         foreach ($body as $name => $value) {

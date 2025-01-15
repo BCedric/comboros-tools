@@ -38,7 +38,9 @@ class WorkshopController extends AbstractAPIController
         $workshop->setName($body['name']);
         $workshop->setStart(new DateTime($body['start']));
         $workshop->setEnd(new DateTime($body['end']));
-        $workshop->setRoom($roomRepository->find($body['room']));
+        if ($body['room'] != null) {
+            $workshop->setRoom($roomRepository->find($body['room']));
+        }
 
         $em->persist($workshop);
 
