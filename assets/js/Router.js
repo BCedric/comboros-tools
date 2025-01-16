@@ -9,6 +9,8 @@ import ConfigTech from './config/ConfigTech'
 // import ConfigVolunteers from './config/ConfigVolunteers'
 import InitConfig from './config/InitConfig'
 import FDR from './fdr/FDR'
+import FDRMenu from './fdr/FDRMenu'
+import OrphanArtists from './fdr/OrphanArtists'
 import Prog from './prog/Prog'
 import Workshop from './workshop/Workshop'
 
@@ -19,7 +21,17 @@ const router = createHashRouter([
     children: [
       {
         path: '',
-        element: <FDR />
+        element: <FDRMenu />,
+        children: [
+          {
+            path: '',
+            element: <FDR />
+          },
+          {
+            path: 'orphan-artists',
+            element: <OrphanArtists />
+          }
+        ]
       },
 
       {

@@ -40,7 +40,6 @@ class ConfigApiController extends AbstractAPIController
         EntityManagerInterface $em,
         ArtistRepository $artistRepository,
         BandRepository $bandRepository,
-        WorkshopRepository $workshopRepository,
         VolunteerRepository $volunteerRepository
     ) {
         $body = json_decode($request->getContent(), true);
@@ -56,60 +55,7 @@ class ConfigApiController extends AbstractAPIController
 
         $em->flush();
 
-        // Clear DB
-        $artists = $artistRepository->findAll();
-        foreach ($artists as $artist) {
-            $em->remove($artist);
-        }
-
-        // $volunteers = $volunteerRepository->findAll();
-        // foreach ($volunteers as $volunteer) {
-        //     $em->remove($volunteer);
-        // }
-
-
-        // Remplissage table Artists
-        $cessionCSV = $configRepository->findConfigValue('cessionCSV');
-        // $cessionCSVbandName = $configRepository->findConfigValue('cessionCSVbandName');
-        if (($handle = fopen($cessionCSV, 'r')) !== FALSE) {
-            while (($row = fgetcsv($handle, 0, ',')) !== FALSE) {
-                $artist = new Artist();
-                $artist->setFirstname($row[$configRepository->findConfigValue('cessionCSVFirstname')]);
-                $artist->setLastname($row[$configRepository->findConfigValue('cessionCSVLastname')]);
-                $arrival = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('cessionCSVDateArrival')] . ' ' . $row[$configRepository->findConfigValue('cessionCSVTimeArrival')]);
-                $arrival != false && $artist->setDateArrival($arrival);
-                $departure = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('cessionCSVDateDeparture')] . ' ' . $row[$configRepository->findConfigValue('cessionCSVTimeDeparture')]);
-                $departure != false && $artist->setDateDeparture($departure);
-                $artist->setCompanions([$row[$configRepository->findConfigValue('cessionCSVCompanion')], $row[$configRepository->findConfigValue('cessionCSVChildren')]]);
-                $artistBand = $bandRepository->findOneByName($row[$configRepository->findConfigValue('cessionCSVbandName')]);
-                if ($artistBand != null) {
-                    $artist->setBand($artistBand);
-                }
-                $em->persist($artist);
-            }
-            fclose($handle);
-        }
-
-        $gusoCSV = $configRepository->findConfigValue('gusoCSV');
-        if (($handle = fopen($gusoCSV, 'r')) !== FALSE) {
-            while (($row = fgetcsv($handle, 0, ',')) !== FALSE) {
-                $artist = new Artist();
-                $artist->setFirstname($row[$configRepository->findConfigValue('gusoCSVFirstname')]);
-                $artist->setLastname($row[$configRepository->findConfigValue('gusoCSVLastname')]);
-                $arrival = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('gusoCSVDateArrival')] . ' ' . $row[$configRepository->findConfigValue('gusoCSVTimeArrival')]);
-                $arrival != false && $artist->setDateArrival($arrival);
-                $departure = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('gusoCSVDateDeparture')] . ' ' . $row[$configRepository->findConfigValue('gusoCSVTimeDeparture')]);
-                $departure != false && $artist->setDateDeparture($departure);
-                $artist->setCompanions([$row[$configRepository->findConfigValue('gusoCSVCompanion')]]);
-                $artistBand = $bandRepository->findOneByName($row[$configRepository->findConfigValue('gusoCSVbandName')]);
-                if ($artistBand != null) {
-                    $artist->setBand($artistBand);
-                }
-                $em->persist($artist);
-            }
-            fclose($handle);
-        }
-        $em->flush();
+        $this->updateArtists($artistRepository, $configRepository, $bandRepository, $em);
 
         //Remplissage table volunteer
         // $volunteerCSV = $configRepository->findConfigValue('volunteerCSV');
@@ -156,6 +102,72 @@ class ConfigApiController extends AbstractAPIController
         }
 
         $em->flush();
+        return new Response('OK');
+    }
+
+
+    #[Route('/update-artists', name: 'update_artists', methods:['PUT'])]
+    public function updateArtists(
+        ArtistRepository $artistRepository,
+        ConfigRepository $configRepository,
+        BandRepository $bandRepository,
+        EntityManagerInterface $em
+    ) {
+        // Clear DB
+        $artists = $artistRepository->findAll();
+        foreach ($artists as $artist) {
+            $em->remove($artist);
+        }
+
+        // $volunteers = $volunteerRepository->findAll();
+        // foreach ($volunteers as $volunteer) {
+        //     $em->remove($volunteer);
+        // }
+
+
+        // Remplissage table Artists
+        $cessionCSV = $configRepository->findConfigValue('cessionCSV');
+        // $cessionCSVbandName = $configRepository->findConfigValue('cessionCSVbandName');
+        if (($handle = fopen($cessionCSV, 'r')) !== FALSE) {
+            while (($row = fgetcsv($handle, 0, ',')) !== FALSE) {
+                $artist = new Artist();
+                $artist->setFirstname($row[$configRepository->findConfigValue('cessionCSVFirstname')]);
+                $artist->setLastname($row[$configRepository->findConfigValue('cessionCSVLastname')]);
+                $arrival = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('cessionCSVDateArrival')] . ' ' . $row[$configRepository->findConfigValue('cessionCSVTimeArrival')]);
+                $arrival != false && $artist->setDateArrival($arrival);
+                $departure = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('cessionCSVDateDeparture')] . ' ' . $row[$configRepository->findConfigValue('cessionCSVTimeDeparture')]);
+                $departure != false && $artist->setDateDeparture($departure);
+                $artist->setCompanions([$row[$configRepository->findConfigValue('cessionCSVCompanion')], $row[$configRepository->findConfigValue('cessionCSVChildren')]]);
+                $artistBand = $bandRepository->findOneByName(trim($row[$configRepository->findConfigValue('cessionCSVbandName')]));
+                if ($artistBand != null) {
+                    $artist->setBand($artistBand);
+                }
+                $em->persist($artist);
+            }
+            fclose($handle);
+        }
+
+        $gusoCSV = $configRepository->findConfigValue('gusoCSV');
+        if (($handle = fopen($gusoCSV, 'r')) !== FALSE) {
+            while (($row = fgetcsv($handle, 0, ',')) !== FALSE) {
+                $artist = new Artist();
+                $artist->setFirstname($row[$configRepository->findConfigValue('gusoCSVFirstname')]);
+                $artist->setLastname($row[$configRepository->findConfigValue('gusoCSVLastname')]);
+                $arrival = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('gusoCSVDateArrival')] . ' ' . $row[$configRepository->findConfigValue('gusoCSVTimeArrival')]);
+                $arrival != false && $artist->setDateArrival($arrival);
+                $departure = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('gusoCSVDateDeparture')] . ' ' . $row[$configRepository->findConfigValue('gusoCSVTimeDeparture')]);
+                $departure != false && $artist->setDateDeparture($departure);
+                $artist->setCompanions([$row[$configRepository->findConfigValue('gusoCSVCompanion')]]);
+                $artistBand = $bandRepository->findOneByName($row[$configRepository->findConfigValue('gusoCSVbandName')]);
+                if ($artistBand != null) {
+                    $artist->setBand($artistBand);
+                }
+                $em->persist($artist);
+            }
+            fclose($handle);
+        }
+        $em->flush();
+
         return new Response('OK');
     }
 }
