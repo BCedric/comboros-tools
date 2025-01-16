@@ -2,7 +2,7 @@ import { CustomFormField } from '@b-cedric/react-common-bootstrap'
 import moment from 'moment'
 import React from 'react'
 
-const FDRArtistsTable = ({ artists, hosting, setHosting }) => {
+const FDRArtistsTable = ({ artists, setHosting, isBandSelected }) => {
   return (
     <>
       {artists.length > 0 && (
@@ -39,7 +39,7 @@ const FDRArtistsTable = ({ artists, hosting, setHosting }) => {
           </tbody>
         </table>
       )}
-      {artists.length == 0 && (
+      {artists.length == 0 && isBandSelected && (
         <p className="informations">
           {' '}
           Aucun artiste de ce groupe n'a été trouvé

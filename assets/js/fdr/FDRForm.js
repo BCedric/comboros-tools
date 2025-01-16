@@ -89,8 +89,8 @@ const FDRForm = () => {
 
       <FDRArtistsTable
         artists={groupSelected != null ? groupSelected.artists : []}
-        hosting={hosting}
         setHosting={setHosting}
+        isBandSelected={groupSelected != null}
       />
       {groupSelected != null && (
         <>
@@ -116,6 +116,18 @@ const FDRForm = () => {
             ]}
           />
         </>
+      )}
+      {groupSelected != null && groupSelected.room === null && (
+        <p className="alert alert-danger">
+          Le groupe sélectionné n'est pas associé à un lieu de concert ou de bal
+          dans le tableau de programmation
+        </p>
+      )}
+      {workshopSelected != null && workshopSelected.room === null && (
+        <p className="alert alert-danger">
+          L'atelier sélectionné n'est pas associé à une salle dans le tableau
+          des ateliers
+        </p>
       )}
     </CustomForm>
   )
