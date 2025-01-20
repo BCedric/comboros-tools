@@ -6,19 +6,22 @@ import {
 import { useAlertsContext } from '@b-cedric/react-common-bootstrap/alert'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useBandsContext } from '../shared/BandsProvider'
 
 const ComForm = () => {
   const { accessCode } = useParams()
+  const [bandName, setBandName] = useState('')
 
   useEffect(() => {
-    Http.get(`/band/access-code/${accessCode}`).then((band) =>
-      setFormFields((prev) => ({
-        ...prev,
-        band: band.id,
-        photos: band.imgs,
-        ...band
-      }))
+    Http.get(`/band/access-code/${accessCode}`).then(
+      (band) => (
+        setFormFields((prev) => ({
+          ...prev,
+          band: band.id,
+          photos: band.imgs,
+          ...band
+        })),
+        setBandName(band.name)
+      )
     )
   }, [accessCode])
 
@@ -37,8 +40,6 @@ const ComForm = () => {
   }, [formFields])
 
   const { addAlert } = useAlertsContext()
-
-  const { bands } = useBandsContext()
 
   const handleSubmit = () => {
     const formData = new FormData()
@@ -66,13 +67,7 @@ const ComForm = () => {
       >
         <CustomFormField
           label="Nom du groupe, de l'artiste ou du spectacle."
-          options={bands.map((g, index) => ({
-            ...g,
-            label: g.name,
-            value: g.id
-          }))}
-          fieldName="band"
-          type="select"
+          value={bandName}
           disabled
         />
         <CustomFormField

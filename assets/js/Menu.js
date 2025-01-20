@@ -1,13 +1,21 @@
-import { mdiCog, mdiFileDocumentOutline, mdiHumanFemaleDance, mdiMusic } from '@mdi/js'
+import {
+  mdiCog,
+  mdiFileDocumentOutline,
+  mdiHumanFemaleDance,
+  mdiMusic
+} from '@mdi/js'
 import Icon from '@mdi/react'
 import React from 'react'
 import { Link, useMatch } from 'react-router-dom'
+import { useUser } from './shared/useUser'
 
 const Menu = () => {
   const isConfig = useMatch('/config*')
   const isProg = useMatch('/prog*')
   const isWorkshop = useMatch('/workshop*')
   const isHome = useMatch('/')
+
+  const { isAdmin } = useUser()
 
   return (
     <div className="menu">
@@ -44,12 +52,14 @@ const Menu = () => {
             <span>Ateliers</span>
           </Link>
         </li>
-        <li>
-          <Link className={`${isConfig ? 'active' : ''}`} to="/config">
-            <Icon path={mdiCog} size={1} />
-            <span>Configuration</span>
-          </Link>
-        </li>
+        {isAdmin && (
+          <li>
+            <Link className={`${isConfig ? 'active' : ''}`} to="/config">
+              <Icon path={mdiCog} size={1} />
+              <span>Configuration</span>
+            </Link>
+          </li>
+        )}
       </ul>
     </div>
   )

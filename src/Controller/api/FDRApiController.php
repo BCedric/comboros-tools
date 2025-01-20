@@ -8,6 +8,7 @@ use App\Repository\BandRepository;
 use App\Repository\ConfigRepository;
 use App\Repository\TechRepository;
 use App\Repository\WorkshopRepository;
+use App\Security\Voter\FDRVoter;
 use App\Service\DocService;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\HeaderUtils;
@@ -15,26 +16,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[Route('/fdr', 'fdr_api_')]
 class FDRApiController extends AbstractAPIController
 {
 
-    #[Route('/band', name: 'band', methods: ['GET'])]
-    public function band(BandRepository $bandRepository)
-    {
-        $bands = $bandRepository->findAll();
-        return new JsonResponse($this->serializer->normalize($bands));
-    }
-
-    #[Route('/workshop', name: 'workshop', methods: ['GET'])]
-    public function workshop(WorkshopRepository $workshopRepository)
-    {
-        $workshops = $workshopRepository->findAll();
-        return new JsonResponse($this->serializer->normalize($workshops));
-    }
-
+    #[IsGranted(FDRVoter::EDIT)]
     #[Route('/get-fdr', name: 'get_fdr', methods: ['GET', 'POST'])]
     public function get_fdr(
         Request $request,
@@ -42,7 +31,6 @@ class FDRApiController extends AbstractAPIController
         ConfigRepository $configRepository,
         HttpClientInterface $http,
         BandRepository $bandRepository,
-        TechRepository $techRepository,
         WorkshopRepository $workshopRepository,
         ArtistRepository $artistRepository
     ) {

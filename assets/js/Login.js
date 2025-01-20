@@ -6,6 +6,7 @@ import {
 import { useAlertsContext } from '@b-cedric/react-common-bootstrap/alert'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import { useUser } from './shared/useUser'
 
 const Login = ({ children }) => {
   const { addAlert } = useAlertsContext()
@@ -16,12 +17,20 @@ const Login = ({ children }) => {
   })
   const [isLogged, setIsLogged] = useState(false)
 
+  const { user } = useUser()
+
   useEffect(() => {
     const session = JSON.parse(localStorage.getItem('session'))
     if (session != null && moment(session.time).add(1, 'h') > moment()) {
       setIsLogged(true)
     }
   }, [])
+
+  useEffect(() => {
+    if (isLogged) {
+      window.USER_API_KEY = user.accessToken
+    }
+  }, [isLogged])
 
   const onSubmit = () => {
     Http.put('/user/auth', fields).then((res) => {
@@ -32,7 +41,10 @@ const Login = ({ children }) => {
           JSON.stringify({ user: res, time: moment() })
         )
       } else {
-        addAlert('Erreur de connexion (mauvais login ou mot de passe)', 'danger')
+        addAlert(
+          'Erreur de connexion (mauvais login ou mot de passe)',
+          'danger'
+        )
       }
     })
   }

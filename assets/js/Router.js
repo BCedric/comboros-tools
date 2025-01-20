@@ -1,5 +1,6 @@
 import React from 'react'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
+import { AdminRoute } from './AdminRoute'
 import { ProtectedRoute } from './ProtectedRoute'
 import ComForm from './com-form/ComForm'
 import ConfigArtisteAnswer from './config/ConfigArtisteAnswer'
@@ -45,7 +46,11 @@ const router = createHashRouter([
 
       {
         path: '/config',
-        element: <InitConfig />,
+        element: (
+          <AdminRoute>
+            <InitConfig />
+          </AdminRoute>
+        ),
         children: [
           {
             path: '',

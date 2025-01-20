@@ -5,9 +5,10 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,6 +23,19 @@ class User
 
     #[ORM\Column(options: ['default' => '[]'])]
     private array $roles = [];
+
+    #[ORM\Column(length: 255)]
+    private ?string $access_token = null;
+
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
+    }
+
+    public function eraseCredentials(): void
+    {
+        
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +74,18 @@ class User
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getAccessToken(): ?string
+    {
+        return $this->access_token;
+    }
+
+    public function setAccessToken(string $access_token): static
+    {
+        $this->access_token = $access_token;
 
         return $this;
     }

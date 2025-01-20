@@ -16,10 +16,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/config', 'config_api_')]
 class ConfigApiController extends AbstractAPIController
 {
+    #[IsGranted('ROLE_USER')]
     #[Route('', name: 'get', methods: ['GET'])]
     public function get(ConfigRepository $configRepository)
     {
@@ -33,6 +35,7 @@ class ConfigApiController extends AbstractAPIController
         return new JsonResponse($configArray);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('', name: 'put', methods: ['PUT'])]
     public function put(
         Request $request,
@@ -83,7 +86,7 @@ class ConfigApiController extends AbstractAPIController
         return $this->get($configRepository);
     }
 
-
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/reset', name: 'reset', methods: ['PUT'])]
     public function reset(
         WorkshopRepository $workshopRepository,
@@ -105,7 +108,7 @@ class ConfigApiController extends AbstractAPIController
         return new Response('OK');
     }
 
-
+    #[IsGranted('ROLE_USER')]
     #[Route('/update-artists', name: 'update_artists', methods:['PUT'])]
     public function updateArtists(
         ArtistRepository $artistRepository,

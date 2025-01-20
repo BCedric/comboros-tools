@@ -27,8 +27,8 @@ const FDRForm = () => {
   const [referent, setReferent] = useState({ name: '', mail: '', tel: '' })
 
   useEffect(() => {
-    Http.get('/fdr/band').then((groups) => setGroups(groups))
-    Http.get('/fdr/workshop').then((groups) => setworkshops(groups))
+    Http.get('/band').then((groups) => setGroups(groups))
+    Http.get('/workshop').then((groups) => setworkshops(groups))
   }, [])
 
   const submit = () =>
@@ -42,7 +42,8 @@ const FDRForm = () => {
         workshop: workshopSelected != null ? workshopSelected.id : null,
         referent,
         hosting
-      }
+      },
+      headers: { 'X-AUTH-TOKEN': window.USER_API_KEY }
     }).then((response) => {
       const url = window.URL.createObjectURL(response.data)
       const link = document.createElement('a')
@@ -53,7 +54,7 @@ const FDRForm = () => {
     })
 
   return (
-    <CustomForm onSubmit={submit}>
+    <CustomForm onSubmit={submit} disabled={groupSelected == null}>
       <div className="form-line">
         <CustomFormField
           label="Nom - Prénom référent.e accueil"
