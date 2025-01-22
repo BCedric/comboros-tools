@@ -18,7 +18,8 @@ RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-install ldap
 RUN pecl install apcu && docker-php-ext-enable apcu
 
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+RUN curl -sS https://getcomposer.org/installer | php -- \
+--install-dir=/usr/bin --filename=composer
 
 RUN apt-get update
 #unoconv : conversion .doc en .pdf
@@ -31,5 +32,7 @@ RUN apt-get update && apt-get install -y ghostscript
 RUN apt-get update && apt-get install -y libldap-common
 
 RUN apt-get install cron -y
+
+COPY vhosts.conf /etc/apache2/sites-available/000-default.conf
 
 RUN a2enmod rewrite
