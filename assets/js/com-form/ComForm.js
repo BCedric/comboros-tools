@@ -10,19 +10,22 @@ import { useParams } from 'react-router-dom'
 const ComForm = () => {
   const { accessCode } = useParams()
   const [bandName, setBandName] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    Http.get(`/band/access-code/${accessCode}`).then(
-      (band) => (
-        setFormFields((prev) => ({
-          ...prev,
-          band: band.id,
-          photos: band.imgs,
-          ...band
-        })),
-        setBandName(band.name)
+    Http.get(`/band/access-code/${accessCode}`)
+      .then(
+        (band) => (
+          setFormFields((prev) => ({
+            ...prev,
+            band: band.id,
+            photos: band.imgs,
+            ...band
+          })),
+          setBandName(band.name)
+        )
       )
-    )
+      .finally(() => setIsLoading(false))
   }, [accessCode])
 
   const [formFields, setFormFields] = useState({
@@ -57,51 +60,63 @@ const ComForm = () => {
   }
 
   return (
-    <div>
+    <>
       <h1>Formulaire des éléments de communication</h1>
-      <CustomForm
-        onSubmit={handleSubmit}
-        formFields={formFields}
-        setFormFields={setFormFields}
-        isFormValid={isFormValid}
-      >
-        <CustomFormField
-          label="Nom du groupe, de l'artiste ou du spectacle."
-          value={bandName}
-          disabled
-        />
-        <CustomFormField
-          label="Photo(s) (taille max: 2Mo)"
-          type="file"
-          fieldName="photos"
-          multiple
-          accept="image/*"
-        />
+      {!isLoading &&
+        (bandName != '' ? (
+          <div>
+            <CustomForm
+              onSubmit={handleSubmit}
+              formFields={formFields}
+              setFormFields={setFormFields}
+              isFormValid={isFormValid}
+            >
+              <CustomFormField
+                label="Nom du groupe, de l'artiste ou du spectacle."
+                value={bandName}
+                disabled
+              />
+              <CustomFormField
+                label="Photo(s) (taille max: 2Mo)"
+                type="file"
+                fieldName="photos"
+                multiple
+                accept="image/*"
+              />
 
-        <CustomFormField
-          label="Nom des membres du groupe et leurs rôles (instruments détaillés, lumière, sonorisation)."
-          type="textarea"
-          fieldName="members"
-          isValid={formFields.members != ''}
-        />
-        <CustomFormField
-          label="Texte de présentation (5-6 lignes)"
-          type="textarea"
-          fieldName="presentation"
-          isValid={formFields.presentation != ''}
-        />
-        <CustomFormField
-          label="Lien vers les ressources numériques : site, vidéos ou réseaux sociaux, si vous en disposez."
-          fieldName="link"
-        />
+              <CustomFormField
+                label="Nom des membres du groupe et leurs rôles (instruments détaillés, lumière, sonorisation)."
+                type="textarea"
+                fieldName="members"
+                isValid={formFields.members != ''}
+              />
+              <CustomFormField
+                label="Texte de présentation (5-6 lignes)"
+                type="textarea"
+                fieldName="presentation"
+                isValid={formFields.presentation != ''}
+              />
+              <CustomFormField
+                label="Lien vers les ressources numériques : site, vidéos ou réseaux sociaux, si vous en disposez."
+                fieldName="link"
+              />
 
-        <CustomFormField
-          label="Tout autre élément que vous souhaiteriez ajouter. "
-          fieldName="otherElements"
-          type="textarea"
-        />
-      </CustomForm>
-    </div>
+              <CustomFormField
+                label="Tout autre élément que vous souhaiteriez ajouter. "
+                fieldName="otherElements"
+                type="textarea"
+              />
+            </CustomForm>
+          </div>
+        ) : (
+          <div>
+            <p className="informations">
+              Le lien que vous utilisez est erroné, veuillez en faire part à
+              votre contact.
+            </p>
+          </div>
+        ))}
+    </>
   )
 }
 
