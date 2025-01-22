@@ -2,12 +2,13 @@ import {
   mdiCog,
   mdiFileDocumentOutline,
   mdiHumanFemaleDance,
+  mdiLogout,
   mdiMusic
 } from '@mdi/js'
 import Icon from '@mdi/react'
 import React from 'react'
 import { Link, useMatch } from 'react-router-dom'
-import { useUser } from './shared/useUser'
+import { useUser, useUserContext } from './shared/UserProvider'
 
 const Menu = () => {
   const isConfig = useMatch('/config*')
@@ -15,11 +16,21 @@ const Menu = () => {
   const isWorkshop = useMatch('/workshop*')
   const isHome = useMatch('/')
 
-  const { isAdmin } = useUser()
+  const { isAdmin, logout } = useUserContext()
 
   return (
     <div className="menu">
       <h2>Outils Comboros</h2>
+      <div className='flex center'>
+
+      <Icon
+        className="clickable"
+        path={mdiLogout}
+        size={1}
+        title="Déconnexion"
+        onClick={logout}
+      />
+      </div>
       <hr />
       <ul>
         <li>

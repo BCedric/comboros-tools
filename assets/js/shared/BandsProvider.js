@@ -1,6 +1,6 @@
 import { Http } from '@b-cedric/react-common-bootstrap'
 import React, { useContext, useEffect, useState } from 'react'
-import { useUser } from './useUser'
+import { useUserContext } from './UserProvider'
 
 const BandsContext = React.createContext(null)
 
@@ -8,7 +8,7 @@ const BandsProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [bands, setBands] = useState([])
 
-  const { isUser, user } = useUser()
+  const { isUser } = useUserContext()
 
   useEffect(() => {
     if (isUser) {

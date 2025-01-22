@@ -3,17 +3,20 @@ import { AlertsContextProvider } from '@b-cedric/react-common-bootstrap/alert'
 import React from 'react'
 import Router from './Router'
 import BandsProvider from './shared/BandsProvider'
+import UserProvider from './shared/UserProvider'
 
 const Root = () => {
   return (
     <AlertsContextProvider>
-      <BandsProvider>
-        <ConfirmContextProvider>
-          <div>
-            <Router />
-          </div>
-        </ConfirmContextProvider>
-      </BandsProvider>
+      <UserProvider>
+        <BandsProvider>
+          <ConfirmContextProvider>
+            <div>
+              <Router />
+            </div>
+          </ConfirmContextProvider>
+        </BandsProvider>
+      </UserProvider>
     </AlertsContextProvider>
   )
 }
