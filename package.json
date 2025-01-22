@@ -22,9 +22,9 @@
     "watch": "encore dev --watch",
     "build": "encore production --progress",
     "docker": "docker compose -p comboros_tools -f .docker/docker-compose.yml --env-file .env --env-file .env.local up",
-    "docker:build": "docker compose -p comboros_tools -f .docker/docker-compose.yml --env-file .env --env-file .env.local build",
     "docker:prod": "docker compose -p comboros_tools -f .docker/docker-compose.prod.yml --env-file .env --env-file .env.local up",
-    "docker:prod:build": "docker compose -p comboros_tools -f .docker/docker-compose.prod.yml --env-file .env --env-file .env.local build"
+    "docker:prod:build": "docker compose -p comboros_tools -f .docker/docker-compose.prod.yml --env-file .env --env-file .env.local build",
+    "docker:publish-img": "docker build -t bcedric/comboros-tools .docker/createimage/ && docker login -u bcedric && docker push bcedric/comboros-tools"
   },
   "dependencies": {
     "@b-cedric/react-common-bootstrap": "^2.0.66",
