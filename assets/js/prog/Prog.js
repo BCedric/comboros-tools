@@ -29,7 +29,10 @@ const Prog = () => {
         onClickEvent={({ event }) => setSelectedBandId(event.id)}
         beforeDelete={() => {
           return new Promise((resolve) => {
-            confirm('Veuillez confirmer la suppression', () => resolve())
+            confirm(
+              'Attention, la suppression pourrait casser le lien vers le formulaire pour renseigner les éléments de communication et effacer ceux-ci.',
+              () => resolve()
+            )
           })
         }}
         onEventsChange={(bands) => setBands(bands)}
