@@ -26,7 +26,8 @@ const Calendar = ({
     Http.post(route, {
       id: event.id,
       name: event.title,
-      room: event.extendedProps.room.id,
+      room:
+        event.extendedProps.room != null ? event.extendedProps.room.id : null,
       start: event.start,
       end: event.end
     }).then((events) => setEvents(events))
