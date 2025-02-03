@@ -1,8 +1,8 @@
 import { CustomFormField } from '@b-cedric/react-common-bootstrap'
 import { mdiClose, mdiContentCopy } from '@mdi/js'
 import Icon from '@mdi/react'
+import copy from 'copy-to-clipboard'
 import React from 'react'
-import CopyToClipboard from 'react-copy-to-clipboard'
 
 const BandDetails = ({ close, band }) => {
   return (
@@ -24,16 +24,17 @@ const BandDetails = ({ close, band }) => {
           value={`${window.location.origin}/#/com-form/${band.formComAccessCode}`}
           disabled={true}
           suffix={
-            <CopyToClipboard
-              text={`${window.location.origin}/#/com-form/${band.formComAccessCode}`}
-            >
-              <Icon
-                className="clickable"
-                path={mdiContentCopy}
-                size={1}
-                title="Copier le lien"
-              />
-            </CopyToClipboard>
+            <Icon
+              className="clickable"
+              path={mdiContentCopy}
+              size={1}
+              title="Copier le lien"
+              onClick={() =>
+                copy(
+                  `${window.location.origin}/#/com-form/${band.formComAccessCode}`
+                )
+              }
+            />
           }
         />
       </div>

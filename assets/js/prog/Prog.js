@@ -36,6 +36,7 @@ const Prog = () => {
           })
         }}
         onEventsChange={(bands) => setBands(bands)}
+        displayMonday={true}
       />
       {selectedBand != null && (
         <BandDetails

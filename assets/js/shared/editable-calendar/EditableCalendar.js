@@ -9,7 +9,8 @@ const EditableCalendar = ({
   onClickEvent = () => {},
   className,
   beforeDelete,
-  onEventsChange = () => {}
+  onEventsChange = () => {},
+  displayMonday = false
 }) => {
   const [rooms, setRooms] = useState([])
   const [events, setEvents] = useState([])
@@ -36,6 +37,7 @@ const EditableCalendar = ({
         route={route}
         onClickEvent={onClickEvent}
         beforeDelete={beforeDelete}
+        displayMonday={displayMonday}
       />
       <ModalEvent
         rooms={rooms}

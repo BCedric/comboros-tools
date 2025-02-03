@@ -1,3 +1,6 @@
+@use '~@b-cedric/react-common-bootstrap/styles/spaced-inline';
+@use './variables.scss' as *;
+
 .menu {
   width: 15%;
   height: 100vh;

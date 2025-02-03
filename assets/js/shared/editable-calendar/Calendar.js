@@ -14,7 +14,8 @@ const Calendar = ({
   setCurrentSelectInfo,
   route,
   onClickEvent = () => {},
-  beforeDelete = () => new Promise((resolve) => resolve())
+  beforeDelete = () => new Promise((resolve) => resolve()),
+  displayMonday = false
 }) => {
   const handleSelect = (selectInfo) => {
     setShowModalEvent(true)
@@ -58,7 +59,8 @@ const Calendar = ({
       selectable={true}
       weekends={true}
       initialEvents={events} // alternatively, use the `events` setting to fetch from a feed
-      hiddenDays={[1, 2, 3, 4]}
+      hiddenDays={displayMonday ? [2, 3, 4] : [1, 2, 3, 4]}
+      firstDay={5}
       initialDate="2025-08-15"
       eventChange={handleEventChange}
       eventClick={onClickEvent}
