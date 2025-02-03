@@ -81,7 +81,7 @@ class BandController extends AbstractAPIController
         if (array_key_exists('otherElements', $body)) {
             $band->setOtherElements($body['otherElements']);
         }
-        if (array_key_exists('link', $body)) {
+        if (array_key_exists('link', $body) && $body['link'] != null) {
             $band->setLink($body['link']);
         }
         $em->flush();
