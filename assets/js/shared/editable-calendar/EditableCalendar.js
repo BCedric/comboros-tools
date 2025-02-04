@@ -10,9 +10,10 @@ const EditableCalendar = ({
   className,
   beforeDelete,
   onEventsChange = () => {},
-  displayMonday = false
+  displayMonday = false,
+  modalEventContent,
+  modalEventTitle
 }) => {
-  const [rooms, setRooms] = useState([])
   const [events, setEvents] = useState([])
   const [showModalEvent, setShowModalEvent] = useState(false)
   const [currentSelectInfo, setCurrentSelectInfo] = useState(null)
@@ -22,8 +23,8 @@ const EditableCalendar = ({
   }, [events])
 
   const customSetEvents = (events) => setEvents(events.map(formatEvents))
+
   useEffect(() => {
-    Http.get('/room').then((rooms) => setRooms(rooms))
     Http.get(route).then(customSetEvents)
   }, [])
 
@@ -40,7 +41,6 @@ const EditableCalendar = ({
         displayMonday={displayMonday}
       />
       <ModalEvent
-        rooms={rooms}
         show={showModalEvent}
         setShow={setShowModalEvent}
         currentSelectInfo={currentSelectInfo}
@@ -52,6 +52,8 @@ const EditableCalendar = ({
           }).then(customSetEvents)
           setCurrentSelectInfo(null)
         }}
+        modalEventContent={modalEventContent}
+        modalEventTitle={modalEventTitle}
       />
     </div>
   )

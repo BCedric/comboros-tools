@@ -41,6 +41,18 @@ class WorkshopController extends AbstractAPIController
         if ($body['room'] != null) {
             $workshop->setRoom($roomRepository->find($body['room']));
         }
+        if (array_key_exists('description', $body) && $body['description'] !== null) {
+            $workshop->setDescription($body['description']);
+        }
+        if (array_key_exists('speakers', $body) && $body['speakers'] != null) {
+            $workshop->setSpeakers($body['speakers']);
+        }
+        if (array_key_exists('level', $body) && $body['level'] !== null) {
+            $workshop->setLevel($body['level']);
+        }
+        if (array_key_exists('gauge', $body) && $body['gauge'] != null) {
+            $workshop->setGauge($body['gauge']);
+        }
 
         $em->persist($workshop);
 

@@ -26,6 +26,18 @@ class Workshop
     #[ORM\ManyToOne]
     private ?Room $room = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $speakers = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $level = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $gauge = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -83,6 +95,54 @@ class Workshop
     public function setRoom(?Room $room): static
     {
         $this->room = $room;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getSpeakers(): ?array
+    {
+        return $this->speakers;
+    }
+
+    public function setSpeakers(?array $speakers): static
+    {
+        $this->speakers = $speakers;
+
+        return $this;
+    }
+
+    public function getLevel(): ?string
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?string $level): static
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    public function getGauge(): ?int
+    {
+        return $this->gauge;
+    }
+
+    public function setGauge(?int $gauge): static
+    {
+        $this->gauge = $gauge;
 
         return $this;
     }

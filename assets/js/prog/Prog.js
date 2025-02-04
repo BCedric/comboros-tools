@@ -3,6 +3,8 @@ import React, { useMemo, useState } from 'react'
 import { useBandsContext } from '../shared/BandsProvider'
 import EditableCalendar from '../shared/editable-calendar/EditableCalendar'
 import BandDetails from './BandDetails'
+import { CustomFormField } from '@b-cedric/react-common-bootstrap/form'
+import RoomFormField from '../shared/RoomFormField'
 
 const formatBand = (b) => ({
   ...b,
@@ -37,6 +39,22 @@ const Prog = () => {
         }}
         onEventsChange={(bands) => setBands(bands)}
         displayMonday={true}
+        modalEventContent={(newEvent, setNewEvent) => (
+          <div>
+            <CustomFormField
+              label="Nom du groupe"
+              value={newEvent.name}
+              onChange={(value) =>
+                setNewEvent({ ...newEvent, name: value, title: value })
+              }
+            />
+            <RoomFormField
+              value={newEvent.room == null ? null : newEvent.room.id}
+              onChange={(event) => setNewEvent({ ...newEvent, room: event })}
+            />
+          </div>
+        )}
+        modalEventTitle="Ajout d'un concert/bal"
       />
       {selectedBand != null && (
         <BandDetails
