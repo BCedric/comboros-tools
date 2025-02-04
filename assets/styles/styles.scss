@@ -1,18 +1,17 @@
 // Variable overrides first
-$primary: #900;
-$enable-shadows: true;
-$prefix: 'mo-';
-$legend-font-weight: bold;
+
+
+@import 'variables.scss';
 
 // Then import Bootstrap
-@use 'bootstrap';
+@import 'bootstrap';
 
-@forward '~@b-cedric/react-common-bootstrap/styles/styles.scss';
+@import '~@b-cedric/react-common-bootstrap/styles/styles.scss';
 
-@forward 'content.scss';
-@forward 'login-form.scss';
-@forward 'menu.scss';
-@forward 'prog.scss';
+@import 'content.scss';
+@import 'login-form.scss';
+@import 'menu.scss';
+@import 'prog.scss';
 
 body {
   background-color: white;
