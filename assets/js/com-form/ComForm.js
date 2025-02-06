@@ -3,9 +3,9 @@ import {
   CustomFormField,
   Http
 } from '@b-cedric/react-common-bootstrap'
-import { useAlertsContext } from '@b-cedric/react-common-bootstrap/alert'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import comborosImg from '../../img/comboros9.png'
 
 const ComForm = () => {
   const { accessCode } = useParams()
@@ -42,7 +42,7 @@ const ComForm = () => {
     return presentation != '' && members != ''
   }, [formFields])
 
-  const { addAlert } = useAlertsContext()
+  const navigate = useNavigate()
 
   const handleSubmit = () => {
     const formData = new FormData()
@@ -52,7 +52,7 @@ const ComForm = () => {
     formData.append('body', JSON.stringify(formFields))
 
     return Http.postFormData(`/band/${formFields.band}`, formData)
-      .then(() => addAlert('Le formulaire a bien été enregistré', 'success'))
+      .then(() => navigate('/com-form/validation'))
       .catch(
         () => "Une erreur est survenue lors de l'enregistrement du formulaire",
         'danger'
@@ -61,6 +61,9 @@ const ComForm = () => {
 
   return (
     <>
+      <div className='flex center'>
+        <img className="form-header-img" src={comborosImg} />
+      </div>
       <h1>Formulaire des éléments de communication</h1>
       {!isLoading &&
         (bandName != '' ? (

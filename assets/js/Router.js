@@ -14,6 +14,7 @@ import FDRMenu from './fdr/FDRMenu'
 import OrphanArtists from './fdr/OrphanArtists'
 import Prog from './prog/Prog'
 import Workshop from './workshop/Workshop'
+import ComFormValidation from './com-form/ComFormValidation'
 
 const router = createHashRouter([
   {
@@ -107,12 +108,25 @@ const router = createHashRouter([
     ]
   },
   {
-    path: 'com-form/:accessCode',
-    element: (
-      <div className="content-unprotected">
-        <ComForm />
-      </div>
-    )
+    path: 'com-form',
+    children: [
+      {
+        path: 'validation',
+        element: (
+          <div className="content-unprotected">
+            <ComFormValidation />
+          </div>
+        )
+      },
+      {
+        path: ':accessCode',
+        element: (
+          <div className="content-unprotected">
+            <ComForm />
+          </div>
+        )
+      }
+    ]
   }
 ])
 
