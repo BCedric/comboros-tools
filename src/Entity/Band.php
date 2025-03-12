@@ -151,6 +151,21 @@ class Band
         return "Dans la journée ou soirée du " . $day . "/" . $startDateTime->format('m') . ', de ' . $startDateTime->format('H\hi') . ' à ' . $this->getEnd()->format('H\hi') . ' à ' . $this->getRoom()->getLabel() . ' (installation à ' . $installation->format('H\hi') . ')';
     }
 
+    #[Ignore]
+    public function getBalances(Datetime $time)
+    {
+        /** @var Datetime */
+        $startDateTime = $this->getStart();
+        if (intval($startDateTime->format('H')) < 5) {
+            $day = intval($startDateTime->format('d')) - 1;
+        } else {
+            $day = intval($startDateTime->format('d'));
+        }
+        $installation = clone $time;
+        $installation->sub(DateInterval::createFromDateString('30 minutes'));
+        return "Le " . $day . "/" . $startDateTime->format('m') . ', à ' . $time->format('H\hi') . ' à ' . $this->getEnd()->format('H\hi') . ' à ' . $this->getRoom()->getLabel() . ' (installation à ' . $installation->format('H\hi') . ')';
+    }
+
     public function getStart(): ?\DateTimeInterface
     {
         return $this->start;

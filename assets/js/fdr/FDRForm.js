@@ -10,6 +10,7 @@ import FDRArtistsTable from './FDRArtistsTable'
 const FDRForm = () => {
   const [groups, setGroups] = useState([])
   const [workshops, setworkshops] = useState([])
+  const [balanceTime, setBalanceTime] = useState('')
 
   const [groupSelectedIndex, setGroupSelectedIndex] = useState(null)
   const [workshopSelectedIndex, setWorkshopSelectedIndex] = useState(null)
@@ -41,6 +42,7 @@ const FDRForm = () => {
         group: groupSelected.id,
         workshop: workshopSelected != null ? workshopSelected.id : null,
         referent,
+        balanceTime,
         hosting
       },
       headers: { 'X-AUTH-TOKEN': window.USER_API_KEY }
@@ -105,6 +107,12 @@ const FDRForm = () => {
             value={workshopSelectedIndex}
             onChange={({ value }) => setWorkshopSelectedIndex(value)}
             type="select"
+          />
+          <CustomFormField
+            label="Horaire de balances"
+            type="time"
+            value={balanceTime}
+            onChange={setBalanceTime}
           />
           <CustomFormField
             label="Format"

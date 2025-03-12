@@ -17,7 +17,6 @@ const EditableCalendar = ({
   const [events, setEvents] = useState([])
   const [showModalEvent, setShowModalEvent] = useState(false)
   const [currentSelectInfo, setCurrentSelectInfo] = useState(null)
-
   useEffect(() => {
     onEventsChange(events)
   }, [events])
