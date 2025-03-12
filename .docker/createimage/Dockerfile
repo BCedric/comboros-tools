@@ -35,4 +35,6 @@ RUN apt-get install cron -y
 
 COPY vhosts.conf /etc/apache2/sites-available/000-default.conf
 
+RUN echo 'date.timezone=Europe/Paris' >> /usr/local/etc/php/conf.d/docker-php-upfilesize.ini;
+
 RUN a2enmod rewrite
