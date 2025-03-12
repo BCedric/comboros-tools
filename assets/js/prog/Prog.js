@@ -9,7 +9,7 @@ import RoomFormField from '../shared/RoomFormField'
 const formatBand = (b) => ({
   ...b,
   title: b.name,
-  extendedProps: { room: b.room },
+  extendedProps: { ...b },
   backgroundColor: b.room == null ? 'black' : b.room.color
 })
 

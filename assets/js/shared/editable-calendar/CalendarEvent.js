@@ -1,12 +1,22 @@
 import { mdiClose, mdiPencil } from '@mdi/js'
 import Icon from '@mdi/react'
+import moment from 'moment'
 import React from 'react'
 
 const CalendarEvent = ({ eventInfo, editEvent, deleteEvent }) => {
   return (
-    <>
+    <div
+      className="calendar-event"
+      title={`${moment(eventInfo.event.extendedProps.start).format(
+        'HH:mm'
+      )} - ${moment(eventInfo.event.extendedProps.end).format('HH:mm')} ${
+        eventInfo.event.title
+      }`}
+    >
       <div className="event-header">
-        <b>{eventInfo.timeText}</b>
+        <b>{`${moment(eventInfo.event.extendedProps.start).format(
+          'HH:mm'
+        )} - ${moment(eventInfo.event.extendedProps.end).format('HH:mm')}`}</b>
         <div className="icons-containers">
           <Icon
             path={mdiPencil}
@@ -30,7 +40,7 @@ const CalendarEvent = ({ eventInfo, editEvent, deleteEvent }) => {
           <p>{eventInfo.event.extendedProps.room.label}</p>
         )}
       </div>
-    </>
+    </div>
   )
 }
 

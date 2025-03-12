@@ -5,13 +5,15 @@
   .fc-timegrid-event-harness {
     width: 33%;
   }
-
-  .event-header {
-    display: flex;
-    justify-content: space-between;
-  }
-  .event-content {
-    padding: 0.25em;
+  .calendar-event {
+    overflow: hidden;
+    .event-header {
+      display: flex;
+      justify-content: space-between;
+    }
+    .event-content {
+      padding: 0.25em;
+    }
   }
 }
 

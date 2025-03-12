@@ -9,7 +9,7 @@ import EditableCalendar from '../shared/editable-calendar/EditableCalendar'
 const formatWorkshop = (w) => ({
   ...w,
   title: w.name,
-  extendedProps: { room: w.room },
+  extendedProps: { ...w },
   backgroundColor: w.room == null ? 'black' : w.room.color
 })
 
