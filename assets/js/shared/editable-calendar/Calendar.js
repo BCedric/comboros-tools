@@ -61,7 +61,7 @@ const Calendar = ({
       initialEvents={events} // alternatively, use the `events` setting to fetch from a feed
       hiddenDays={displayMonday ? [2, 3, 4] : [1, 2, 3, 4]}
       firstDay={5}
-      initialDate="2025-08-15"
+      initialDate="2025-08-08"
       eventChange={handleEventChange}
       eventClick={onClickEvent}
       select={(param) => handleSelect(param)}
