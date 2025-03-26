@@ -16,6 +16,17 @@
       padding: 0.25em;
     }
   }
+
+  [data-time^='03'],
+  [data-time^='04'],
+  [data-time^='05'],
+  [data-time^='06'],
+  [data-time^='07'],
+  [data-time^='08'],
+  [data-time^='09'],
+  [data-time^='10'] {
+    display: none;
+  }
 }
 
 .calendar-workshop {

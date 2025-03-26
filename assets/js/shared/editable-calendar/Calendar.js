@@ -72,7 +72,6 @@ const Calendar = ({
           eventInfo={eventInfo}
         />
       )}
-      timeZone="Europe/Paris"
       slotDuration="00:15:00"
       scrollTime={false}
     />
