@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
+import moment from 'moment'
 import React from 'react'
 import CalendarEvent from './CalendarEvent'
 
@@ -26,13 +27,14 @@ const Calendar = ({
 
   const handleEventChange = (param) => {
     const event = param.event
+    console.log(event, moment(event.end).format())
     Http.post(route, {
       id: event.id,
       name: event.title,
       room:
         event.extendedProps.room != null ? event.extendedProps.room.id : null,
-      start: event.start,
-      end: event.end
+      start: moment(event.start).format(),
+      end: moment(event.end).format()
     }).then((events) => setEvents(events))
   }
 
@@ -78,6 +80,7 @@ const Calendar = ({
       scrollTime={false}
       slotMinTime={slotMinTime}
       slotMaxTime={slotMaxTime}
+      timezone="Europe/Paris"
     />
   )
 }
