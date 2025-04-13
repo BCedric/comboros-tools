@@ -15,7 +15,9 @@ const Calendar = ({
   route,
   onClickEvent = () => {},
   beforeDelete = () => new Promise((resolve) => resolve()),
-  displayMonday = false
+  displayMonday = false,
+  slotMinTime,
+  slotMaxTime
 }) => {
   const handleSelect = (selectInfo) => {
     setShowModalEvent(true)
@@ -74,6 +76,8 @@ const Calendar = ({
       )}
       slotDuration="00:15:00"
       scrollTime={false}
+      slotMinTime={slotMinTime}
+      slotMaxTime={slotMaxTime}
     />
   )
 }

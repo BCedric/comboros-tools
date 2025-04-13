@@ -21,6 +21,8 @@ const Workshop = () => {
         className="calendar-workshop"
         formatEvents={formatWorkshop}
         route="/workshop"
+        slotMinTime="10:00:00"
+        slotMaxTime="17:30:00"
         modalEventContent={(newEvent, setNewEvent) => (
           <div>
             <CustomFormField
@@ -44,9 +46,7 @@ const Workshop = () => {
             />
             <CustomFormFieldInputList
               label="Intervenants"
-              value={
-                newEvent.speakers == null ? [] : newEvent.speakers
-              }
+              value={newEvent.speakers == null ? [] : newEvent.speakers}
               onChange={(value) =>
                 setNewEvent({ ...newEvent, speakers: value })
               }

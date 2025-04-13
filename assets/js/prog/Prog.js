@@ -1,10 +1,10 @@
 import { useConfirm } from '@b-cedric/react-common-bootstrap'
+import { CustomFormField } from '@b-cedric/react-common-bootstrap/form'
 import React, { useMemo, useState } from 'react'
 import { useBandsContext } from '../shared/BandsProvider'
+import RoomFormField from '../shared/RoomFormField'
 import EditableCalendar from '../shared/editable-calendar/EditableCalendar'
 import BandDetails from './BandDetails'
-import { CustomFormField } from '@b-cedric/react-common-bootstrap/form'
-import RoomFormField from '../shared/RoomFormField'
 
 const formatBand = (b) => ({
   ...b,
@@ -26,6 +26,7 @@ const Prog = () => {
     <>
       <h1>Programmation</h1>
       <EditableCalendar
+        className={'prog-calendar'}
         formatEvents={formatBand}
         route="/band"
         onClickEvent={({ event }) => setSelectedBandId(event.id)}

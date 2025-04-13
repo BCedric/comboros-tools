@@ -12,7 +12,9 @@ const EditableCalendar = ({
   onEventsChange = () => {},
   displayMonday = false,
   modalEventContent,
-  modalEventTitle
+  modalEventTitle,
+  slotMinTime = '00:00:00',
+  slotMaxTime = '24:00:00'
 }) => {
   const [events, setEvents] = useState([])
   const [showModalEvent, setShowModalEvent] = useState(false)
@@ -38,6 +40,8 @@ const EditableCalendar = ({
         onClickEvent={onClickEvent}
         beforeDelete={beforeDelete}
         displayMonday={displayMonday}
+        slotMinTime={slotMinTime}
+        slotMaxTime={slotMaxTime}
       />
       <ModalEvent
         show={showModalEvent}
