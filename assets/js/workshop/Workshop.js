@@ -16,7 +16,12 @@ const formatWorkshop = (w) => ({
 const Workshop = () => {
   return (
     <div>
-      <h1>Ateliers</h1>
+      <div className="flex space-between align-center">
+        <h1>Ateliers</h1>
+        <a className="btn btn-success" href="./export/workshop">
+          Exporter au format Excel
+        </a>
+      </div>
       <EditableCalendar
         className="calendar-workshop"
         formatEvents={formatWorkshop}
