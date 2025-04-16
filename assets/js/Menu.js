@@ -60,7 +60,7 @@ const Menu = () => {
             to="/workshop"
           >
             <Icon path={mdiHumanFemaleDance} size={1} />
-            <span>Ateliers</span>
+            <span>Stages</span>
           </Link>
         </li>
         {isAdmin && (

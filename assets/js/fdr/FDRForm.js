@@ -134,8 +134,8 @@ const FDRForm = () => {
       )}
       {workshopSelected != null && workshopSelected.room === null && (
         <p className="alert alert-danger">
-          L'atelier sélectionné n'est pas associé à une salle dans le tableau
-          des ateliers
+          Le stage sélectionné n'est pas associé à une salle dans le tableau
+          des stages
         </p>
       )}
     </CustomForm>

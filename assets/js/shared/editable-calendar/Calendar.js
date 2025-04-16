@@ -27,7 +27,6 @@ const Calendar = ({
 
   const handleEventChange = (param) => {
     const event = param.event
-    console.log(event, moment(event.end).format())
     Http.post(route, {
       id: event.id,
       name: event.title,
