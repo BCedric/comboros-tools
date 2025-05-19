@@ -109,7 +109,7 @@ class ConfigApiController extends AbstractAPIController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/update-artists', name: 'update_artists', methods:['PUT'])]
+    #[Route('/update-artists', name: 'update_artists', methods: ['PUT'])]
     public function updateArtists(
         ArtistRepository $artistRepository,
         ConfigRepository $configRepository,
@@ -136,9 +136,9 @@ class ConfigApiController extends AbstractAPIController
                 $artist = new Artist();
                 $artist->setFirstname($row[$configRepository->findConfigValue('cessionCSVFirstname')]);
                 $artist->setLastname($row[$configRepository->findConfigValue('cessionCSVLastname')]);
-                $arrival = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('cessionCSVDateArrival')] . ' ' . $row[$configRepository->findConfigValue('cessionCSVTimeArrival')]);
+                $arrival = DateTime::createFromFormat('d/m/Y H:i:s', $row[$configRepository->findConfigValue('cessionCSVDateArrival')] . ' ' . $row[$configRepository->findConfigValue('cessionCSVTimeArrival')]);
                 $arrival != false && $artist->setDateArrival($arrival);
-                $departure = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('cessionCSVDateDeparture')] . ' ' . $row[$configRepository->findConfigValue('cessionCSVTimeDeparture')]);
+                $departure = DateTime::createFromFormat('d/m/Y H:i:s', $row[$configRepository->findConfigValue('cessionCSVDateDeparture')] . ' ' . $row[$configRepository->findConfigValue('cessionCSVTimeDeparture')]);
                 $departure != false && $artist->setDateDeparture($departure);
                 $artist->setCompanions([$row[$configRepository->findConfigValue('cessionCSVCompanion')], $row[$configRepository->findConfigValue('cessionCSVChildren')]]);
                 $artistBand = $bandRepository->findOneByName(trim($row[$configRepository->findConfigValue('cessionCSVbandName')]));
@@ -156,9 +156,9 @@ class ConfigApiController extends AbstractAPIController
                 $artist = new Artist();
                 $artist->setFirstname($row[$configRepository->findConfigValue('gusoCSVFirstname')]);
                 $artist->setLastname($row[$configRepository->findConfigValue('gusoCSVLastname')]);
-                $arrival = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('gusoCSVDateArrival')] . ' ' . $row[$configRepository->findConfigValue('gusoCSVTimeArrival')]);
+                $arrival = DateTime::createFromFormat('d/m/Y H:i:s', $row[$configRepository->findConfigValue('gusoCSVDateArrival')] . ' ' . $row[$configRepository->findConfigValue('gusoCSVTimeArrival')]);
                 $arrival != false && $artist->setDateArrival($arrival);
-                $departure = DateTime::createFromFormat('d.m.Y H:i:s', $row[$configRepository->findConfigValue('gusoCSVDateDeparture')] . ' ' . $row[$configRepository->findConfigValue('gusoCSVTimeDeparture')]);
+                $departure = DateTime::createFromFormat('d/m/Y H:i:s', $row[$configRepository->findConfigValue('gusoCSVDateDeparture')] . ' ' . $row[$configRepository->findConfigValue('gusoCSVTimeDeparture')]);
                 $departure != false && $artist->setDateDeparture($departure);
                 $artist->setCompanions([$row[$configRepository->findConfigValue('gusoCSVCompanion')]]);
                 $artistBand = $bandRepository->findOneByName($row[$configRepository->findConfigValue('gusoCSVbandName')]);
