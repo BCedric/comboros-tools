@@ -43,7 +43,7 @@ class ConfigApiController extends AbstractAPIController
         EntityManagerInterface $em,
         ArtistRepository $artistRepository,
         BandRepository $bandRepository,
-        VolunteerRepository $volunteerRepository
+        // VolunteerRepository $volunteerRepository
     ) {
         $body = json_decode($request->getContent(), true);
         foreach ($body as $name => $value) {
