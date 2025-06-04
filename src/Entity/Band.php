@@ -163,7 +163,7 @@ class Band
         }
         $installation = clone $time;
         $installation->sub(DateInterval::createFromDateString('30 minutes'));
-        return "Le " . $day . "/" . $startDateTime->format('m') . ', à ' . $time->format('H\hi') . ' à ' . $this->getEnd()->format('H\hi') . ' à ' . $this->getRoom()->getLabel() . ' (installation à ' . $installation->format('H\hi') . ')';
+        return "Le " . $day . "/" . $startDateTime->format('m') . ', à ' . $time->format('H\hi') . ' à ' . $this->getRoom()->getLabel() . ' (installation à ' . $installation->format('H\hi') . ')';
     }
 
     public function getStart(): ?\DateTimeInterface
