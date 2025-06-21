@@ -88,6 +88,10 @@ class FDRApiController extends AbstractAPIController
             $docFields = array_merge($docFields, [
                 ['tag' => 'hebergement', 'type' => 'array', 'value' => $hosting],
             ]);
+        } else {
+            $docFields = array_merge($docFields, [
+                ['tag' => 'hebergement', 'type' => 'string', 'value' => $hosting],
+            ]);
         }
 
         $response = $http->request('GET', $urlFDR);
