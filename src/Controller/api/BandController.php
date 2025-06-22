@@ -63,14 +63,15 @@ class BandController extends AbstractAPIController
         $imgsFolder = $appKernel->getProjectDir() . '/var/band-imgs';
         $body = json_decode($request->request->get('body'), true);
         $files = $request->files->all();
-
-        foreach ($band->getImgs() as $value) {
-            unlink($imgsFolder . '/' . $value);
-        }
-        $band->setImgs([]);
-        foreach ($files as $file) {
-            $band->addImg($file->getClientOriginalName());
-            $file->move($imgsFolder, $file->getClientOriginalName());
+        if (!empty($files)) {
+            foreach ($band->getImgs() as $value) {
+                unlink($imgsFolder . '/' . $value);
+            }
+            $band->setImgs([]);
+            foreach ($files as $file) {
+                $band->addImg($file->getClientOriginalName());
+                $file->move($imgsFolder, $file->getClientOriginalName());
+            }
         }
         if (array_key_exists('presentation', $body)) {
             $band->setPresentation($body['presentation']);
