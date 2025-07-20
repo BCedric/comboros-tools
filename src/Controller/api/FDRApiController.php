@@ -83,14 +83,13 @@ class FDRApiController extends AbstractAPIController
             return $acc;
         }, []);
 
-
         if (!empty($hosting)) {
             $docFields = array_merge($docFields, [
                 ['tag' => 'hebergement', 'type' => 'array', 'value' => $hosting],
             ]);
         } else {
             $docFields = array_merge($docFields, [
-                ['tag' => 'hebergement', 'type' => 'string', 'value' => $hosting],
+                ['tag' => 'hebergement', 'type' => 'string', 'value' => ''],
             ]);
         }
 
