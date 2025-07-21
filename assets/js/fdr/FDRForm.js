@@ -13,16 +13,16 @@ const FDRForm = () => {
   const [balanceTime, setBalanceTime] = useState('')
 
   const [groupSelectedIndex, setGroupSelectedIndex] = useState(null)
-  const [workshopSelectedIndex, setWorkshopSelectedIndex] = useState(null)
+  const [workshopsSelectedIndex, setWorkshopsSelectedIndex] = useState([])
   const groupSelected = useMemo(
     () => groups[groupSelectedIndex],
     [groupSelectedIndex, groups]
   )
 
   const [hosting, setHosting] = useState([])
-  const workshopSelected = useMemo(
-    () => workshops[workshopSelectedIndex],
-    [workshopSelectedIndex, workshops]
+  const workshopsSelected = useMemo(
+    () => workshops.filter((w) => workshopsSelectedIndex.includes(w.id)),
+    [workshopsSelectedIndex, workshops]
   )
   const [format, setFormat] = useState('docx')
   const [referent, setReferent] = useState({ name: '', mail: '', tel: '' })
@@ -40,7 +40,7 @@ const FDRForm = () => {
       data: {
         format,
         group: groupSelected.id,
-        workshop: workshopSelected != null ? workshopSelected.id : null,
+        workshops: workshopsSelectedIndex,
         referent,
         balanceTime,
         hosting
@@ -102,11 +102,14 @@ const FDRForm = () => {
             options={workshops.map((g, index) => ({
               ...g,
               label: g.name,
-              value: index
+              value: g.id
             }))}
-            value={workshopSelectedIndex}
-            onChange={({ value }) => setWorkshopSelectedIndex(value)}
+            value={workshopsSelectedIndex}
+            onChange={(values) =>
+              setWorkshopsSelectedIndex(values.map((v) => v.id))
+            }
             type="select"
+            multi
           />
           <CustomFormField
             label="Horaire de balances"
@@ -132,10 +135,10 @@ const FDRForm = () => {
           dans le tableau de programmation
         </p>
       )}
-      {workshopSelected != null && workshopSelected.room === null && (
+      {workshopsSelected.some((w) => w.room === null) && (
         <p className="alert alert-danger">
-          Le stage sélectionné n'est pas associé à une salle dans le tableau
-          des stages
+          Le stage sélectionné n'est pas associé à une salle dans le tableau des
+          stages
         </p>
       )}
     </CustomForm>

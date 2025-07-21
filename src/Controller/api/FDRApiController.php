@@ -61,17 +61,15 @@ class FDRApiController extends AbstractAPIController
             ]);
         }
 
-        $workshopId = $body['workshop'];
-        if ($workshopId != null) {
-            $workshop = $workshopRepository->find($workshopId);
-            $docFields = array_merge($docFields, [
-                ['tag' => 'stage', 'type' => 'string', 'value' => $workshop->__toString()],
-            ]);
-        } else {
-            $docFields = array_merge($docFields, [
-                ['tag' => 'stage', 'type' => 'string', 'value' => ''],
-            ]);
-        }
+        $workshopIds = $body['workshops'];
+        $workshopsStr = join(", \n", array_map(
+            fn($id) => $workshopRepository->find($id)->__toString(),
+            $workshopIds
+        ));
+        $docFields = array_merge($docFields, [
+            ['tag' => 'stage', 'type' => 'string', 'value' => $workshopsStr],
+        ]);
+
         $hosting = array_reduce($body['hosting'], function ($acc, $item) use ($artistRepository) {
             if (!empty($item['value'])) {
                 $artist = $artistRepository->find($item['id']);

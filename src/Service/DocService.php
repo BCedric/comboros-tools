@@ -124,11 +124,12 @@ class DocService
             if ($type === 'image' && is_file('/tmp/' . $value)) {
                 $templateProcessor->setImageValue($tag, ['path' => '/tmp/' . $value, 'width' => $field['width'], 'height' => 10000000]);
             } else if ($type === 'array') {
-                $table = new Table(array('borderSize' => 1, 'borderColor' => 'CCCCCC', 'width' => 100 * 100, 'unit' => TblWidth::PERCENT));
+                $table = new Table(array('fontFamily' => 'Calibri', 'borderSize' => 1, 'borderColor' => 'CCCCCC', 'width' => 100 * 100, 'unit' => TblWidth::PERCENT));
+
                 foreach ($value as $row) {
                     $table->addRow();
                     foreach ($row as $cellValue) {
-                        $table->addCell($cellValue['width'])->addText($cellValue['value']);
+                        $table->addCell($cellValue['width'])->addText($cellValue['value'])->setFontStyle(['name' => 'Calibri', 'size' => 10]);
                     }
                 }
                 $templateProcessor->setComplexValue($tag, $table);
