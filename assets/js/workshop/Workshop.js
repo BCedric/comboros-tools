@@ -17,7 +17,15 @@ const Workshop = () => {
   const confirm = useConfirm()
 
   const wsSorted = useMemo(
-    () => workshops.sort((ws1, ws2) => ws1.start > ws2.start),
+    () =>
+      workshops.sort((ws1, ws2) => {
+        const momentStart1 = moment(ws1.start)
+        const momentStart2 = moment(ws2.start)
+        if (momentStart1.isSame(momentStart2)) {
+          return ws1.name > ws2.name
+        }
+        return momentStart1.isAfter(momentStart2)
+      }),
     [workshops]
   )
   const daysWS = useMemo(() => {
@@ -80,25 +88,25 @@ const Workshop = () => {
         </a>
       </div>
       <div>
-        {daysWS.map((d, key) => (
-          <div key={key}>
-            <h2>{d.format('LL')}</h2>
-            <ul>
-              {wsSorted
-                .filter((w) => {
-                  return moment(w.start).date() === d.date()
-                })
-                .map((w, k) => (
-                  <WorkshopLine
-                    workshop={w}
-                    key={k}
-                    onClickEdit={() => onClickEdit(w)}
-                    onClickDelete={() => onClickDelete(w)}
-                  />
-                ))}
-            </ul>
-          </div>
-        ))}
+        <div>
+          {wsSorted.map((w, k) => (
+            <>
+              {(wsSorted[k - 1] == null ||
+                moment(w.start).format('LL') !=
+                  moment(wsSorted[k - 1].start).format('LL')) && (
+                <h2>{moment(w.start).format('LL')}</h2>
+              )}
+              <WorkshopLine
+                workshop={w}
+                key={k}
+                onClickEdit={() => onClickEdit(w)}
+                onClickDelete={() => onClickDelete(w)}
+              />
+              {wsSorted[k + 1] != null &&
+                !moment(wsSorted[k + 1].start).isSame(w.start) && <br />}
+            </>
+          ))}
+        </div>
       </div>
     </div>
   )
