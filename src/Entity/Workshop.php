@@ -38,6 +38,9 @@ class Workshop
     #[ORM\Column(nullable: true)]
     private ?int $gauge = null;
 
+    #[ORM\Column(length: 255, options: ['default' => "Musique"])]
+    private ?string $type = 'Musique';
+
     public function getId(): ?int
     {
         return $this->id;
@@ -143,6 +146,18 @@ class Workshop
     public function setGauge(?int $gauge): static
     {
         $this->gauge = $gauge;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

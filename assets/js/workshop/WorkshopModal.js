@@ -48,6 +48,17 @@ const WorkshopModal = ({
             onChange={(value) => setFormFields({ ...formFields, name: value })}
           />
           <CustomFormField
+            type="select"
+            options={['Musique', 'Danse'].map((value) => ({
+              label: value,
+              value
+            }))}
+            value={formFields.type}
+            onChange={({ value }) =>
+              setFormFields({ ...formFields, type: value })
+            }
+          />
+          <CustomFormField
             label="Date"
             type="date"
             value={formFields.date}

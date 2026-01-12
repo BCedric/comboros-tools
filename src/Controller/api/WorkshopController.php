@@ -53,6 +53,9 @@ class WorkshopController extends AbstractAPIController
         if (array_key_exists('gauge', $body) && $body['gauge'] != null) {
             $workshop->setGauge($body['gauge']);
         }
+        if (array_key_exists('type', $body) && $body['type'] != null) {
+            $workshop->setType($body['type']);
+        }
 
         $em->persist($workshop);
 
