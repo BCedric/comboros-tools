@@ -6,6 +6,7 @@ import {
 import React, { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import comborosImg from '../../img/comboros9.png'
+import Wysiwyg from './Wysiwyg'
 
 const ComForm = () => {
   const { accessCode } = useParams()
@@ -37,10 +38,17 @@ const ComForm = () => {
     link: ''
   })
 
+const isPresentationValid = useMemo(
+  () => formFields.presentation.replace(/\n/g, '') != '',
+  [formFields.presentation]
+)
+
   const isFormValid = useMemo(() => {
     const { presentation, members } = formFields
-    return presentation != '' && members != ''
+    return isPresentationValid && members != ''
   }, [formFields])
+
+  console.log(formFields);
 
   const navigate = useNavigate()
 
@@ -61,7 +69,7 @@ const ComForm = () => {
 
   return (
     <>
-      <div className='flex center'>
+      <div className="flex center">
         <img className="form-header-img" src={comborosImg} />
       </div>
       <h1>Formulaire des éléments de communication</h1>
@@ -93,11 +101,13 @@ const ComForm = () => {
                 fieldName="members"
                 isValid={formFields.members != ''}
               />
-              <CustomFormField
+              <Wysiwyg
                 label="Texte de présentation (5-6 lignes)"
-                type="textarea"
-                fieldName="presentation"
-                isValid={formFields.presentation != ''}
+                value={formFields.presentation}
+                onChange={(value) =>
+                  setFormFields((prev) => ({ ...prev, presentation: value }))
+                }
+                isValid={isPresentationValid}
               />
               <CustomFormField
                 label="Lien vers les ressources numériques : site, vidéos ou réseaux sociaux, si vous en disposez."
