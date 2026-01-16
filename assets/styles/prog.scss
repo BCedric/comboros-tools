@@ -8,9 +8,11 @@
   .calendar-event {
     overflow: hidden;
     height: inherit;
-    .event-header {
-      display: flex;
-      justify-content: space-between;
+    position: relative;
+    .icons-containers {
+      position: absolute;
+      right: 0;
+      top: 0;
     }
     .event-content {
       padding: 0.25em;

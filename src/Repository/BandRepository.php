@@ -27,6 +27,19 @@ class BandRepository extends ServiceEntityRepository
             ->getResult());
     }
 
+    public function findAll($orderBy = null): array
+    {
+
+        $q = $this->createQueryBuilder('b');
+        if ($orderBy) {
+
+            $q->orderBy('b.' . $orderBy);
+        }
+        return $q->getQuery()
+            ->getResult()
+        ;
+    }
+
     //    /**
     //     * @return Band[] Returns an array of Band objects
     //     */

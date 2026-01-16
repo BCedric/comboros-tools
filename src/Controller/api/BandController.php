@@ -22,7 +22,7 @@ class BandController extends AbstractAPIController
     #[Route('', name: 'get', methods: ['GET'])]
     public function get(BandRepository $bandRepository)
     {
-        return new JsonResponse($this->serializer->normalize($bandRepository->findAll()));
+        return new JsonResponse($this->serializer->normalize($bandRepository->findAll('name')));
     }
 
     #[Route('', name: 'post', methods: ['POST'])]
