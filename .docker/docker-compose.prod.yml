@@ -33,6 +33,7 @@ services:
       - localNetwork
     ports:
       - '${DB_PORT}:3306'
+    restart: unless-stopped
 
 volumes:
   db_data:
