@@ -62,3 +62,16 @@
     max-width: 200px;
   }
 }
+
+.prog-table {
+  .numeric-link,
+  .other-elements {
+    max-width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .band-imgs img {
+    max-width: 100px;
+  }
+}
