@@ -4,12 +4,13 @@ import React from 'react'
 
 const ProgTable = ({ bands }) => {
   return (
-    <div className='prog-table'>
+    <div className="prog-table">
       <TableSearch
         items={bands}
         filter={(band, search) =>
-          band.name.includes(search) ||
-          (band.members != null && band.members.includes(search))
+          band.name.toLowerCase().includes(search.toLowerCase()) ||
+          (band.members != null &&
+            band.members.toLowerCase().includes(search.toLowerCase()))
         }
         fields={[
           { label: 'Nom', get: (band) => band.name },
@@ -32,16 +33,16 @@ const ProgTable = ({ bands }) => {
           {
             label: 'Lien vers les ressources numériques',
             get: (band) => band.link,
-            className: "numeric-link"
+            className: 'numeric-link'
           },
           {
             label: 'Autres éléments de communication',
             get: (band) => band.otherElements,
-            className: "other-elements"
+            className: 'other-elements'
           },
           {
             label: 'Photos',
-            className: "band-imgs",
+            className: 'band-imgs',
             get: (band) =>
               band.imgs.map((img, index) => (
                 <img

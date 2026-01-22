@@ -1,11 +1,9 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { useBandsContext } from '../shared/BandsProvider'
-import BandDetails from './BandDetails'
 import ProgCalendar from './ProgCalendar'
 import ProgTable from './ProgTable'
 
 const Prog = () => {
-  const [selectedBandId, setSelectedBandId] = useState(null)
   const { bands, setBands } = useBandsContext()
 
   const displayModes = [
@@ -23,15 +21,10 @@ const Prog = () => {
 
   const [displayMode, setDisplayMode] = useState(displayModes[0].value)
 
-  const selectedBand = useMemo(
-    () => bands.find((b) => b.id === parseInt(selectedBandId)),
-    [selectedBandId]
-  )
-
   return (
     <>
       <h1>Programmation</h1>
-      <div className='flex end'>
+      <div className="flex end">
         <div class="btn-group">
           {displayModes.map(({ label, value }, index) => (
             <button
@@ -46,12 +39,6 @@ const Prog = () => {
         </div>
       </div>
       {displayModes.find((m) => m.value === displayMode).element()}
-      {selectedBand != null && (
-        <BandDetails
-          close={() => setSelectedBandId(null)}
-          band={selectedBand}
-        />
-      )}
     </>
   )
 }
