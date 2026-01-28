@@ -4,14 +4,14 @@ import { mdiPlus } from '@mdi/js'
 import Icon from '@mdi/react'
 import moment from 'moment'
 import React, { useEffect, useMemo, useState } from 'react'
+import WorkshopForm from './WorkshopForm'
 import WorkshopLine from './WorkshopLine'
-import WorkshopModal from './WorkshopModal'
 
 moment.locale('fr')
 
 const Workshop = () => {
   const [workshops, setWorkshops] = useState([])
-  const [showModal, setShowModal] = useState(false)
+  const [showForm, setShowForm] = useState(false)
   const [formFields, setFormFields] = useState({})
 
   const confirm = useConfirm()
@@ -41,6 +41,9 @@ const Workshop = () => {
 
   const initFormFields = () =>
     setFormFields({
+      name: '',
+      description: '',
+      level: '',
       date: daysWS.length > 0 ? daysWS[0].format('YYYY-MM-DD') : null,
       time: 'morning'
     })
@@ -50,7 +53,7 @@ const Workshop = () => {
   }, [daysWS])
 
   const onClickEdit = (w) => {
-    setShowModal(true)
+    setShowForm(true)
     setFormFields({
       ...w,
       date: moment(w.start).format('YYYY-MM-DD'),
@@ -65,20 +68,15 @@ const Workshop = () => {
 
   return (
     <div>
-      <WorkshopModal
-        show={showModal}
-        setShow={setShowModal}
-        formFields={formFields}
-        setFormFields={setFormFields}
-        setWorkshops={setWorkshops}
-        initFormFields={initFormFields}
-      />
       <div className="flex space-between align-center">
         <div className="flex spaced-inline">
           <h1>Stages</h1>
           <button
             className="btn btn-primary"
-            onClick={() => setShowModal(true)}
+            onClick={() => {
+              initFormFields()
+              setShowForm(true)
+            }}
           >
             <Icon path={mdiPlus} size={1} />
           </button>
@@ -87,7 +85,7 @@ const Workshop = () => {
           Exporter au format Excel
         </a>
       </div>
-      <div>
+      <div className="flex">
         <div>
           {wsSorted.map((w, k) => (
             <>
@@ -107,6 +105,16 @@ const Workshop = () => {
             </>
           ))}
         </div>
+        {showForm && (
+          <WorkshopForm
+            formFields={formFields}
+            setFormFields={setFormFields}
+            onCancel={() => {
+              setShowForm(false)
+              initFormFields()
+            }}
+          />
+        )}
       </div>
     </div>
   )
