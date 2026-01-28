@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from 'react'
-import EditableCalendar from '../shared/editable-calendar/EditableCalendar'
-import { useConfirm } from '@b-cedric/react-common-bootstrap/modal'
 import { CustomFormField } from '@b-cedric/react-common-bootstrap/form'
+import { useConfirm } from '@b-cedric/react-common-bootstrap/modal'
+import React, { useMemo, useState } from 'react'
 import RoomFormField from '../shared/RoomFormField'
+import EditableCalendar from '../shared/editable-calendar/EditableCalendar'
 import BandDetails from './BandDetails'
 
 const formatBand = (b) => ({
@@ -14,13 +14,13 @@ const formatBand = (b) => ({
 
 const ProgCalendar = ({ bands, setBands }) => {
   const confirm = useConfirm()
-  
+
   const [selectedBandId, setSelectedBandId] = useState(null)
-   const selectedBand = useMemo(
-     () => bands.find((b) => b.id === parseInt(selectedBandId)),
-     [selectedBandId]
-   )
-    
+  const selectedBand = useMemo(
+    () => bands.find((b) => b.id === parseInt(selectedBandId)),
+    [selectedBandId]
+  )
+
   return (
     <>
       <EditableCalendar
@@ -49,7 +49,21 @@ const ProgCalendar = ({ bands, setBands }) => {
             />
             <RoomFormField
               value={newEvent.room == null ? null : newEvent.room.id}
-              onChange={(event) => setNewEvent({ ...newEvent, room: event })}
+              onChange={(value) => setNewEvent({ ...newEvent, room: value })}
+            />
+            <CustomFormField
+              label="Type"
+              type="select"
+              value={newEvent.type}
+              options={[
+                { value: 'bal', label: 'Bal' },
+                { value: 'concert', label: 'Concert' },
+                { value: 'conference', label: 'Conférence' },
+                { value: 'sport', label: 'Sport' }
+              ]}
+              onChange={({ value }) => {
+                setNewEvent({ ...newEvent, type: value })
+              }}
             />
           </div>
         )}

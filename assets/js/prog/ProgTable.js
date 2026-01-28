@@ -14,6 +14,7 @@ const ProgTable = ({ bands }) => {
         }
         fields={[
           { label: 'Nom', get: (band) => band.name },
+          { label: 'Type', get: (band) => band.type },
           {
             label: 'Artistes',
             get: (band) =>

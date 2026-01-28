@@ -55,6 +55,9 @@ class Band
     #[ORM\Column(length: 255)]
     private ?string $formComAccessCode = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $type = "bal";
+
     public function __construct()
     {
         $this->artists = new ArrayCollection();
@@ -277,6 +280,18 @@ class Band
     public function setFormComAccessCode(string $formComAccessCode): static
     {
         $this->formComAccessCode = $formComAccessCode;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }
