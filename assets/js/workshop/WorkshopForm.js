@@ -6,9 +6,13 @@ import {
 import React from 'react'
 import RoomFormField from '../shared/RoomFormField'
 
-const WorkshopForm = ({ formFields, setFormFields, onCancel }) => {
+const WorkshopForm = ({ formFields, setFormFields, onCancel, onSubmit }) => {
   return (
-    <CustomForm onCancel={onCancel} className="flex1 workshop-form">
+    <CustomForm
+      onCancel={onCancel}
+      className="flex1 workshop-form"
+      onSubmit={onSubmit}
+    >
       <CustomFormField
         label="Intitulé du stage"
         value={formFields.name}

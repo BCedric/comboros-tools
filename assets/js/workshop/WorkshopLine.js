@@ -3,9 +3,16 @@ import Icon from '@mdi/react'
 import moment from 'moment'
 import React from 'react'
 
-const WorkshopLine = ({ workshop, onClickEdit, onClickDelete }) => {
+const WorkshopLine = ({
+  workshop,
+  onClickEdit,
+  onClickDelete,
+  isSameTimeSamePlaceOtherWs
+}) => {
   return (
-    <li className="flex align-center workshop-line">
+    <li
+      className={`flex align-center workshop-line ${isSameTimeSamePlaceOtherWs ? 'text-danger' : ''}`}
+    >
       <span className="bold">{workshop.name} </span>&nbsp;
       <span> Le {moment(workshop.start).format('LL')} </span>&nbsp;
       {workshop.room != null && <span>à {`${workshop.room.label}`}&nbsp;</span>}

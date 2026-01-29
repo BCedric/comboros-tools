@@ -3,7 +3,7 @@ import { Http } from '@b-cedric/react-common-bootstrap/services'
 import { mdiPlus } from '@mdi/js'
 import Icon from '@mdi/react'
 import moment from 'moment'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import WorkshopForm from './WorkshopForm'
 import WorkshopLine from './WorkshopLine'
 
@@ -66,6 +66,33 @@ const Workshop = () => {
       Http.delete(`/workshop/${w.id}`).then(setWorkshops)
     )
 
+  const onSubmit = () => {
+    return Http.post('/workshop', {
+      ...formFields,
+      room: formFields.room != null ? formFields.room.id : null,
+      start: moment(
+        `${formFields.date} ${
+          formFields.time === 'morning' ? '10:00' : '14:30'
+        }`
+      ).format(),
+      end: moment(
+        `${formFields.date} ${
+          formFields.time === 'morning' ? '13:00' : '17:30'
+        }`
+      ).format()
+    })
+      .then((list) => setWorkshops(list))
+      .then(() => initFormFields())
+  }
+
+  const isSameTimeSamePlaceOtherWs = useCallback(
+    (ws) =>
+      workshops.some(
+        (w) => w.id != ws.id && w.room.id === ws.room.id && w.start === ws.start
+      ),
+    [workshops]
+  )
+
   return (
     <div>
       <div className="flex space-between align-center">
@@ -99,6 +126,7 @@ const Workshop = () => {
                 key={k}
                 onClickEdit={() => onClickEdit(w)}
                 onClickDelete={() => onClickDelete(w)}
+                isSameTimeSamePlaceOtherWs={isSameTimeSamePlaceOtherWs(w)}
               />
               {wsSorted[k + 1] != null &&
                 !moment(wsSorted[k + 1].start).isSame(w.start) && <br />}
@@ -113,6 +141,7 @@ const Workshop = () => {
               setShowForm(false)
               initFormFields()
             }}
+            onSubmit={onSubmit}
           />
         )}
       </div>
