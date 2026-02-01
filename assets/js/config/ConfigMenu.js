@@ -25,6 +25,11 @@ const ConfigMenu = () => {
         </Link>
       </li>
       <li className="nav-item">
+        <Link className="nav-link" to="/config/artist-liaison-officer">
+          Référents AA
+        </Link>
+      </li>
+      <li className="nav-item">
         <Link className="nav-link" to="/config/reset">
           Reset
         </Link>

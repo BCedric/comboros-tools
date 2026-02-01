@@ -3,6 +3,7 @@ import { RouterProvider, createHashRouter } from 'react-router-dom'
 import { AdminRoute } from './AdminRoute'
 import { ProtectedRoute } from './ProtectedRoute'
 import ComForm from './com-form/ComForm'
+import ConfigArtistLiaisonOfficer from './config/ConfigArtistLiaisonOfficer'
 import ConfigArtisteAnswer from './config/ConfigArtisteAnswer'
 import ConfigFDR from './config/ConfigFDR'
 import ConfigReset from './config/ConfigReset'
@@ -98,6 +99,10 @@ const router = createHashRouter([
           {
             path: 'tech',
             element: <ConfigTech />
+          },
+          {
+            path: 'artist-liaison-officer',
+            element: <ConfigArtistLiaisonOfficer />
           },
           {
             path: 'reset',

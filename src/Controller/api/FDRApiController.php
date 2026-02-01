@@ -2,6 +2,7 @@
 
 namespace App\Controller\api;
 
+use App\Repository\ArtistLiaisonOfficerRepository;
 use App\Repository\ArtistRepository;
 use App\Repository\BandRepository;
 use App\Repository\ConfigRepository;
@@ -29,7 +30,8 @@ class FDRApiController extends AbstractAPIController
         HttpClientInterface $http,
         BandRepository $bandRepository,
         WorkshopRepository $workshopRepository,
-        ArtistRepository $artistRepository
+        ArtistRepository $artistRepository,
+        ArtistLiaisonOfficerRepository $artistLiaisonOfficerRepository
     ) {
         $body = json_decode($request->getContent(), true);
         $urlFDR = $configRepository->findConfigValue('urlFDR');
@@ -46,10 +48,19 @@ class FDRApiController extends AbstractAPIController
             ['tag' => 'depart', 'type' => 'string', 'value' => $band->getDepartures()],
             ['tag' => 'concert', 'type' => 'string', 'value' => $band->getConcert()],
             ['tag' => 'balances', 'type' => 'string', 'value' => $body['balanceTime'] === '' ?  '' : $band->getBalances(new DateTime($body['balanceTime']))],
-            ['tag' => 'nom_accueil_ref', 'type' => 'string', 'value' => $body['referent']['name']],
-            ['tag' => 'mail_accueil_ref', 'type' => 'string', 'value' => $body['referent']['mail']],
-            ['tag' => 'tel_accueil_ref', 'type' => 'string', 'value' => $body['referent']['tel']],
+            ['tag' => 'nom_accueil_ref', 'type' => 'string', 'value' => $officer->getFirstname() . ' ' . $officer->getLastname()],
+            ['tag' => 'mail_accueil_ref', 'type' => 'string', 'value' => $officer->getMail()],
+            ['tag' => 'tel_accueil_ref', 'type' => 'string', 'value' => $officer->getPhone()],
         ];
+
+        $officer = $artistLiaisonOfficerRepository->find($body['referent']);
+        if ($officer != null) {
+            $docFields = [
+                ['tag' => 'nom_accueil_ref', 'type' => 'string', 'value' => $officer->getFirstname() . ' ' . $officer->getLastname()],
+                ['tag' => 'mail_accueil_ref', 'type' => 'string', 'value' => $officer->getMail()],
+                ['tag' => 'tel_accueil_ref', 'type' => 'string', 'value' => $officer->getPhone()],
+            ];
+        }
 
         $tech = $band->getRoom()->getTech();
         if ($tech != null) {

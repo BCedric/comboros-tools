@@ -9,6 +9,7 @@ import FDRArtistsTable from './FDRArtistsTable'
 
 const FDRForm = () => {
   const [groups, setGroups] = useState([])
+  const [officers, setOfficers] = useState([])
   const [workshops, setworkshops] = useState([])
   const [balanceTime, setBalanceTime] = useState('')
 
@@ -25,11 +26,14 @@ const FDRForm = () => {
     [workshopsSelectedIndex, workshops]
   )
   const [format, setFormat] = useState('docx')
-  const [referent, setReferent] = useState({ name: '', mail: '', tel: '' })
+  const [referent, setReferent] = useState(null)
 
   useEffect(() => {
     Http.get('/band').then((groups) => setGroups(groups))
     Http.get('/workshop').then((groups) => setworkshops(groups))
+    Http.get('/artist-liaison-officer').then((officers) =>
+      setOfficers(officers)
+    )
   }, [])
 
   const submit = () =>
@@ -56,26 +60,20 @@ const FDRForm = () => {
     })
 
   return (
-    <CustomForm onSubmit={submit} disabled={groupSelected == null}>
+    <CustomForm
+      onSubmit={submit}
+      disabled={groupSelected == null || referent == null}
+    >
       <div className="form-line">
         <CustomFormField
-          label="Nom - Prénom référent.e accueil"
-          value={referent.name}
-          onChange={(value) =>
-            setReferent((prev) => ({ ...prev, name: value }))
-          }
-        />
-        <CustomFormField
-          label="Mail référent.e accueil"
-          value={referent.mail}
-          onChange={(value) =>
-            setReferent((prev) => ({ ...prev, mail: value }))
-          }
-        />
-        <CustomFormField
-          label="Téléphone référent.e accueil"
-          value={referent.tel}
-          onChange={(value) => setReferent((prev) => ({ ...prev, tel: value }))}
+          label="Référent.e accueil artiste"
+          type="select"
+          options={officers.map((o) => ({
+            label: `${o.firstname} ${o.lastname}`,
+            value: o.id
+          }))}
+          value={referent}
+          onChange={({ value }) => setReferent(value)}
         />
       </div>
       <CustomFormField
