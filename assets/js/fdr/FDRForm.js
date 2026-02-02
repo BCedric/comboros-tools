@@ -6,6 +6,7 @@ import {
 import axios from 'axios'
 import React, { useEffect, useMemo, useState } from 'react'
 import FDRArtistsTable from './FDRArtistsTable'
+import FDRLaunchFormControl from './FDRLaunchFormControl'
 
 const FDRForm = () => {
   const [groups, setGroups] = useState([])
@@ -27,6 +28,7 @@ const FDRForm = () => {
   )
   const [format, setFormat] = useState('docx')
   const [referent, setReferent] = useState(null)
+  const [launches, setLaunches] = useState([])
 
   useEffect(() => {
     Http.get('/band').then((groups) => setGroups(groups))
@@ -47,7 +49,8 @@ const FDRForm = () => {
         workshops: workshopsSelectedIndex,
         referent,
         balanceTime,
-        hosting
+        hosting,
+        launches
       },
       headers: { 'X-AUTH-TOKEN': window.USER_API_KEY }
     }).then((response) => {
@@ -124,6 +127,11 @@ const FDRForm = () => {
               { value: 'docx', label: 'docx' },
               { value: 'pdf', label: 'pdf' }
             ]}
+          />
+          <FDRLaunchFormControl
+            formfield={launches}
+            setFormField={setLaunches}
+            firstDay="2025-08-08"
           />
         </>
       )}

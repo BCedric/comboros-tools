@@ -39,6 +39,7 @@ class FDRApiController extends AbstractAPIController
         /** @var Band */
         $band = $bandRepository->find($body['group']);
 
+        $officer = $artistLiaisonOfficerRepository->find($body['referent']);
 
         $docFields = [
             ['tag' => 'groupe', 'type' => 'string', 'value' => $band->getName()],
@@ -99,6 +100,15 @@ class FDRApiController extends AbstractAPIController
         } else {
             $docFields = array_merge($docFields, [
                 ['tag' => 'hebergement', 'type' => 'string', 'value' => ''],
+            ]);
+        }
+        if (!empty($body['launches'])) {
+            $docFields = array_merge($docFields, [
+                ['tag' => 'repas', 'type' => 'string', 'value' => "Repas pris en charge : " . implode(', ', $body['launches'])],
+            ]);
+        } else {
+            $docFields = array_merge($docFields, [
+                ['tag' => 'repas', 'type' => 'string', 'value' => ''],
             ]);
         }
 
