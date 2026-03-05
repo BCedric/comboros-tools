@@ -75,4 +75,11 @@
     max-width: 200px;
     margin: 0.1em;
   }
+
+  .prog-table-presentation {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+  }
 }

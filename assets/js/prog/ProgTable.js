@@ -1,4 +1,5 @@
 import { TableSearch } from '@b-cedric/react-common-bootstrap/list'
+import copy from 'copy-to-clipboard'
 import moment from 'moment'
 import React from 'react'
 
@@ -29,11 +30,29 @@ const ProgTable = ({ bands }) => {
             get: (band) => moment(band.end).format('Do MMMM YYYY, H:mm:ss ')
           },
           { label: 'Lieu', get: (band) => band.room.label },
-          { label: 'Présentation', get: (band) => band.presentation },
+          {
+            label: 'Présentation',
+            get: (band) => (
+              <div>
+                <p
+                  className="prog-table-presentation"
+                  title={band.presentation}
+                >
+                  {band.presentation}
+                </p>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => copy(band.presentation)}
+                >
+                  Copier
+                </button>
+              </div>
+            )
+          },
           { label: 'Membres', get: (band) => band.members },
           {
             label: 'Lien vers les ressources numériques',
-            get: (band) => band.link,
+            get: (band) => <a href={band.link}>{band.link}</a>,
             className: 'numeric-link'
           },
           {
@@ -55,51 +74,6 @@ const ProgTable = ({ bands }) => {
           }
         ]}
       />
-      {/* <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Artistes</th>
-            <th>Heure de début</th>
-            <th>Heure de fin</th>
-            <th>Lieu</th>
-            <th>Présentation</th>
-            <th>Membres</th>
-            <th>Lien vers les ressources numériques</th>
-            <th>Autres éléments de communication</th>
-            <th>Photos</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bands.map((band, index) => (
-            <tr>
-              <td>{band.name}</td>
-              <td>
-                {band.artists
-                  .map((a) => `${a.firstname} ${a.lastname}`)
-                  .join(', ')}
-              </td>
-              <td>{moment(band.start).format('Do MMMM YYYY, H:mm:ss ')}</td>
-              <td>{moment(band.end).format('Do MMMM YYYY, H:mm:ss ')}</td>
-              <td>{band.room.label}</td>
-              <td>{band.presentation}</td>
-              <td>{band.members}</td>
-              <td>{band.link}</td>
-              <td>{band.otherElements}</td>
-              <td>
-                {band.imgs.map((img, index) => (
-                  <img
-                    className="band-detail-img"
-                    key={index}
-                    src={`${window.location.origin}/api/band/img/${img}`}
-                  />
-                ))}
-              </td>
-            </tr>
-          ))}
-          <tr></tr>
-        </tbody>
-      </table> */}
     </div>
   )
 }
