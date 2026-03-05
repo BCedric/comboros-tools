@@ -11,16 +11,20 @@ const WorkshopLine = ({
 }) => {
   return (
     <li
-      className={`flex align-center workshop-line ${isSameTimeSamePlaceOtherWs ? 'text-danger' : ''}`}
+      className={`flex align-center workshop-line row ${
+        isSameTimeSamePlaceOtherWs ? 'text-danger' : ''
+      }`}
     >
-      <span className="bold">{workshop.name} </span>&nbsp;
-      <span> Le {moment(workshop.start).format('LL')} </span>&nbsp;
-      {workshop.room != null && <span>à {`${workshop.room.label}`}&nbsp;</span>}
-      <span className="italic">
+      <span className="bold col-6">{workshop.name} </span>&nbsp;
+      {/* <span className="col"> Le {moment(workshop.start).format('LL')} </span> */}
+      {workshop.room != null && (
+        <span className="col">{`${workshop.room.label}`}&nbsp;</span>
+      )}
+      <span className="italic col">
         de {moment(workshop.start).format('LT')} à{' '}
         {moment(workshop.end).format('LT')}
       </span>
-      <span>
+      <span className="col">
         <Icon
           className="clickable text-info"
           path={mdiPencil}

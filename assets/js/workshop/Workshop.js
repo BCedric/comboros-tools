@@ -113,7 +113,7 @@ const Workshop = () => {
         </a>
       </div>
       <div className="flex">
-        <div>
+        <div className='container'>
           {wsSorted.map((w, k) => (
             <>
               {(wsSorted[k - 1] == null ||
