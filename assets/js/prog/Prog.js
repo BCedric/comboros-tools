@@ -23,7 +23,12 @@ const Prog = () => {
 
   return (
     <>
-      <h1>Programmation</h1>
+      <div className="flex space-between align-center">
+        <h1>Programmation</h1>
+        <a className="btn btn-success" href="./export/band">
+          Exporter au format Excel
+        </a>
+      </div>
       <div className="flex end">
         <div class="btn-group">
           {displayModes.map(({ label, value }, index) => (
