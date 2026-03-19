@@ -135,7 +135,7 @@ const ArtistsAdminForm = ({
       />
       <CustomFormField
         label="Numéro de téléphone"
-        type="number"
+        type="tel"
         fieldName="phoneNumber"
         isValid={formFields.phoneNumber != ''}
       />
