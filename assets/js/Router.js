@@ -2,7 +2,9 @@ import React from 'react'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
 import { AdminRoute } from './AdminRoute'
 import { ProtectedRoute } from './ProtectedRoute'
+import ArtistsForm from './artists/form/ArtistsForm'
 import ComForm from './com-form/ComForm'
+import ComFormValidation from './com-form/ComFormValidation'
 import ConfigArtistLiaisonOfficer from './config/ConfigArtistLiaisonOfficer'
 import ConfigArtisteAnswer from './config/ConfigArtisteAnswer'
 import ConfigFDR from './config/ConfigFDR'
@@ -15,7 +17,6 @@ import FDRMenu from './fdr/FDRMenu'
 import OrphanArtists from './fdr/OrphanArtists'
 import Prog from './prog/Prog'
 import Workshop from './workshop/Workshop'
-import ComFormValidation from './com-form/ComFormValidation'
 
 const router = createHashRouter([
   {
@@ -109,6 +110,19 @@ const router = createHashRouter([
             element: <ConfigReset />
           }
         ]
+      }
+    ]
+  },
+  {
+    path: 'artist',
+    children: [
+      {
+        path: 'form',
+        element: (
+          <div className="content-unprotected">
+            <ArtistsForm />
+          </div>
+        )
       }
     ]
   },

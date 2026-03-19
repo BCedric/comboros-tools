@@ -1,13 +1,15 @@
 // Variable overrides first
 
-
-@import 'variables.scss';
+@use 'variables.scss' as *;
+@use '~@b-cedric/react-common-bootstrap/styles/variables.scss' as b-cedric
+  with($primary: $primary);
 
 // Then import Bootstrap
 @import 'bootstrap';
 
 @import '~@b-cedric/react-common-bootstrap/styles/styles.scss';
 
+@import 'artist-form.scss';
 @import 'content.scss';
 @import 'form.scss';
 @import 'login-form.scss';
