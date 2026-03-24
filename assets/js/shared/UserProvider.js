@@ -1,41 +1,62 @@
 import { Http } from '@b-cedric/react-common-bootstrap'
 import { useAlertsContext } from '@b-cedric/react-common-bootstrap/alert'
 import moment from 'moment'
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 
 const UserContext = React.createContext()
 const UserProvider = ({ children }) => {
-  const [isLogged, setIsLogged] = useState(() => {
+  const [user, setUser] = useState(() => {
     const session = JSON.parse(localStorage.getItem('session'))
     if (session != null && moment(session.time).add(1, 'h') > moment()) {
-      return true
+      window.USER_API_KEY = session.user.accessToken
+      return session.user
     }
-    return false
+    return null
   })
 
-  const { addAlert } = useAlertsContext()
+  const setUserAndAPIKey = useCallback((user) => {
+    window.USER_API_KEY = user.accessToken
+    setUser(user)
+  }, [])
 
-  const user = useMemo(() => {
-    const session = JSON.parse(localStorage.getItem('session'))
-    return isLogged ? session.user : null
-  }, [isLogged])
+  const setSession = useCallback((session) => {
+    if (session == null) {
+      setUser(null)
+    } else {
+      localStorage.setItem('session', JSON.stringify(session))
+      setUserAndAPIKey(session.user)
+    }
+  }, [])
+
+  const isLogged = useMemo(() => user != null, [user])
 
   useEffect(() => {
-    if (isLogged) {
-      window.USER_API_KEY = user.accessToken
-    } else {
-      localStorage.removeItem('session')
+    function checkUserData() {
+      const session = localStorage.getItem('session')
+      console.log('session change', session)
+      if (session != null) {
+        window.USER_API_KEY = user.accessToken
+      }
+      setUser(session != null ? session.user : null)
     }
-  }, [isLogged])
+    window.addEventListener('storage', checkUserData)
+    return () => {
+      window.removeEventListener('storage', checkUserData)
+    }
+  }, [])
+
+  const { addAlert } = useAlertsContext()
 
   const login = (fields) =>
     Http.put('/user/auth', fields).then((res) => {
       if (res != false) {
-        localStorage.setItem(
-          'session',
-          JSON.stringify({ user: res, time: moment() })
-        )
-        setIsLogged(true)
+        setSession({ user: res, time: moment() })
       } else {
         addAlert(
           'Erreur de connexion (mauvais login ou mot de passe)',
@@ -52,7 +73,8 @@ const UserProvider = ({ children }) => {
       isAdmin: user != null ? user.roles.includes('ROLE_ADMIN') : false,
       isUser: user != null,
       logout: () => {
-        setIsLogged(false)
+        setUser(null)
+        localStorage.removeItem('session')
       }
     }),
     [user, isLogged]
