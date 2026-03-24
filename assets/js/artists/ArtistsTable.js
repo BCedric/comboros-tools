@@ -23,7 +23,7 @@ const ArtistsTable = () => {
       <div className="flex space-between align-center">
         <h1>Réponses du formulaire Accueil artistes</h1>
         <button className="btn btn-success" onClick={onClickExport}>
-          Exporter en CSV
+          Exporter au format Excel
         </button>
       </div>
 
