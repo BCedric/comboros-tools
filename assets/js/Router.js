@@ -2,6 +2,7 @@ import React from 'react'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
 import { AdminRoute } from './AdminRoute'
 import { ProtectedRoute } from './ProtectedRoute'
+import ArtistsTable from './artists/ArtistsTable'
 import ArtistsForm from './artists/form/ArtistsForm'
 import ComForm from './com-form/ComForm'
 import ComFormValidation from './com-form/ComFormValidation'
@@ -123,6 +124,16 @@ const router = createHashRouter([
             <ArtistsForm />
           </div>
         )
+      },
+      {
+        path: '',
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: 'table',
+            element: <ArtistsTable />
+          }
+        ]
       }
     ]
   },

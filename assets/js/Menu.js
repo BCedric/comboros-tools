@@ -8,28 +8,28 @@ import {
 import Icon from '@mdi/react'
 import React from 'react'
 import { Link, useMatch } from 'react-router-dom'
-import { useUser, useUserContext } from './shared/UserProvider'
+import { useUserContext } from './shared/UserProvider'
 
 const Menu = () => {
   const isConfig = useMatch('/config*')
   const isProg = useMatch('/prog*')
   const isWorkshop = useMatch('/workshop*')
   const isHome = useMatch('/')
+  const isArtistTable = useMatch('/artist/table')
 
   const { isAdmin, logout } = useUserContext()
 
   return (
     <div className="menu">
       <h2>Outils Comboros</h2>
-      <div className='flex center'>
-
-      <Icon
-        className="clickable"
-        path={mdiLogout}
-        size={1}
-        title="Déconnexion"
-        onClick={logout}
-      />
+      <div className="flex center">
+        <Icon
+          className="clickable"
+          path={mdiLogout}
+          size={1}
+          title="Déconnexion"
+          onClick={logout}
+        />
       </div>
       <hr />
       <ul>
@@ -37,10 +37,18 @@ const Menu = () => {
           <Link
             className={`${isHome ? 'active' : ''}`}
             aria-current="page"
-            to=""
+            to="/"
           >
             <Icon path={mdiFileDocumentOutline} size={1} />
             <span>Feuilles de route</span>
+          </Link>
+          <Link
+            className={`${isArtistTable ? 'active' : ''}`}
+            aria-current="page"
+            to="/artist/table"
+          >
+            <Icon path={mdiFileDocumentOutline} size={1} />
+            <span>Réponses du formulaire AA</span>
           </Link>
         </li>
         <li>

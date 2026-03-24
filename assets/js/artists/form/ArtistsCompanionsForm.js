@@ -17,7 +17,7 @@ const ArtistsCompanionsForm = ({
 
   const [formFields, setFormFields] = useState({
     companionName: '',
-    childrenName: '',
+    childrenCompanions: '',
     ...globalFormFields
   })
 

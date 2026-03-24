@@ -49,7 +49,6 @@ const ArtistsAdminForm = ({
       performanceBreaksNumber
     } = formFields
     return (
-      band != '' &&
       firstname != '' &&
       lastname != '' &&
       address != '' &&
