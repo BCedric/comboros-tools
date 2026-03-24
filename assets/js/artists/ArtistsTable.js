@@ -20,7 +20,12 @@ const ArtistsTable = () => {
 
   return (
     <div>
-      <h1>Réponses du formulaire Accueil artistes</h1>
+      <div className="flex space-between align-center">
+        <h1>Réponses du formulaire Accueil artistes</h1>
+        <button className="btn btn-success" onClick={onClickExport}>
+          Exporter en CSV
+        </button>
+      </div>
 
       <div>
         <span className="label">Lien vers le formulaire :</span>
@@ -38,9 +43,7 @@ const ArtistsTable = () => {
           }
         />
       </div>
-      <button className="btn btn-primary" onClick={onClickExport}>
-        Exporter en CSV
-      </button>
+
       <TableSearch
         filter={(item, search) =>
           item.lastname.toLowerCase().includes(search.toLowerCase()) ||
