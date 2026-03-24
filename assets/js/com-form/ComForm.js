@@ -5,7 +5,7 @@ import {
 } from '@b-cedric/react-common-bootstrap'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import comborosImg from '../../img/comboros9.png'
+import comborosImg from 'img/bandeau.png'
 import Wysiwyg from './Wysiwyg'
 
 const ComForm = () => {
@@ -38,16 +38,15 @@ const ComForm = () => {
     link: ''
   })
 
-const isPresentationValid = useMemo(
-  () => formFields.presentation.replace(/\n/g, '') != '',
-  [formFields.presentation]
-)
+  const isPresentationValid = useMemo(
+    () => formFields.presentation.replace(/\n/g, '') != '',
+    [formFields.presentation]
+  )
 
   const isFormValid = useMemo(() => {
     const { presentation, members } = formFields
     return isPresentationValid && members != ''
   }, [formFields])
-
 
   const navigate = useNavigate()
 

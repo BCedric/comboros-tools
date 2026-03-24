@@ -1,5 +1,5 @@
 import React from 'react'
-import comborosAvatar from '../../img/Insta-publication2.jpg'
+import comborosAvatar from 'img/Insta-publication2.png'
 
 const ComFormValidation = () => {
   return (

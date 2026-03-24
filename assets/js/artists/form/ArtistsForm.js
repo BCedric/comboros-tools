@@ -1,6 +1,7 @@
 import { Steps } from '@b-cedric/react-common-bootstrap/form'
 import { useConfirm } from '@b-cedric/react-common-bootstrap/modal'
 import { Http } from '@b-cedric/react-common-bootstrap/services'
+import comborosImg from 'img/bandeau.png'
 import moment from 'moment'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -64,6 +65,9 @@ const ArtistsForm = () => {
 
   return (
     <div className="artist-form content content-without-menu">
+      <div className="flex center">
+        <img className="form-header-img" src={comborosImg} />
+      </div>
       {isInit && (
         <>
           {!isEnded && !hasError ? (
