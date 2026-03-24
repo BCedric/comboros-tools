@@ -28,7 +28,7 @@ class ArtistsApiController extends AbstractAPIController
         return new JsonResponse(array_values($this->serializer->normalize($orphans)));
     }
 
-    #[Route('/', name: 'get', methods: ['GET'])]
+    #[Route('', name: 'get', methods: ['GET'])]
     public function get(ArtistRepository $artistRepository)
     {
         $artists = $artistRepository->findAll();
