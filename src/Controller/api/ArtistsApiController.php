@@ -29,12 +29,12 @@ class ArtistsApiController extends AbstractAPIController
     }
 
     #[Route('/', name: 'get', methods: ['GET'])]
-    #[IsGranted('ROLE_USER')]
     public function get(ArtistRepository $artistRepository)
     {
         $artists = $artistRepository->findAll();
         return new JsonResponse(array_values($this->serializer->normalize($artists)));
     }
+
     #[Route('/{code}', name: 'get_by_code', methods: ['GET'])]
     public function getByCode(
         #[MapEntity(mapping: ['code' => 'formAccessCode'])] Artist $artist
