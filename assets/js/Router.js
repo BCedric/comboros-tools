@@ -123,7 +123,8 @@ const router = createHashRouter([
           <div className="content-unprotected">
             <ArtistsForm />
           </div>
-        )
+        ),
+        children: [{ path: '' }, { path: ':accessCode' }]
       },
       {
         path: '',

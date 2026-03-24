@@ -92,6 +92,14 @@ class Artist
     #[ORM\Column(length: 255)]
     private ?string $companionName = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $formAccessCode = null;
+
+    public function __construct()
+    {
+        $this->formAccessCode = md5(uniqid());
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -405,6 +413,18 @@ class Artist
     public function setCompanionName(string $companionName): static
     {
         $this->companionName = $companionName;
+
+        return $this;
+    }
+
+    public function getFormAccessCode(): ?string
+    {
+        return $this->formAccessCode;
+    }
+
+    public function setFormAccessCode(string $formAccessCode): static
+    {
+        $this->formAccessCode = $formAccessCode;
 
         return $this;
     }

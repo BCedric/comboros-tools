@@ -1,7 +1,12 @@
+import { CustomFormField } from '@b-cedric/react-common-bootstrap/form'
 import { TableSearch } from '@b-cedric/react-common-bootstrap/list'
 import { Http } from '@b-cedric/react-common-bootstrap/services'
+import { mdiContentCopy, mdiPen } from '@mdi/js'
+import Icon from '@mdi/react'
+import copy from 'copy-to-clipboard'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const ArtistsTable = () => {
   const [artists, setArtists] = useState([])
@@ -16,6 +21,23 @@ const ArtistsTable = () => {
   return (
     <div>
       <h1>Réponses du formulaire Accueil artistes</h1>
+
+      <div>
+        <span className="label">Lien vers le formulaire :</span>
+        <CustomFormField
+          value={`${window.location.origin}/#/artist/form`}
+          disabled={true}
+          suffix={
+            <Icon
+              className="clickable"
+              path={mdiContentCopy}
+              size={1}
+              title="Copier le lien"
+              onClick={() => copy(`${window.location.origin}/#/artist/form`)}
+            />
+          }
+        />
+      </div>
       <button className="btn btn-primary" onClick={onClickExport}>
         Exporter en CSV
       </button>
@@ -52,6 +74,16 @@ const ArtistsTable = () => {
             label: 'Date de départ',
             get: (a) => moment(a.dateDeparture).format('DD/MM hh:mm')
           }
+        ]}
+        actions={[
+          (a) => (
+            <Link
+              to={`/artist/form/${a.formAccessCode}`}
+              title={`Editer la réponse de ${a.firstname} ${a.lastname}`}
+            >
+              <Icon path={mdiPen} size={1}></Icon>
+            </Link>
+          )
         ]}
       />
     </div>

@@ -39,7 +39,6 @@ const UserProvider = ({ children }) => {
   useEffect(() => {
     function checkUserData() {
       const session = localStorage.getItem('session')
-      console.log('session change', session)
       if (session != null) {
         window.USER_API_KEY = user.accessToken
       }

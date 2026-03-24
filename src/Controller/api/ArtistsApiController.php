@@ -7,6 +7,7 @@ use App\Repository\ArtistRepository;
 use App\Repository\BandRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,12 +35,29 @@ class ArtistsApiController extends AbstractAPIController
         $artists = $artistRepository->findAll();
         return new JsonResponse(array_values($this->serializer->normalize($artists)));
     }
+    #[Route('/{code}', name: 'get_by_code', methods: ['GET'])]
+    public function getByCode(
+        #[MapEntity(mapping: ['code' => 'formAccessCode'])] Artist $artist
+    ) {
+
+        return new JsonResponse($this->serializer->normalize($artist));
+    }
 
     #[Route('', name: 'post', methods: ['POST'])]
-    public function post(EntityManagerInterface $em, Request $request, BandRepository $bandRepository)
-    {
+    #[Route('/{code}', name: 'put', methods: ['PUT'])]
+    public function post(
+        string $code = null,
+        EntityManagerInterface $em,
+        Request $request,
+        BandRepository $bandRepository,
+        ArtistRepository $artistRepository
+    ) {
+        if ($code != null) {
+            $artist = $artistRepository->findOneByFormAccessCode($code);
+        } else {
+            $artist = new Artist();
+        }
         $body = json_decode($request->getContent(), true);
-        $artist = new Artist();
 
         $artist->setHostingType($body['hostingType']);
         $artist->setMealValues($body['mealValues']);

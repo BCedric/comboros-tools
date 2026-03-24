@@ -23,7 +23,6 @@ const FDRLaunchFormControl = ({ formfield, setFormField, firstDay }) => {
     copy.slice(index, 1)
     setFormField(copy)
   }
-  console.log(formfield)
   return (
     <div>
       <label>Repas pris en charge</label>

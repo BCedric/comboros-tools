@@ -7,7 +7,6 @@ const OrphanArtists = () => {
   useEffect(() => {}, [])
 
   useEffect(() => {
-    Http.get('/config').then((c) => console.log(c))
     Http.get('/artist/orphan').then((res) => setArtists(res))
   }, [])
 

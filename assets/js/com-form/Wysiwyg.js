@@ -28,7 +28,6 @@ const Wysiwyg = ({ label, value = '', onChange, isValid = true }) => {
     ref.current = quill
   }, [ref])
     
-    console.log(isValid);
   return (
     <div className="custom-form-field ">
       {label != '' && <label>{label}</label>}

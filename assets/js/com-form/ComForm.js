@@ -48,7 +48,6 @@ const isPresentationValid = useMemo(
     return isPresentationValid && members != ''
   }, [formFields])
 
-  console.log(formFields);
 
   const navigate = useNavigate()
 

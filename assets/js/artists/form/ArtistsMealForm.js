@@ -19,7 +19,6 @@ const ArtistsMealForm = ({
     mealValues: [],
     ...globalFormFields
   })
-  console.log(formFields)
 
   return (
     <>
