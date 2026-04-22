@@ -35,32 +35,32 @@ class Artist
     #[ORM\Column(type: Types::JSON, options: ['default' => '[]'])]
     private array $mealValues = [];
 
-    #[ORM\Column(length: 255)]
-    private ?string $hostingType = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $hostingType = null;
 
     #[ORM\Column(type: Types::JSON, options: ['default' => '[]'])]
     private array $schoolNights = [];
 
-    #[ORM\Column(length: 255)]
-    private ?string $cityComing = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $cityComing = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $cityReturn = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $cityReturn = null;
 
     #[ORM\Column(type: Types::JSON, options: ['default' => '[]'])]
     private array $transport = [];
 
-    #[ORM\Column(length: 255)]
-    private ?string $address = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $address = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $phoneNumber = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $phoneNumber = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $job = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $job = null;
 
-    #[ORM\Column]
-    private ?bool $isGUSO = null;
+    // #[ORM\Column]
+    // private ?bool $isGUSO = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthDate = null;
@@ -83,14 +83,14 @@ class Artist
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $birthCity = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $comment = null;
+    // #[ORM\Column(type: Types::TEXT)]
+    // private ?string $comment = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $childrenCompanions = null;
+    // #[ORM\Column(type: Types::TEXT)]
+    // private ?string $childrenCompanions = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $companionName = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $companionName = null;
 
     #[ORM\Column(length: 255)]
     private ?string $formAccessCode = null;
@@ -189,17 +189,17 @@ class Artist
         return $this;
     }
 
-    public function getHostingType(): ?string
-    {
-        return $this->hostingType;
-    }
+    // public function getHostingType(): ?string
+    // {
+    //     return $this->hostingType;
+    // }
 
-    public function setHostingType(string $hostingType): static
-    {
-        $this->hostingType = $hostingType;
+    // public function setHostingType(string $hostingType): static
+    // {
+    //     $this->hostingType = $hostingType;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getSchoolNights(): array
     {
@@ -213,29 +213,29 @@ class Artist
         return $this;
     }
 
-    public function getCityComing(): ?string
-    {
-        return $this->cityComing;
-    }
+    // public function getCityComing(): ?string
+    // {
+    //     return $this->cityComing;
+    // }
 
-    public function setCityComing(string $cityComing): static
-    {
-        $this->cityComing = $cityComing;
+    // public function setCityComing(string $cityComing): static
+    // {
+    //     $this->cityComing = $cityComing;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getCityReturn(): ?string
-    {
-        return $this->cityReturn;
-    }
+    // public function getCityReturn(): ?string
+    // {
+    //     return $this->cityReturn;
+    // }
 
-    public function setCityReturn(string $cityReturn): static
-    {
-        $this->cityReturn = $cityReturn;
+    // public function setCityReturn(string $cityReturn): static
+    // {
+    //     $this->cityReturn = $cityReturn;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getTransport(): array
     {
@@ -249,53 +249,53 @@ class Artist
         return $this;
     }
 
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
+    // public function getAddress(): ?string
+    // {
+    //     return $this->address;
+    // }
 
-    public function setAddress(string $address): static
-    {
-        $this->address = $address;
+    // public function setAddress(string $address): static
+    // {
+    //     $this->address = $address;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phoneNumber;
-    }
+    // public function getPhoneNumber(): ?string
+    // {
+    //     return $this->phoneNumber;
+    // }
 
-    public function setPhoneNumber(string $phoneNumber): static
-    {
-        $this->phoneNumber = $phoneNumber;
+    // public function setPhoneNumber(string $phoneNumber): static
+    // {
+    //     $this->phoneNumber = $phoneNumber;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getJob(): ?string
-    {
-        return $this->job;
-    }
+    // public function getJob(): ?string
+    // {
+    //     return $this->job;
+    // }
 
-    public function setJob(string $job): static
-    {
-        $this->job = $job;
+    // public function setJob(string $job): static
+    // {
+    //     $this->job = $job;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function isGUSO(): ?bool
-    {
-        return $this->isGUSO;
-    }
+    // public function isGUSO(): ?bool
+    // {
+    //     return $this->isGUSO;
+    // }
 
-    public function setIsGUSO(bool $isGUSO): static
-    {
-        $this->isGUSO = $isGUSO;
+    // public function setIsGUSO(bool $isGUSO): static
+    // {
+    //     $this->isGUSO = $isGUSO;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getBirthDate(): ?\DateTimeInterface
     {
@@ -381,41 +381,41 @@ class Artist
         return $this;
     }
 
-    public function getComment(): ?string
-    {
-        return $this->comment;
-    }
+    // public function getComment(): ?string
+    // {
+    //     return $this->comment;
+    // }
 
-    public function setComment(string $comment): static
-    {
-        $this->comment = $comment;
+    // public function setComment(string $comment): static
+    // {
+    //     $this->comment = $comment;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getChildrenCompanions(): ?string
-    {
-        return $this->childrenCompanions;
-    }
+    // public function getChildrenCompanions(): ?string
+    // {
+    //     return $this->childrenCompanions;
+    // }
 
-    public function setChildrenCompanions(string $childrenCompanions): static
-    {
-        $this->childrenCompanions = $childrenCompanions;
+    // public function setChildrenCompanions(string $childrenCompanions): static
+    // {
+    //     $this->childrenCompanions = $childrenCompanions;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getCompanionName(): ?string
-    {
-        return $this->companionName;
-    }
+    // public function getCompanionName(): ?string
+    // {
+    //     return $this->companionName;
+    // }
 
-    public function setCompanionName(string $companionName): static
-    {
-        $this->companionName = $companionName;
+    // public function setCompanionName(string $companionName): static
+    // {
+    //     $this->companionName = $companionName;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getFormAccessCode(): ?string
     {

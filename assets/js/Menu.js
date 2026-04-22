@@ -42,14 +42,14 @@ const Menu = () => {
             <Icon path={mdiFileDocumentOutline} size={1} />
             <span>Feuilles de route</span>
           </Link>
-          <Link
+          {/* <Link
             className={`${isArtistTable ? 'active' : ''}`}
             aria-current="page"
             to="/artist/table"
           >
             <Icon path={mdiFileDocumentOutline} size={1} />
             <span>Réponses du formulaire AA</span>
-          </Link>
+          </Link> */}
         </li>
         <li>
           <Link
