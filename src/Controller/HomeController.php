@@ -68,7 +68,8 @@ class HomeController extends AbstractController
                 'Membres' => $band->getMembers(),
                 'Lien vers les ressources numériques' => $band->getLink(),
                 'Autres éléments de communication' => $band->getOtherElements(),
-                'Photos' => implode(', ', array_map(fn($img) => $request->getSchemeAndHttpHost() . "/" . $img, $band->getImgs()))
+                'Photos' => implode(', ', array_map(fn($img) => $request->getSchemeAndHttpHost() . "/" . $img, $band->getImgs())),
+                "Lien vers le formulaire de communication" => $request->getSchemeAndHttpHost() . "/#/com-form/" . $band->getFormComAccessCode()
             ];
             $data[] = $line;
         }
