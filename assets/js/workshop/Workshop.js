@@ -88,7 +88,9 @@ const Workshop = () => {
   const isSameTimeSamePlaceOtherWs = useCallback(
     (ws) =>
       workshops.some(
-        (w) => w.id != ws.id && w.room.id === ws.room.id && w.start === ws.start
+        (w) => w.id != ws.id &&
+          w.room != null && ws.room != null &&
+          w.room.id === ws.room.id && w.start === ws.start
       ),
     [workshops]
   )
