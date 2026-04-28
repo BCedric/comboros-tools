@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/band', 'band_api_')]
 class BandController extends AbstractAPIController
@@ -42,7 +41,7 @@ class BandController extends AbstractAPIController
         $band->setName($body['name']);
         $band->setStart(new DateTime($body['start']));
         $band->setEnd(new DateTime($body['end']));
-        $band->setType($body['type']);
+        array_key_exists('type', $body) && $band->setType($body['type']);
         if (array_key_exists('room', $body) && $body['room'] != null) {
             $band->setRoom($roomRepository->find($body['room']));
         }
