@@ -39,7 +39,8 @@ const ComForm = () => {
   })
 
   const isPresentationValid = useMemo(
-    () => formFields.presentation.replace(/\n/g, '') != '',
+    () =>
+      formFields.presentation != null && formFields.presentation.replace(/\n/g, '') != '',
     [formFields.presentation]
   )
 
