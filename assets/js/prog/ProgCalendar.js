@@ -60,7 +60,8 @@ const ProgCalendar = ({ bands, setBands }) => {
                 { value: 'concert', label: 'Concert' },
                 { value: 'conference', label: 'Conférence' },
                 { value: 'sport', label: 'Sport' },
-                { value: 'spectacle', label: 'Spectacle' }
+                { value: 'spectacle', label: 'Spectacle' },
+                { value: 'autre', label: 'Autre' }
               ]}
               onChange={({ value }) => {
                 setNewEvent({ ...newEvent, type: value })
