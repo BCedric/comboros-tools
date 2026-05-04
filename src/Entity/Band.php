@@ -41,6 +41,9 @@ class Band
     private ?string $presentation = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $shortPresentation = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $members = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -213,6 +216,18 @@ class Band
     public function setPresentation(?string $presentation): static
     {
         $this->presentation = $presentation;
+
+        return $this;
+    }
+
+    public function getShortPresentation(): ?string
+    {
+        return $this->shortPresentation;
+    }
+
+    public function setShortPresentation(?string $shortPresentation): static
+    {
+        $this->shortPresentation = $shortPresentation;
 
         return $this;
     }

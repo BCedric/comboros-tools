@@ -68,6 +68,10 @@ const BandDetails = ({ close, band }) => {
             ))}
           </div>
         </div>
+        <div>
+          <span className="label">Presentation plaquette:</span>
+          <p>{band.shortPresentation}</p>
+        </div>
       </div>
     </div>
   )

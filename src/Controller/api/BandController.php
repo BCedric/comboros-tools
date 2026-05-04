@@ -46,6 +46,9 @@ class BandController extends AbstractAPIController
             $band->setRoom($roomRepository->find($body['room']));
         }
 
+        array_key_exists('shortPresentation', $body) && $body['shortPresentation'] != null && $band->setShortPresentation($body['shortPresentation']);
+
+
         $em->persist($band);
 
 

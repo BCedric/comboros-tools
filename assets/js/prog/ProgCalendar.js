@@ -67,6 +67,17 @@ const ProgCalendar = ({ bands, setBands }) => {
                 setNewEvent({ ...newEvent, type: value })
               }}
             />
+            <CustomFormField
+              label="Présentation plaquette"
+              type="textarea"
+              value={newEvent.shortPresentation}
+              onChange={(value) =>
+                setNewEvent({
+                  ...newEvent,
+                  shortPresentation: value
+                })
+              }
+            />
           </div>
         )}
         modalEventTitle="Ajout d'un concert/bal"
