@@ -71,6 +71,25 @@ const ProgTable = ({ bands }) => {
                   src={`${window.location.origin}/api/band/img/${img}`}
                 />
               ))
+          },
+          {
+            label: 'Présentation plaquette',
+            get: (band) => (
+              <div>
+                <p
+                  className="prog-table-presentation"
+                  title={band.shortPresentation}
+                >
+                  {band.shortPresentation}
+                </p>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => copy(band.shortPresentation)}
+                >
+                  Copier
+                </button>
+              </div>
+            )
           }
         ]}
       />
