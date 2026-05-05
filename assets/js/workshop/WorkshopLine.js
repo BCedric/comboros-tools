@@ -15,11 +15,20 @@ const WorkshopLine = ({
         isSameTimeSamePlaceOtherWs ? 'text-danger' : ''
       }`}
     >
-      <span className="bold col-6">{workshop.name} </span>&nbsp;
+      <span className="bold col-4">{workshop.name} </span>&nbsp;
       {/* <span className="col"> Le {moment(workshop.start).format('LL')} </span> */}
-      {workshop.room != null && (
-        <span className="col">{`${workshop.room.label}`}&nbsp;</span>
-      )}
+      <span className="col-2">
+        {workshop.room != null && workshop.room.label}&nbsp;
+      </span>
+      <span className="col-2">
+        <span className=" prog-table-presentation" title={workshop.description}>
+          {workshop.description}&nbsp;
+        </span>
+      </span>
+      <span className="italic col">
+        de {moment(workshop.start).format('LT')} à{' '}
+        {moment(workshop.end).format('LT')}
+      </span>
       <span className="italic col">
         de {moment(workshop.start).format('LT')} à{' '}
         {moment(workshop.end).format('LT')}
