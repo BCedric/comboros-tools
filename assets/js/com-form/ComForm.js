@@ -3,9 +3,9 @@ import {
   CustomFormField,
   Http
 } from '@b-cedric/react-common-bootstrap'
+import comborosImg from 'img/bandeau.png'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import comborosImg from 'img/bandeau.png'
 import Wysiwyg from './Wysiwyg'
 
 const ComForm = () => {
@@ -40,7 +40,8 @@ const ComForm = () => {
 
   const isPresentationValid = useMemo(
     () =>
-      formFields.presentation != null && formFields.presentation.replace(/\n/g, '') != '',
+      formFields.presentation != null &&
+      formFields.presentation.replace(/\n/g, '') != '',
     [formFields.presentation]
   )
 
@@ -86,6 +87,23 @@ const ComForm = () => {
                 value={bandName}
                 disabled
               />
+              {formFields.imgs.length > 0 && (
+                <div>
+                  <label>Photos mises en ligne</label>
+                  <p className="informations">
+                    /!\ La soumission du formulaire avec le champ "Photos"
+                    complété remplacera ces images /!\
+                  </p>
+                  <div className="com-form-imgs">
+                    {formFields.imgs.map((img, index) => (
+                      <img
+                        key={index}
+                        src={`${window.location.origin}/api/band/img/${img}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
               <CustomFormField
                 label="Photo(s) (taille max: 2Mo)"
                 type="file"
