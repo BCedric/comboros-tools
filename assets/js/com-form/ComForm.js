@@ -3,6 +3,8 @@ import {
   CustomFormField,
   Http
 } from '@b-cedric/react-common-bootstrap'
+import { mdiAlert } from '@mdi/js'
+import Icon from '@mdi/react'
 import comborosImg from 'img/bandeau.png'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -91,8 +93,9 @@ const ComForm = () => {
                 <div>
                   <label>Photos mises en ligne</label>
                   <p className="informations">
-                    /!\ La soumission du formulaire avec le champ "Photos"
-                    complété remplacera ces images /!\
+                    <Icon path={mdiAlert} size={1} /> La soumission du
+                    formulaire avec le champ "Photos" complété remplacera ces
+                    images <Icon path={mdiAlert} size={1} />
                   </p>
                   <div className="com-form-imgs">
                     {formFields.imgs.map((img, index) => (
