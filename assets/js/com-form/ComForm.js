@@ -5,6 +5,7 @@ import {
 } from '@b-cedric/react-common-bootstrap'
 import { mdiAlert } from '@mdi/js'
 import Icon from '@mdi/react'
+import Compressor from 'compressorjs'
 import comborosImg from 'img/bandeau.png'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -14,6 +15,7 @@ const ComForm = () => {
   const { accessCode } = useParams()
   const [bandName, setBandName] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const [photos, setPhotos] = useState([])
 
   useEffect(() => {
     Http.get(`/band/access-code/${accessCode}`)
@@ -69,6 +71,27 @@ const ComForm = () => {
       )
   }
 
+  const addPhoto = (photo) =>
+    setFormFields((prev) => ({ ...prev, photos: [...prev.photos, photo] }))
+
+  const reinitPhotos = () => setFormFields((prev) => ({ ...prev, photos: [] }))
+
+  useEffect(() => {
+    reinitPhotos()
+    Array.from(photos).forEach((photo) => {
+      new Compressor(photo, {
+        maxHeight: 1200,
+        convertSize: 50000,
+        success(result) {
+          addPhoto(result)
+        },
+        error(err) {
+          addPhoto(photo)
+        }
+      })
+    })
+  }, [photos])
+
   return (
     <>
       <div className="flex center">
@@ -97,7 +120,7 @@ const ComForm = () => {
                     formulaire avec le champ "Photos" complété remplacera ces
                     images <Icon path={mdiAlert} size={1} />
                   </p>
-                  <div className="com-form-imgs">
+                  <div className="com-form-imgs spaced-inline">
                     {formFields.imgs.map((img, index) => (
                       <img
                         key={index}
@@ -108,13 +131,14 @@ const ComForm = () => {
                 </div>
               )}
               <CustomFormField
-                label="Photo(s) (taille max: 2Mo)"
+                label="Photo(s)"
                 type="file"
-                fieldName="photos"
+                value={photos}
+                onChange={(values) => setPhotos(values)}
                 multiple
                 accept="image/*"
+                fileSizeLimit="100000000"
               />
-
               <CustomFormField
                 label="Nom des membres du groupe et leurs rôles (instruments détaillés, lumière, sonorisation)."
                 type="textarea"
