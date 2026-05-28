@@ -19,6 +19,7 @@ const WorkshopForm = ({ formFields, setFormFields, onCancel, onSubmit }) => {
         onChange={(value) => setFormFields({ ...formFields, name: value })}
       />
       <CustomFormField
+        label="Type de stage"
         type="select"
         options={['Musique', 'Danse', 'Autre'].map((value) => ({
           label: value,
