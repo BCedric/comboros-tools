@@ -20,7 +20,7 @@ const WorkshopForm = ({ formFields, setFormFields, onCancel, onSubmit }) => {
       />
       <CustomFormField
         type="select"
-        options={['Musique', 'Danse'].map((value) => ({
+        options={['Musique', 'Danse', 'Autre'].map((value) => ({
           label: value,
           value
         }))}
