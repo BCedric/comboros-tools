@@ -56,11 +56,14 @@ class FDRApiController extends AbstractAPIController
 
         $officer = $artistLiaisonOfficerRepository->find($body['referent']);
         if ($officer != null) {
-            $docFields = [
-                ['tag' => 'nom_accueil_ref', 'type' => 'string', 'value' => $officer->getFirstname() . ' ' . $officer->getLastname()],
-                ['tag' => 'mail_accueil_ref', 'type' => 'string', 'value' => $officer->getMail()],
-                ['tag' => 'tel_accueil_ref', 'type' => 'string', 'value' => $officer->getPhone()],
-            ];
+            $docFields = array_merge(
+                $docFields,
+                [
+                    ['tag' => 'nom_accueil_ref', 'type' => 'string', 'value' => $officer->getFirstname() . ' ' . $officer->getLastname()],
+                    ['tag' => 'mail_accueil_ref', 'type' => 'string', 'value' => $officer->getMail()],
+                    ['tag' => 'tel_accueil_ref', 'type' => 'string', 'value' => $officer->getPhone()],
+                ]
+            );
         }
 
         $tech = $band->getRoom()->getTech();
