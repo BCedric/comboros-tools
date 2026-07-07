@@ -128,11 +128,11 @@ const FDRForm = () => {
               { value: 'pdf', label: 'pdf' }
             ]}
           />
-          <FDRLaunchFormControl
+          {/* <FDRLaunchFormControl
             formfield={launches}
             setFormField={setLaunches}
             firstDay="2025-08-08"
-          />
+          /> */}
         </>
       )}
       {groupSelected != null && groupSelected.room === null && (
