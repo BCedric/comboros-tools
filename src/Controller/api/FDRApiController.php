@@ -38,6 +38,10 @@ class FDRApiController extends AbstractAPIController
 
         /** @var Band */
         $band = $bandRepository->find($body['group']);
+        foreach ($body['addedArtists'] as $addedArtistId) {
+            $artist = $artistRepository->find($addedArtistId);
+            $band->addArtist($artist);
+        }
 
         $officer = $artistLiaisonOfficerRepository->find($body['referent']);
 

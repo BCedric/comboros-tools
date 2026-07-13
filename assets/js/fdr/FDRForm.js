@@ -6,13 +6,13 @@ import {
 import axios from 'axios'
 import React, { useEffect, useMemo, useState } from 'react'
 import FDRArtistsTable from './FDRArtistsTable'
-import FDRLaunchFormControl from './FDRLaunchFormControl'
 
 const FDRForm = () => {
   const [groups, setGroups] = useState([])
   const [officers, setOfficers] = useState([])
   const [workshops, setworkshops] = useState([])
   const [balanceTime, setBalanceTime] = useState('')
+  const [addedArtists, setAddedArtists] = useState([])
 
   const [groupSelectedIndex, setGroupSelectedIndex] = useState(null)
   const [workshopsSelectedIndex, setWorkshopsSelectedIndex] = useState([])
@@ -32,7 +32,7 @@ const FDRForm = () => {
 
   useEffect(() => {
     Http.get('/band').then((groups) => setGroups(groups))
-    Http.get('/workshop').then((groups) => setworkshops(groups))
+    Http.get('/workshop').then((workshops) => setworkshops(workshops))
     Http.get('/artist-liaison-officer').then((officers) =>
       setOfficers(officers)
     )
@@ -50,7 +50,8 @@ const FDRForm = () => {
         referent,
         balanceTime,
         hosting,
-        launches
+        launches,
+        addedArtists: addedArtists.map(a => a.id)
       },
       headers: { 'X-AUTH-TOKEN': window.USER_API_KEY }
     }).then((response) => {
@@ -95,6 +96,8 @@ const FDRForm = () => {
         artists={groupSelected != null ? groupSelected.artists : []}
         setHosting={setHosting}
         isBandSelected={groupSelected != null}
+        addedArtists={addedArtists}
+        setAddedArtists={setAddedArtists}
       />
       {groupSelected != null && (
         <>
